@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>坪・畳・㎡ 換算ツール｜1坪は何畳？何㎡？ すぐ計算</title>
+<meta name="description" content="坪・畳・平方メートル（㎡）を相互に換算。江戸間・中京間・京間・団地間と、不動産広告の基準（1畳＝1.62㎡）にも対応。縦横の長さから広さも計算できます。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#f3f5f8;--grid:#dfe5ee;--ink:#1b2433;--sub:#53607a;--card:#fff;--line:#c5cedd;--accent:#1f3a8a;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--paper:#141a26;--grid:#1d2536;--ink:#e7ecf6;--sub:#9aa7c2;--card:#1b2334;--line:#34405a;--accent:#8fb0ff}}
+:root[data-theme="dark"]{--paper:#141a26;--grid:#1d2536;--ink:#e7ecf6;--sub:#9aa7c2;--card:#1b2334;--line:#34405a;--accent:#8fb0ff}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;color:var(--ink);background-color:var(--paper);background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:24px 24px;font-family:"Zen Kaku Gothic New","Hiragino Sans","Yu Gothic",Meiryo,sans-serif;line-height:1.8;font-size:16px}
+main{max-width:760px;margin:0 auto;padding:20px 16px 56px}
+.back{display:inline-block;margin-bottom:10px;color:var(--accent);text-decoration:none;font-weight:700;min-height:32px}
+h1{font-size:clamp(26px,6vw,36px);line-height:1.35;margin:0 0 6px}
+.lead{margin:0 0 22px;color:var(--sub)}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:6px;padding:16px}
+.panel + .panel{margin-top:14px}
+h2{font-size:18px;margin:0 0 10px}
+label.t{display:block;font-weight:700;margin:10px 0 4px}
+input,select{width:100%;font:inherit;font-size:16px;padding:8px 10px;min-height:44px;color:var(--ink);background:var(--paper);border:1px solid var(--line);border-radius:4px}
+.row{display:grid;gap:0 14px;grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}
+.u{color:var(--sub);font-weight:400;font-size:14px}
+table{width:100%;border-collapse:collapse;font-size:15px}
+th,td{padding:8px 6px;border-bottom:1px solid var(--line);text-align:left}
+th{color:var(--sub);font-weight:700;font-size:14px}
+td.n{text-align:right;font-weight:700;color:var(--accent)}
+.wrap{overflow-x:auto}
+.small{color:var(--sub);font-size:14px;margin:6px 0 0}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+article p{margin:0 0 12px}
+article dt{font-weight:700;margin-top:8px}
+article dd{margin:0 0 6px;color:var(--sub)}
+</style>
+</head>
+<body>
+<main>
+  <a class="back" href="/">← tinytool-box</a>
+  <h1>坪・畳・㎡ 換算ツール</h1>
+  <p class="lead">どれか1つを入力すると、残りが自動で計算されます。入力した内容は送信されません。</p>
+
+  <section class="panel">
+    <div class="row">
+      <div><label class="t" for="m">平方メートル <span class="u">㎡</span></label><input id="m" type="number" inputmode="decimal" min="0" step="any"></div>
+      <div><label class="t" for="t">坪 <span class="u">坪</span></label><input id="t" type="number" inputmode="decimal" min="0" step="any"></div>
+      <div><label class="t" for="j">畳 <span class="u">畳（帖）</span></label><input id="j" type="number" inputmode="decimal" min="0" step="any"></div>
+    </div>
+    <label class="t" for="base">1畳の広さの基準</label>
+    <select id="base">
+      <option value="1.62">不動産広告の基準（1畳＝1.62㎡）</option>
+      <option value="1.5488">江戸間（関東間）1畳＝約1.55㎡</option>
+      <option value="1.6562">中京間 1畳＝約1.66㎡</option>
+      <option value="1.82405">京間（本間）1畳＝約1.82㎡</option>
+      <option value="1.445">団地間 1畳＝約1.45㎡</option>
+    </select>
+    <p class="small">1坪＝約3.3058㎡（400÷121）で計算しています。</p>
+  </section>
+
+  <section class="panel">
+    <h2>縦と横の長さから広さを求める</h2>
+    <div class="row">
+      <div><label class="t" for="w">横 <span class="u">m</span></label><input id="w" type="number" inputmode="decimal" min="0" step="any"></div>
+      <div><label class="t" for="d">縦 <span class="u">m</span></label><input id="d" type="number" inputmode="decimal" min="0" step="any"></div>
+    </div>
+    <p class="small" id="room">縦と横を入力すると、上の欄に反映されます。</p>
+  </section>
+
+  <section class="panel">
+    <h2>基準ごとの畳数</h2>
+    <div class="wrap"><table>
+      <thead><tr><th>基準</th><th>1畳の広さ</th><th style="text-align:right">畳数</th></tr></thead>
+      <tbody id="tb"></tbody>
+    </table></div>
+    <p class="small">同じ広さでも、基準によって畳の数が変わります。</p>
+  </section>
+
+  <article class="panel">
+    <h2>使い方と解説</h2>
+    <p>㎡・坪・畳のどれか1つに数字を入れると、他の2つが自動で計算されます。畳の基準は、部屋の種類や地域に合わせて選んでください。</p>
+    <dl>
+      <dt>1坪は何㎡・何畳？</dt>
+      <dd>1坪は約3.3058㎡です。畳に直すと、一般的に約2畳（江戸間で約2.1畳、不動産広告の基準で約2.04畳）になります。</dd>
+      <dt>畳の広さに違いがあるのはなぜ？</dt>
+      <dd>畳のサイズは地域や建物によって異なります。関東の江戸間、中部の中京間、関西の京間、公団住宅の団地間があり、同じ「6畳」でも実際の広さが変わります。</dd>
+      <dt>不動産広告の基準</dt>
+      <dd>不動産の広告では、1畳あたり1.62㎡以上で畳数を表示するルールがあります。物件の「〇畳」は、この基準で換算された広さです。</dd>
+    </dl>
+    <p>表示される数値は目安です。正確な面積が必要な契約や申請などでは、登記簿や図面の数値を確認してください。</p>
+  </article>
+</main>
+<script>
+(function(){
+  var $=function(i){return document.getElementById(i)}, T=400/121;
+  var R=[["不動産広告の基準",1.62],["江戸間（関東間）",1.5488],["中京間",1.6562],["京間（本間）",1.82405],["団地間",1.445]];
+  function f(x,n){return String(+x.toFixed(n))}
+  function sync(from){
+    var b=parseFloat($("base").value), m;
+    if(from==="m")m=parseFloat($("m").value);
+    else if(from==="t")m=parseFloat($("t").value)*T;
+    else m=parseFloat($("j").value)*b;
+    var tb=$("tb");
+    if(isNaN(m)||m<0){
+      ["m","t","j"].forEach(function(id){if(id!==from)$(id).value=""});
+      tb.innerHTML=""; return;
+    }
+    if(from!=="m")$("m").value=f(m,3);
+    if(from!=="t")$("t").value=f(m/T,3);
+    if(from!=="j")$("j").value=f(m/b,3);
+    tb.innerHTML=R.map(function(r){
+      return "<tr><td>"+r[0]+"</td><td>"+r[1]+"㎡</td><td class=\"n\">"+f(m/r[1],2)+"畳</td></tr>";
+    }).join("");
+  }
+  function room(){
+    var w=parseFloat($("w").value), d=parseFloat($("d").value);
+    if(isNaN(w)||isNaN(d)||w<0||d<0){$("room").textContent="縦と横を入力すると、上の欄に反映されます。";return;}
+    var a=w*d;
+    $("m").value=f(a,3); sync("m");
+    $("room").textContent=w+"m × "+d+"m ＝ "+f(a,3)+"㎡ を上の欄に反映しました。";
+  }
+  $("m").addEventListener("input",function(){sync("m")});
+  $("t").addEventListener("input",function(){sync("t")});
+  $("j").addEventListener("input",function(){sync("j")});
+  $("base").addEventListener("change",function(){sync($("m").value!==""?"m":"j")});
+  $("w").addEventListener("input",room); $("d").addEventListener("input",room);
+  $("m").value="10"; sync("m");
+})();
+</script>
+</body>
+</html>
