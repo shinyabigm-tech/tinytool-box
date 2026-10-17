@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>営業日計算ツール｜〇営業日後・営業日数の計算（祝日対応）</title>
+<meta name="description" content="土日・祝日を除いた「〇営業日後（前）の日付」や「期間内の営業日数」をすぐに計算。年末年始や会社の休業日も指定できます。入力内容は送信されません。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#f3f5f8; --grid:#dfe5ee; --ink:#1b2433; --sub:#53607a;
+  --card:#ffffff; --line:#c5cedd; --accent:#1f3a8a; --accent-ink:#ffffff;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --paper:#141a26; --grid:#1d2536; --ink:#e7ecf6; --sub:#9aa7c2;
+    --card:#1b2334; --line:#34405a; --accent:#8fb0ff; --accent-ink:#0f1626;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#141a26; --grid:#1d2536; --ink:#e7ecf6; --sub:#9aa7c2;
+  --card:#1b2334; --line:#34405a; --accent:#8fb0ff; --accent-ink:#0f1626;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{
+  margin:0; color:var(--ink); background-color:var(--paper);
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:24px 24px;
+  font-family:"Zen Kaku Gothic New","Hiragino Sans","Yu Gothic",Meiryo,sans-serif;
+  line-height:1.8; font-size:16px;
+}
+main{max-width:760px; margin:0 auto; padding:20px 16px 56px}
+.back{display:inline-block; margin-bottom:10px; color:var(--accent); text-decoration:none; font-weight:700; min-height:32px}
+h1{font-size:clamp(26px,6vw,36px); line-height:1.35; margin:0 0 6px}
+.lead{margin:0 0 22px; color:var(--sub)}
+.panel{background:var(--card); border:1px solid var(--line); border-radius:6px; padding:16px}
+.panel + .panel{margin-top:14px}
+h2{font-size:18px; margin:0 0 10px}
+label.t{display:block; font-weight:700; margin:10px 0 4px}
+input[type=date],input[type=number],select,textarea{
+  width:100%; font:inherit; font-size:16px; padding:8px 10px; min-height:44px;
+  color:var(--ink); background:var(--paper); border:1px solid var(--line); border-radius:4px;
+}
+textarea{min-height:84px; resize:vertical}
+.row{display:grid; gap:0 14px; grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+.opts label{display:flex; align-items:center; gap:8px; min-height:40px; cursor:pointer}
+.opts input{width:20px; height:20px; accent-color:var(--accent)}
+:focus-visible{outline:3px solid var(--accent); outline-offset:2px}
+.result{border-left:6px solid var(--accent)}
+.big{font-size:clamp(22px,5.5vw,30px); font-weight:700; color:var(--accent); margin:0 0 4px; overflow-wrap:anywhere}
+.small{color:var(--sub); font-size:14px; margin:4px 0 0}
+article p{margin:0 0 12px}
+article dt{font-weight:700; margin-top:8px}
+article dd{margin:0 0 6px; color:var(--sub)}
+</style>
+</head>
+<body>
+<main>
+  <a class="back" href="/">← tinytool-box</a>
+  <h1>営業日計算ツール</h1>
+  <p class="lead">土日・祝日を除いて、「〇営業日後（前）の日付」や「期間内の営業日数」を計算します。入力した内容は送信されません。</p>
+
+  <section class="panel">
+    <label class="t" for="mode">計算の種類</label>
+    <select id="mode">
+      <option value="add">〇営業日後（前）の日付を求める</option>
+      <option value="between">期間内の営業日数を数える</option>
+    </select>
+
+    <div id="m-add">
+      <div class="row">
+        <div><label class="t" for="s1">起点の日付</label><input type="date" id="s1"></div>
+        <div><label class="t" for="n">営業日数</label><input type="number" id="n" min="0" max="3650" value="5" inputmode="numeric"></div>
+        <div><label class="t" for="dir">方向</label>
+          <select id="dir"><option value="after">後</option><option value="before">前</option></select></div>
+      </div>
+    </div>
+
+    <div id="m-between" hidden>
+      <div class="row">
+        <div><label class="t" for="s2">開始日</label><input type="date" id="s2"></div>
+        <div><label class="t" for="e2">終了日</label><input type="date" id="e2"></div>
+      </div>
+      <div class="opts"><label><input type="checkbox" id="inc" checked>開始日を数える</label></div>
+    </div>
+  </section>
+
+  <section class="panel">
+    <h2>休みの設定</h2>
+    <div class="opts">
+      <label><input type="checkbox" id="we" checked>土日を休みにする</label>
+      <label><input type="checkbox" id="hl" checked>祝日を休みにする</label>
+      <label><input type="checkbox" id="ny">年末年始（12/29〜1/3）を休みにする</label>
+    </div>
+    <label class="t" for="cu">会社独自の休業日（1行に1日、例：2026-08-14）</label>
+    <textarea id="cu" placeholder="2026-08-13&#10;2026-08-14"></textarea>
+  </section>
+
+  <section class="panel result" aria-live="polite">
+    <p class="big" id="res">—</p>
+    <p class="small" id="sub"></p>
+    <p class="small" id="warn"></p>
+  </section>
+
+  <article class="panel">
+    <h2>使い方</h2>
+    <p>計算の種類を選び、日付と営業日数を入力すると結果がすぐに表示されます。起点の日は数えず、翌日から数え始めます。たとえば金曜日を起点に「1営業日後」を求めると、祝日でなければ翌週の月曜日になります。</p>
+    <dl>
+      <dt>営業日とは</dt>
+      <dd>一般的に、土曜・日曜・祝日・年末年始などの休業日を除いた、仕事をする日のことです。支払期日や納期、書類の提出期限の計算によく使われます。</dd>
+      <dt>祝日の扱い</dt>
+      <dd>国民の祝日、振替休日、国民の休日を自動で反映します。2020年〜2050年に対応しています。</dd>
+      <dt>注意</dt>
+      <dd>金融機関や取引先によって営業日の考え方は異なります。契約書や取引先の規定で確認が必要な場合は、休みの設定と独自の休業日で調整してください。</dd>
+    </dl>
+  </article>
+</main>
+<script>
+(function(){
+  var $=function(i){return document.getElementById(i)};
+  var W=["日","月","火","水","木","金","土"], DAY=864e5, cache={};
+  function U(y,m,d){return new Date(Date.UTC(y,m-1,d))}
+  function key(d){return d.toISOString().slice(0,10)}
+  function nthMon(y,m,n){var f=U(y,m,1).getUTCDay();return 1+((8-f)%7)+(n-1)*7}
+  function hol(y){
+    if(cache[y])return cache[y];
+    var h={}, a=function(m,d,n){h[key(U(y,m,d))]=n}, c=y-1980-0, q=Math.floor((y-1980)/4);
+    a(1,1,"元日"); a(1,nthMon(y,1,2),"成人の日"); a(2,11,"建国記念の日"); a(2,23,"天皇誕生日");
+    a(3,Math.floor(20.8431+0.242194*c-q),"春分の日"); a(4,29,"昭和の日");
+    a(5,3,"憲法記念日"); a(5,4,"みどりの日"); a(5,5,"こどもの日");
+    a(7,y==2020?23:y==2021?22:nthMon(y,7,3),"海の日");
+    a(8,y==2020?10:y==2021?8:11,"山の日");
+    a(9,nthMon(y,9,3),"敬老の日"); a(9,Math.floor(23.2488+0.242194*c-q),"秋分の日");
+    if(y==2020)a(7,24,"スポーツの日"); else if(y==2021)a(7,23,"スポーツの日"); else a(10,nthMon(y,10,2),"スポーツの日");
+    a(11,3,"文化の日"); a(11,23,"勤労感謝の日");
+    var ks=Object.keys(h);
+    ks.forEach(function(k){
+      var d=new Date(k+"T00:00:00Z");
+      if(d.getUTCDay()===0){var n=new Date(d.getTime()+DAY); while(h[key(n)])n=new Date(n.getTime()+DAY); h[key(n)]="振替休日";}
+    });
+    ks.forEach(function(k){
+      var d=new Date(k+"T00:00:00Z"), mid=new Date(d.getTime()+DAY), nx=new Date(d.getTime()+2*DAY);
+      if(h[key(nx)]&&!h[key(mid)]&&mid.getUTCDay()!==0)h[key(mid)]="国民の休日";
+    });
+    return (cache[y]=h);
+  }
+  function opts(){
+    var cu={};
+    $("cu").value.split(/\n/).forEach(function(l){
+      var m=l.match(/(\d{4})[-\/.](\d{1,2})[-\/.](\d{1,2})/);
+      if(m)cu[key(U(+m[1],+m[2],+m[3]))]=1;
+    });
+    return {we:$("we").checked, hl:$("hl").checked, ny:$("ny").checked, cu:cu};
+  }
+  function off(d,o){
+    var w=d.getUTCDay(), m=d.getUTCMonth()+1, dd=d.getUTCDate(), k=key(d);
+    if(o.we&&(w===0||w===6))return "土日";
+    if(o.hl){var n=hol(d.getUTCFullYear())[k]; if(n)return n;}
+    if(o.ny&&((m===12&&dd>=29)||(m===1&&dd<=3)))return "年末年始";
+    if(o.cu[k])return "指定の休業日";
+    return "";
+  }
+  function fmt(d){return d.getUTCFullYear()+"年"+(d.getUTCMonth()+1)+"月"+d.getUTCDate()+"日（"+W[d.getUTCDay()]+"）"}
+  function parse(v){return v?new Date(v+"T00:00:00Z"):null}
+  function out(a,b,c){$("res").textContent=a; $("sub").textContent=b||""; $("warn").textContent=c||"";}
+  function range(ds){
+    var bad=ds.some(function(d){var y=d.getUTCFullYear();return y<2020||y>2050});
+    return bad?"祝日は2020年〜2050年に対応しています。範囲外の年は祝日が正しく反映されない場合があります。":"";
+  }
+  function calc(){
+    var o=opts(), mode=$("mode").value;
+    $("m-add").hidden=mode!=="add"; $("m-between").hidden=mode!=="between";
+    if(mode==="add"){
+      var s=parse($("s1").value), n=parseInt($("n").value,10);
+      if(!s||isNaN(n)||n<0||n>3650){out("—","日付と、0〜3650の営業日数を入力してください。");return;}
+      var step=$("dir").value==="after"?1:-1, d=s, c=0;
+      while(c<n){d=new Date(d.getTime()+step*DAY); if(!off(d,o))c++;}
+      var cal=Math.round(Math.abs(d-s)/DAY);
+      var note=(n===0&&off(s,o))?"起点の日は休みです。":"起点から暦日で"+cal+"日"+(step>0?"後":"前")+"です。";
+      out(fmt(d),note,range([s,d]));
+    }else{
+      var a=parse($("s2").value), e=parse($("e2").value);
+      if(!a||!e){out("—","開始日と終了日を入力してください。");return;}
+      if(e<a){out("—","終了日は開始日以降の日付にしてください。");return;}
+      if((e-a)/DAY>36600){out("—","期間が長すぎます（100年以内）。");return;}
+      var cnt=0, tot=0, why={}, first=$("inc").checked;
+      for(var d2=new Date(a.getTime()); d2<=e; d2=new Date(d2.getTime()+DAY)){
+        if(!first&&d2.getTime()===a.getTime())continue;
+        tot++;
+        var r=off(d2,o);
+        if(r){why[r]=(why[r]||0)+1;}else cnt++;
+      }
+      var parts=Object.keys(why).map(function(k){return k+" "+why[k]+"日"});
+      out("営業日数：" + cnt + "日","対象 "+tot+"日のうち、休みは "+(tot-cnt)+"日"+(parts.length?"（"+parts.join("、")+"）":"")+"。",range([a,e]));
+    }
+  }
+  var t=new Date(), p=function(x){return (x<10?"0":"")+x}, today=t.getFullYear()+"-"+p(t.getMonth()+1)+"-"+p(t.getDate());
+  $("s1").value=today; $("s2").value=today; $("e2").value=today;
+  ["mode","s1","n","dir","s2","e2","inc","we","hl","ny","cu"].forEach(function(id){
+    $(id).addEventListener("input",calc); $(id).addEventListener("change",calc);
+  });
+  calc();
+})();
+</script>
+</body>
+</html>
