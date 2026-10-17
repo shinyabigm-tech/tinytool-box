@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>tinytool-box｜ブラウザで使える小さな無料ツール集</title>
+<meta name="description" content="登録不要・無料で使える小さなツール集。入力したデータはブラウザ内だけで処理され、送信されません。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#f3f5f8; --grid:#dfe5ee; --ink:#1b2433; --sub:#53607a;
+  --card:#ffffff; --line:#c5cedd; --accent:#1f3a8a;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --paper:#141a26; --grid:#1d2536; --ink:#e7ecf6; --sub:#9aa7c2;
+    --card:#1b2334; --line:#34405a; --accent:#8fb0ff;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#141a26; --grid:#1d2536; --ink:#e7ecf6; --sub:#9aa7c2;
+  --card:#1b2334; --line:#34405a; --accent:#8fb0ff;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{
+  margin:0; color:var(--ink); background-color:var(--paper);
+  background-image:
+    linear-gradient(var(--grid) 1px,transparent 1px),
+    linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:24px 24px;
+  font-family:"Zen Kaku Gothic New","Hiragino Sans","Yu Gothic",Meiryo,sans-serif;
+  line-height:1.8; font-size:16px;
+}
+main{max-width:760px; margin:0 auto; padding:40px 16px 56px}
+h1{font-size:clamp(28px,7vw,42px); line-height:1.3; margin:0 0 8px; letter-spacing:.02em}
+.lead{margin:0 0 28px; color:var(--sub)}
+h2{font-size:18px; margin:0 0 12px}
+ul{list-style:none; margin:0; padding:0; display:grid; gap:12px}
+a.tool{
+  display:block; padding:16px; color:inherit; text-decoration:none;
+  background:var(--card); border:1px solid var(--line); border-left:6px solid var(--accent); border-radius:6px;
+}
+a.tool:hover{border-color:var(--accent)}
+a.tool:focus-visible{outline:3px solid var(--accent); outline-offset:2px}
+.name{display:block; font-weight:700; font-size:18px; color:var(--accent)}
+.desc{display:block; color:var(--sub); font-size:15px}
+.note{margin-top:28px; color:var(--sub); font-size:14px}
+</style>
+</head>
+<body>
+<main>
+  <h1>tinytool-box</h1>
+  <p class="lead">登録不要・無料で使える、ブラウザ上の小さなツール集です。</p>
+
+  <section>
+    <h2>ツール一覧</h2>
+    <ul>
+      <li>
+        <a class="tool" href="/text-seiri/">
+          <span class="name">テキスト整形ツール</span>
+          <span class="desc">重複行の削除、並べ替え、空白・空行の除去をまとめて実行できます。</span>
+        </a>
+      </li>
+    </ul>
+  </section>
+
+  <p class="note">入力したデータはお使いのブラウザの中だけで処理され、サーバーには送信されません。新しいツールは順次追加します。</p>
+</main>
+</body>
+</html>
