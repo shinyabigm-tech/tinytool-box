@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-G1ZB4CKMD7"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-G1ZB4CKMD7');
+</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>日数・年齢計算ツール｜〇日後の日付・日数の差・満年齢をすぐ計算</title>
+<meta name="description" content="2つの日付の間の日数、〇日（週・か月・年）後の日付、生年月日からの満年齢と次の誕生日までの日数をすぐに計算。入力内容は送信されません。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#f3f5f8;--grid:#dfe5ee;--ink:#1b2433;--sub:#53607a;--card:#fff;--line:#c5cedd;--accent:#1f3a8a;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--paper:#141a26;--grid:#1d2536;--ink:#e7ecf6;--sub:#9aa7c2;--card:#1b2334;--line:#34405a;--accent:#8fb0ff}}
+:root[data-theme="dark"]{--paper:#141a26;--grid:#1d2536;--ink:#e7ecf6;--sub:#9aa7c2;--card:#1b2334;--line:#34405a;--accent:#8fb0ff}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;color:var(--ink);background-color:var(--paper);background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:24px 24px;font-family:"Zen Kaku Gothic New","Hiragino Sans","Yu Gothic",Meiryo,sans-serif;line-height:1.8;font-size:16px}
+main{max-width:760px;margin:0 auto;padding:20px 16px 56px}
+.back{display:inline-block;margin-bottom:10px;color:var(--accent);text-decoration:none;font-weight:700;min-height:32px}
+h1{font-size:clamp(26px,6vw,36px);line-height:1.35;margin:0 0 6px}
+.lead{margin:0 0 22px;color:var(--sub)}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:6px;padding:16px}
+.panel + .panel{margin-top:14px}
+h2{font-size:18px;margin:0 0 10px}
+label.t{display:block;font-weight:700;margin:10px 0 4px}
+input[type=date],input[type=number],select{width:100%;font:inherit;font-size:16px;padding:8px 10px;min-height:44px;color:var(--ink);background:var(--paper);border:1px solid var(--line);border-radius:4px}
+.row{display:grid;gap:0 14px;grid-template-columns:repeat(auto-fit,minmax(170px,1fr))}
+.chk label{display:flex;align-items:center;gap:8px;min-height:40px;cursor:pointer}
+.chk input{width:20px;height:20px;accent-color:var(--accent)}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.result{border-left:6px solid var(--accent)}
+.big{font-size:clamp(22px,5.5vw,30px);font-weight:700;color:var(--accent);margin:0 0 4px;overflow-wrap:anywhere}
+.small{color:var(--sub);font-size:14px;margin:4px 0 0}
+article p{margin:0 0 12px}
+article dt{font-weight:700;margin-top:8px}
+article dd{margin:0 0 6px;color:var(--sub)}
+</style>
+</head>
+<body>
+<main>
+  <a class="back" href="/">← tinytool-box</a>
+  <h1>日数・年齢計算ツール</h1>
+  <p class="lead">日付の差、〇日後の日付、満年齢を計算します。入力した内容は送信されません。</p>
+
+  <section class="panel">
+    <label class="t" for="mode">計算の種類</label>
+    <select id="mode">
+      <option value="diff">2つの日付の間の日数を求める</option>
+      <option value="add">〇日（週・か月・年）後／前の日付を求める</option>
+      <option value="age">生年月日から満年齢を求める</option>
+    </select>
+
+    <div id="m-diff">
+      <div class="row">
+        <div><label class="t" for="s1">開始日</label><input type="date" id="s1"></div>
+        <div><label class="t" for="e1">終了日</label><input type="date" id="e1"></div>
+      </div>
+      <div class="chk"><label><input type="checkbox" id="inc">開始日と終了日の両方を数える（日数に1日足す）</label></div>
+    </div>
+
+    <div id="m-add" hidden>
+      <div class="row">
+        <div><label class="t" for="s2">起点の日付</label><input type="date" id="s2"></div>
+        <div><label class="t" for="n">数</label><input type="number" id="n" min="0" max="100000" value="100" inputmode="numeric"></div>
+        <div><label class="t" for="u">単位</label>
+          <select id="u"><option value="d">日</option><option value="w">週間</option><option value="m">か月</option><option value="y">年</option></select></div>
+        <div><label class="t" for="dir">方向</label>
+          <select id="dir"><option value="1">後</option><option value="-1">前</option></select></div>
+      </div>
+    </div>
+
+    <div id="m-age" hidden>
+      <div class="row">
+        <div><label class="t" for="b">生年月日</label><input type="date" id="b"></div>
+        <div><label class="t" for="base">基準日（初期値は今日）</label><input type="date" id="base"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="panel result" aria-live="polite">
+    <p class="big" id="res">—</p>
+    <p class="small" id="sub"></p>
+  </section>
+
+  <article class="panel">
+    <h2>使い方と解説</h2>
+    <p>計算の種類を選び、日付を入力すると、結果がすぐに表示されます。日付は、スマホのカレンダー入力や、数字の直接入力で指定できます。</p>
+    <dl>
+      <dt>日数の数え方</dt>
+      <dd>初期設定では、開始日の翌日から終了日までを数えます。たとえば、1月1日から1月10日までは9日です。開始日も数えたいときは、「両方を数える」にチェックを入れてください（10日になります）。</dd>
+      <dt>か月・年の計算</dt>
+      <dd>31日の翌月などで日付が存在しない場合は、その月の末日になります。たとえば、1月31日の1か月後は、2月の末日です。</dd>
+      <dt>満年齢とは</dt>
+      <dd>生まれた日を0歳として、誕生日を迎えるたびに1歳を加える数え方です。2月29日生まれの人は、平年は3月1日に年を取るものとして計算しています。</dd>
+    </dl>
+    <p>契約の期間や法律上の期限など、重要な計算では、必ず契約書や公的機関の情報をあわせて確認してください。</p>
+  </article>
+</main>
+<script>
+(function(){
+  var $=function(i){return document.getElementById(i)}, W=["日","月","火","水","木","金","土"], DAY=864e5;
+  function parse(v){return v?new Date(v+"T00:00:00Z"):null}
+  function fmt(d){return d.getUTCFullYear()+"年"+(d.getUTCMonth()+1)+"月"+d.getUTCDate()+"日（"+W[d.getUTCDay()]+"）"}
+  function lastDay(y,m){return new Date(Date.UTC(y,m+1,0)).getUTCDate()}
+  function addMonths(d,n){
+    var t=new Date(Date.UTC(d.getUTCFullYear(),d.getUTCMonth()+n,1));
+    t.setUTCDate(Math.min(d.getUTCDate(),lastDay(t.getUTCFullYear(),t.getUTCMonth())));
+    return t;
+  }
+  function ymd(a,b){
+    var tot=(b.getUTCFullYear()-a.getUTCFullYear())*12+(b.getUTCMonth()-a.getUTCMonth());
+    if(addMonths(a,tot)>b)tot--;
+    var r=addMonths(a,tot);
+    return [Math.floor(tot/12),tot%12,Math.round((b-r)/DAY)];
+  }
+  function out(a,b){$("res").textContent=a;$("sub").textContent=b||"";}
+  function calc(){
+    var mode=$("mode").value;
+    $("m-diff").hidden=mode!=="diff"; $("m-add").hidden=mode!=="add"; $("m-age").hidden=mode!=="age";
+    if(mode==="diff"){
+      var s=parse($("s1").value), e=parse($("e1").value);
+      if(!s||!e){out("—","開始日と終了日を入力してください。");return;}
+      var note="";
+      if(e<s){var t=s;s=e;e=t;note="開始日と終了日が逆なので、入れ替えて計算しました。";}
+      var days=Math.round((e-s)/DAY)+($("inc").checked?1:0), p=ymd(s,e);
+      out(days+"日間",
+        Math.floor(days/7)+"週間と"+(days%7)+"日。期間の長さは、"+p[0]+"年"+p[1]+"か月"+p[2]+"日です。"+(note?" "+note:""));
+    }else if(mode==="add"){
+      var st=parse($("s2").value), n=parseInt($("n").value,10), dir=parseInt($("dir").value,10), u=$("u").value;
+      if(!st||isNaN(n)||n<0||n>100000){out("—","日付と、0〜100000の数を入力してください。");return;}
+      var r;
+      if(u==="d")r=new Date(st.getTime()+dir*n*DAY);
+      else if(u==="w")r=new Date(st.getTime()+dir*n*7*DAY);
+      else if(u==="m")r=addMonths(st,dir*n);
+      else r=addMonths(st,dir*n*12);
+      if(isNaN(r.getTime())||r.getUTCFullYear()<1||r.getUTCFullYear()>9999){out("—","計算できる範囲を超えました。");return;}
+      out(fmt(r),"起点：" + fmt(st) + "。暦日で " + Math.round(Math.abs(r-st)/DAY) + "日" + (dir>0?"後":"前") + "です。");
+    }else{
+      var bd=parse($("b").value), bs=parse($("base").value);
+      if(!bd||!bs){out("—","生年月日と基準日を入力してください。");return;}
+      if(bd>bs){out("—","基準日は、生年月日より後の日付にしてください。");return;}
+      var by=bd.getUTCFullYear(), bm=bd.getUTCMonth(), bday=bd.getUTCDate(), y=bs.getUTCFullYear();
+      function nb(yr){return (bm===1&&bday===29&&lastDay(yr,1)===28)?new Date(Date.UTC(yr,2,1)):new Date(Date.UTC(yr,bm,bday));}
+      var yrs=y-by; if(bs<nb(y))yrs--;
+      var anchor=nb(by+yrs), a=ymd(anchor,bs);
+      if(a[0]>0){a=[0,11,Math.round((bs-addMonths(anchor,11))/DAY)];}
+      var next=nb(by+yrs+1), left=Math.round((next-bs)/DAY);
+      out("満"+yrs+"歳",
+        "生まれてから"+yrs+"年"+a[1]+"か月"+a[2]+"日（"+Math.round((bs-bd)/DAY)+"日目）。"+
+        (bs.getTime()===anchor.getTime()&&yrs>0?"基準日が誕生日です。":"次の誕生日（"+fmt(next)+"）まで、あと"+left+"日です。"));
+    }
+  }
+  var t=new Date(), p=function(x){return (x<10?"0":"")+x}, today=t.getFullYear()+"-"+p(t.getMonth()+1)+"-"+p(t.getDate());
+  $("s1").value=today; $("e1").value=today; $("s2").value=today; $("base").value=today;
+  ["mode","s1","e1","inc","s2","n","u","dir","b","base"].forEach(function(id){
+    $(id).addEventListener("input",calc); $(id).addEventListener("change",calc);
+  });
+  calc();
+})();
+</script>
+</body>
+</html>
