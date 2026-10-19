@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-G1ZB4CKMD7"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-G1ZB4CKMD7');
+</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>画像リサイズ・圧縮ツール｜サイズ・容量（KB）を指定して軽くする</title>
+<meta name="description" content="画像のサイズを変更し、容量（KB）を指定して圧縮。JPEG・PNG・WebPに対応し、複数枚をまとめて処理できます。画像は外部に送信されません。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#f3f5f8;--grid:#dfe5ee;--ink:#1b2433;--sub:#53607a;--card:#fff;--line:#c5cedd;--accent:#1f3a8a;--accent-ink:#fff;--ok:#1d6b45;--bad:#a12626;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--paper:#141a26;--grid:#1d2536;--ink:#e7ecf6;--sub:#9aa7c2;--card:#1b2334;--line:#34405a;--accent:#8fb0ff;--accent-ink:#0f1626;--ok:#6fd0a0;--bad:#ff9b9b}}
+:root[data-theme="dark"]{--paper:#141a26;--grid:#1d2536;--ink:#e7ecf6;--sub:#9aa7c2;--card:#1b2334;--line:#34405a;--accent:#8fb0ff;--accent-ink:#0f1626;--ok:#6fd0a0;--bad:#ff9b9b}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;color:var(--ink);background-color:var(--paper);background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:24px 24px;font-family:"Zen Kaku Gothic New","Hiragino Sans","Yu Gothic",Meiryo,sans-serif;line-height:1.8;font-size:16px}
+main{max-width:760px;margin:0 auto;padding:20px 16px 56px}
+.back{display:inline-block;margin-bottom:10px;color:var(--accent);text-decoration:none;font-weight:700;min-height:32px}
+h1{font-size:clamp(26px,6vw,36px);line-height:1.35;margin:0 0 6px}
+.lead{margin:0 0 22px;color:var(--sub)}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:6px;padding:16px}
+.panel + .panel{margin-top:14px}
+h2{font-size:18px;margin:0 0 10px}
+label.t{display:block;font-weight:700;margin:10px 0 4px}
+input[type=text],input[type=password],input[type=number],input[type=file],select,textarea{width:100%;font:inherit;font-size:16px;padding:8px 10px;min-height:44px;color:var(--ink);background:var(--paper);border:1px solid var(--line);border-radius:4px}
+textarea{min-height:150px;resize:vertical;line-height:1.6}
+input[type=range]{width:100%;accent-color:var(--accent);min-height:32px}
+input[type=color]{width:56px;height:44px;padding:2px;border:1px solid var(--line);border-radius:4px;background:var(--paper)}
+.row{display:grid;gap:0 14px;grid-template-columns:repeat(auto-fit,minmax(170px,1fr))}
+.chk label,.rad label{display:flex;align-items:center;gap:8px;min-height:40px;cursor:pointer}
+.chk input,.rad input{width:20px;height:20px;accent-color:var(--accent)}
+button,.btn{font:inherit;font-weight:700;min-height:44px;padding:0 18px;cursor:pointer;border-radius:4px;border:1px solid var(--accent);background:var(--accent);color:var(--accent-ink)}
+button.ghost{background:transparent;color:var(--accent)}
+button:disabled{opacity:.5;cursor:default}
+.bar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:12px}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.small{color:var(--sub);font-size:14px;margin:6px 0 0}
+.msg{min-height:1.8em;font-weight:700}
+.msg.ok{color:var(--ok)}.msg.bad{color:var(--bad)}
+.list{display:grid;gap:8px;margin:10px 0 0;padding:0;list-style:none}
+.item{display:flex;gap:10px;align-items:center;justify-content:space-between;padding:8px 10px;border:1px solid var(--line);border-radius:4px;background:var(--paper)}
+.item .nm{overflow-wrap:anywhere;flex:1;min-width:0}
+.item .sz{color:var(--sub);font-size:14px;white-space:nowrap}
+.item button{min-height:36px;padding:0 12px}
+.thumb{width:56px;height:56px;object-fit:contain;border:1px solid var(--line);border-radius:4px;background:#fff}
+.checker{background-color:#fff;background-image:linear-gradient(45deg,#d9d9d9 25%,transparent 25%,transparent 75%,#d9d9d9 75%),linear-gradient(45deg,#d9d9d9 25%,transparent 25%,transparent 75%,#d9d9d9 75%);background-size:16px 16px;background-position:0 0,8px 8px}
+article p{margin:0 0 12px}
+article dt{font-weight:700;margin-top:8px}
+article dd{margin:0 0 6px;color:var(--sub)}
+</style>
+</head>
+<body>
+<main>
+<a class="back" href="/">← tinytool-box</a>
+<h1>画像リサイズ・圧縮ツール</h1>
+<p class="lead">画像のサイズや容量を、目標に合わせて小さくします。画像は端末の外に送信されません。</p>
+<section class="panel">
+<label class="t" for="fin">画像を選ぶ（複数選択できます）</label>
+<input type="file" id="fin" accept="image/*" multiple>
+<div class="row">
+<div><label class="t" for="rm">リサイズの方法</label>
+<select id="rm"><option value="none">変更しない（容量だけ軽くする）</option><option value="width">幅を指定</option><option value="long">長辺を指定</option><option value="pct">倍率で指定</option></select></div>
+<div><label class="t" for="rv">サイズの値 <span class="small" id="ru"></span></label><input type="number" id="rv" min="1" max="20000" inputmode="numeric" disabled></div>
+</div>
+<div class="row">
+<div><label class="t" for="fm">保存形式</label>
+<select id="fm"><option value="orig">元の形式</option><option value="jpeg">JPEG（写真向き）</option><option value="webp">WebP（小さくなりやすい）</option><option value="png">PNG（透明を保てる）</option></select></div>
+<div><label class="t" for="tk">目標の容量（KB）<span class="small">任意</span></label><input type="number" id="tk" min="5" max="50000" inputmode="numeric" placeholder="例：500"></div>
+</div>
+<label class="t" for="q">画質：<span id="qv">80</span></label>
+<input type="range" id="q" min="10" max="100" value="80">
+<p class="small">目標の容量を入れると、その容量以下になるよう、画質とサイズを自動で調整します（PNGは、サイズだけを調整します）。</p>
+<div class="bar"><button id="go" type="button">変換する</button><button id="all" class="ghost" type="button" hidden>すべて保存</button></div>
+<p class="msg" id="msg" role="status"></p>
+<ul class="list" id="res"></ul>
+</section>
+<article class="panel">
+<h2>使い方と解説</h2>
+<p>画像を選んで、リサイズの方法と保存形式を決め、「変換する」を押します。画像は端末の中だけで処理され、外部には送信されません。</p>
+<dl>
+<dt>容量（KB）を指定して軽くする</dt>
+<dd>「500KB以下にしたい」といった、アップロード先の制限に合わせたいときは、目標の容量を入れてください。画質を少しずつ下げて、足りなければ、サイズも縮小して、容量以下に収まる、いちばん画質の高い設定を探します。</dd>
+<dt>形式の選び方</dt>
+<dd>写真は、JPEG か WebP が軽くなります。ロゴや図、背景が透明な画像は、PNG が向いています。ブラウザによっては、WebP で保存できないため、その場合は JPEG になります。</dd>
+<dt>位置情報などが消えます</dt>
+<dd>変換すると、撮影場所などのメタデータ（EXIF）は、引き継がれません。写真をそのまま公開したくないときにも使えます。</dd>
+<dt>注意</dt>
+<dd>画質を下げた画像は、元に戻せません。元の画像は、必ず別に残してください。一度に処理できるのは、30枚までです。</dd>
+</dl>
+</article>
+</main>
+<script>
+(function(){
+  var $=function(i){return document.getElementById(i)};
+  function targetDims(w,h,mode,val){
+    var nw=w,nh=h;
+    if(mode==="width"&&val>0){nw=val;nh=Math.round(h*val/w);}
+    else if(mode==="long"&&val>0){var l=Math.max(w,h);nw=Math.round(w*val/l);nh=Math.round(h*val/l);}
+    else if(mode==="pct"&&val>0){nw=Math.round(w*val/100);nh=Math.round(h*val/100);}
+    nw=Math.max(1,nw);nh=Math.max(1,nh);
+    var area=nw*nh, MAX=16000000;
+    if(area>MAX){var k=Math.sqrt(MAX/area);nw=Math.max(1,Math.floor(nw*k));nh=Math.max(1,Math.floor(nh*k));}
+    return [nw,nh];
+  }
+  function toBlob(cv,mime,q){return new Promise(function(res){cv.toBlob(function(b){res(b)},mime,q)})}
+  function render(bmp,nw,nh,mime){
+    var cv=document.createElement("canvas");cv.width=nw;cv.height=nh;
+    var c=cv.getContext("2d");
+    if(mime==="image/jpeg"){c.fillStyle="#fff";c.fillRect(0,0,nw,nh);}
+    c.imageSmoothingQuality="high";c.drawImage(bmp,0,0,nw,nh);
+    return cv;
+  }
+  async function encodeFit(bmp,w,h,mode,val,mime,q,targetKB){
+    var d=targetDims(w,h,mode,val), nw=d[0], nh=d[1], tgt=targetKB>0?targetKB*1024:0, lossy=(mime!=="image/png");
+    var cv=render(bmp,nw,nh,mime), b=await toBlob(cv,mime,lossy?q:undefined);
+    if(!tgt||b.size<=tgt)return {blob:b,w:nw,h:nh,note:""};
+    var scale=1;
+    for(var step=0;step<14;step++){
+      if(lossy){
+        var lo=0.15, hi=q, minB=await toBlob(cv,mime,lo);
+        if(minB.size<=tgt){
+          var found={blob:minB,q:lo};
+          for(var it=0;it<7;it++){var mid=(lo+hi)/2, bb=await toBlob(cv,mime,mid);if(bb.size<=tgt){found={blob:bb,q:mid};lo=mid;}else hi=mid;}
+          return {blob:found.blob,w:cv.width,h:cv.height,note:scale<1?"画質を下げ、サイズも縮小しました":"画質を調整しました"};
+        }
+      }
+      scale*=0.85;
+      var w2=Math.max(1,Math.round(nw*scale)), h2=Math.max(1,Math.round(nh*scale));
+      if(w2<16||h2<16)break;
+      cv=render(bmp,w2,h2,mime);
+      if(!lossy){var pb=await toBlob(cv,mime);if(pb.size<=tgt)return {blob:pb,w:w2,h:h2,note:"サイズを縮小しました"};}
+    }
+    var fb=await toBlob(cv,mime,lossy?0.15:undefined);
+    return {blob:fb,w:cv.width,h:cv.height,note:"目標の容量に届きませんでした"};
+  }
+  function fmt(b){return b<1024?b+" B":b<1048576?(b/1024).toFixed(1)+" KB":(b/1048576).toFixed(2)+" MB";}
+  function dl(blob,name){var u=URL.createObjectURL(blob),a=document.createElement("a");a.href=u;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(u)},8000);}
+  function msg(t,c){var m=$("msg");m.textContent=t;m.className="msg"+(c?" "+c:"");}
+  var EXT={"image/jpeg":".jpg","image/png":".png","image/webp":".webp"};
+  var outs=[], urls=[];
+  async function openBmp(f){
+    try{return await createImageBitmap(f,{imageOrientation:"from-image"});}catch(e){return await createImageBitmap(f);}
+  }
+  async function webpOk(){
+    var cv=document.createElement("canvas");cv.width=cv.height=2;
+    var b=await toBlob(cv,"image/webp",0.8);return !!b&&b.type==="image/webp";
+  }
+  $("go").addEventListener("click",async function(){
+    var fs=$("fin").files;
+    if(!fs||!fs.length){msg("画像を選んでください。","bad");return;}
+    if(fs.length>30){msg("一度に処理できるのは30枚までです。","bad");return;}
+    var mode=$("rm").value, val=parseFloat($("rv").value), q=parseInt($("q").value,10)/100, tk=parseFloat($("tk").value)||0, fm=$("fm").value;
+    if(mode!=="none"&&!(val>0)){msg("サイズの値を入力してください。","bad");return;}
+    this.disabled=true;$("all").hidden=true;
+    urls.forEach(function(u){URL.revokeObjectURL(u)});urls=[];outs=[];$("res").textContent="";
+    var canWebp=await webpOk(), notes=[];
+    for(var i=0;i<fs.length;i++){
+      var f=fs[i];msg((i+1)+" / "+fs.length+" 枚を処理しています…");
+      try{
+        if(f.size>60*1048576)throw new Error("ファイルが大きすぎます（60MBまで）");
+        var bmp=await openBmp(f), mime;
+        if(fm==="orig")mime=(f.type==="image/png"||f.type==="image/webp"||f.type==="image/jpeg")?f.type:"image/jpeg";
+        else mime={jpeg:"image/jpeg",webp:"image/webp",png:"image/png"}[fm];
+        if(mime==="image/webp"&&!canWebp){mime="image/jpeg";if(notes.indexOf("webp")<0)notes.push("webp");}
+        var r=await encodeFit(bmp,bmp.width,bmp.height,mode,val,mime,q,tk);
+        if(bmp.close)bmp.close();
+        var base=f.name.replace(/\.[^.]+$/,"")+"-resized"+EXT[mime], u=URL.createObjectURL(r.blob);
+        urls.push(u);outs.push({blob:r.blob,name:base});
+        var li=document.createElement("li");li.className="item";
+        var im=document.createElement("img");im.className="thumb";im.src=u;im.alt="";
+        var nm=document.createElement("span");nm.className="nm";
+        var diff=Math.round((1-r.blob.size/f.size)*100);
+        nm.textContent=base+"\n"+fmt(f.size)+" → "+fmt(r.blob.size)+"（"+(diff>=0?"-"+diff:"+"+(-diff))+"%）／"+r.w+"×"+r.h+"px"+(r.note?"／"+r.note:"")+(r.blob.size>f.size?"／元より大きくなりました":"");
+        nm.style.whiteSpace="pre-line";
+        var bt=document.createElement("button");bt.type="button";bt.textContent="保存";
+        (function(bl,n){bt.addEventListener("click",function(){dl(bl,n)});})(r.blob,base);
+        li.appendChild(im);li.appendChild(nm);li.appendChild(bt);$("res").appendChild(li);
+      }catch(e){
+        var li2=document.createElement("li");li2.className="item";
+        var s=document.createElement("span");s.className="nm";s.textContent=f.name+"：処理できませんでした（"+(e.message||"読み込めない形式です")+"）";
+        li2.appendChild(s);$("res").appendChild(li2);
+      }
+    }
+    msg(outs.length?(outs.length+"枚を変換しました。"+(notes.length?"お使いのブラウザは WebP で保存できないため、JPEG にしました。":"")):"変換できた画像がありません。",outs.length?"ok":"bad");
+    $("all").hidden=outs.length<2;this.disabled=false;
+  });
+  $("all").addEventListener("click",async function(){
+    this.disabled=true;
+    for(var i=0;i<outs.length;i++){dl(outs[i].blob,outs[i].name);await new Promise(function(r){setTimeout(r,400)});}
+    this.disabled=false;
+  });
+  $("q").addEventListener("input",function(){$("qv").textContent=this.value;});
+  $("rm").addEventListener("change",function(){
+    var m=this.value;$("rv").disabled=(m==="none");
+    $("ru").textContent=m==="width"?"（px）":m==="long"?"（px）":m==="pct"?"（%）":"";
+    if(m==="none")$("rv").value="";
+  });
+})();
+</script>
+</body>
+</html>
