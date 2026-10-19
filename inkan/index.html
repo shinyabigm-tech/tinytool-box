@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-G1ZB4CKMD7"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-G1ZB4CKMD7');
+</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>電子印鑑作成ツール｜無料で認印・角印・日付印を透明PNGで作成</title>
+<meta name="description" content="名前を入力するだけで、認印（丸印）・角印・日付印の電子印鑑を無料で作成。透明PNGで保存でき、PDFやWordに貼り付けられます。入力内容は送信されません。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Antique&family=Yuji+Mai&family=Yuji+Syuku&family=Zen+Maru+Gothic:wght@500&family=Noto+Serif+JP:wght@700&family=Noto+Sans+JP:wght@700&family=Zen+Kaku+Gothic+New:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#f3f5f8;--grid:#dfe5ee;--ink:#1b2433;--sub:#53607a;--card:#fff;--line:#c5cedd;--accent:#1f3a8a;--accent-ink:#fff;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:、dark){:root:not([data-theme="light"]){--paper:#141a26;--grid:#1d2536;--ink:#e7ecf6;--sub:#9aa7c2;--card:#1b2334;--line:#34405a;--accent:#8fb0ff;--accent-ink:#0f1626}}
+:root[data-theme="dark"]{--paper:#141a26;--grid:#1d2536;--ink:#e7ecf6;--sub:#9aa7c2;--card:#1b2334;--line:#34405a;--accent:#8fb0ff;--accent-ink:#0f1626}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;color:var(--ink);background-color:var(--paper);background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:24px 24px;font-family:"Zen Kaku Gothic New","Hiragino Sans","Yu Gothic",Meiryo,sans-serif;line-height:1.8;font-size:16px}
+main{max-width:760px;margin:0 auto;padding:20px 16px 56px}
+.back{display:inline-block;margin-bottom:10px;color:var(--accent);text-decoration:none;font-weight:700;min-height:32px}
+h1{font-size:clamp(26px,6vw,36px);line-height:1.35;margin:0 0 6px}
+.lead{margin:0 0 22px;color:var(--sub)}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:6px;padding:16px}
+.panel + .panel{margin-top:14px}
+h2{font-size:18px;margin:0 0 10px}
+label.t{display:block;font-weight:700;margin:10px 0 4px}
+input[type=text],select{width:100%;font:inherit;font-size:16px;padding:8px 10px;min-height:44px;color:var(--ink);background:var(--paper);border:1px solid var(--line);border-radius:4px}
+input[type=range]{width:100%;accent-color:var(--accent);min-height:32px}
+.row{display:grid;gap:0 14px;grid-template-columns:repeat(auto-fit,minmax(170px,1fr))}
+.chk label{display:flex;align-items:center;gap:8px;min-height:40px;cursor:pointer}
+.chk input{width:20px;height:20px;accent-color:var(--accent)}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.pv{display:flex;justify-content:center;padding:14px;border:1px dashed var(--line);border-radius:6px;background:#fff}
+.pv img{width:min(300px,80vw);height:auto;display:block}
+button{font:inherit;font-weight:700;min-height:46px;padding:0 22px;cursor:pointer;border-radius:4px;border:1px solid var(--accent);background:var(--accent);color:var(--accent-ink);margin-top:12px}
+.small{color:var(--sub);font-size:14px;margin:6px 0 0}
+#dateRow[hidden]{display:none}
+article p{margin:0 0 12px}
+article dt{font-weight:700;margin-top:8px}
+article dd{margin:0 0 6px;color:var(--sub)}
+</style>
+</head>
+<body>
+<main>
+  <a class="back" href="/">← tinytool-box</a>
+  <h1>電子印鑑作成ツール</h1>
+  <p class="lead">名前を入力するだけで、認印（丸印）・角印・日付印の画像を作成できます。入力した内容は送信されません。</p>
+
+  <section class="panel">
+    <div class="row">
+      <div><label class="t" for="kind">印鑑の種類</label>
+        <select id="kind"><option value="maru">丸印（認印）</option><option value="kaku">角印</option><option value="hizuke">日付印</option></select></div>
+      <div><label class="t" for="name">名前（6文字まで）</label><input type="text" id="name" maxlength="6" value="山田" autocomplete="off"></div>
+      <div><label class="t" for="font">書体</label>
+        <select id="font"><option value="antique">古印体風</option><option value="gyosho">行書体風</option><option value="kaisho">楷書体</option><option value="reisho">隷書体風</option><option value="tensho">篆書体風（近似）</option><option value="serif">明朝体</option><option value="sans">ゴシック体</option></select></div>
+      <div id="dirRow"><label class="t" for="dir">文字の向き</label>
+        <select id="dir"><option value="v">縦書き</option><option value="h">横書き</option></select></div>
+      <div><label class="t" for="color">色</label>
+        <select id="color"><option value="#d2402a">朱色</option><option value="#1a1a1a">黒</option><option value="#1f3a8a">藍色</option></select></div>
+    </div>
+    <div class="row" id="dateRow" hidden>
+      <div><label class="t" for="date">日付（自由に書き換えられます）</label><input type="text" id="date" autocomplete="off" maxlength="12"></div>
+      <div><label class="t" for="sub">下段の文字（任意）</label><input type="text" id="sub" maxlength="6" placeholder="例：営業部" autocomplete="off"></div>
+    </div>
+    <div class="row">
+      <div><label class="t" for="lw">枠線の太さ</label><input type="range" id="lw" min="4" max="14" value="7"></div>
+      <div><label class="t" for="tw">文字の太さ</label><input type="range" id="tw" min="0" max="30" value="10"></div>
+      <div><label class="t" for="rough">かすれ・にじみ</label><input type="range" id="rough" min="0" max="100" value="12"></div>
+    </div>
+    <div class="chk"><label><input type="checkbox" id="white">背景を白にする（オフなら透明）</label></div>
+  </section>
+
+  <section class="panel">
+    <h2>プレビュー</h2>
+    <div class="pv"><img id="pv" alt="作成した電子印鑑のプレビュー" width="300" height="300"></div>
+    <button id="dl" type="button">PNG画像として保存</button>
+    <p class="small" id="msg">保存されないときは、プレビューの画像を長押しして保存してください。</p>
+  </section>
+
+  <article class="panel">
+    <h2>使い方と注意</h2>
+    <p>種類と名前を選ぶと、プレビューがすぐに更新されます。「PNG画像として保存」で、背景が透明な画像（600×600ピクセル）を保存できます。PDF や Word、Excel の書類に、画像として貼り付けて使えます。</p>
+    <dl>
+      <dt>丸印・角印・日付印の違い</dt>
+      <dd>丸印は、個人の認印として、日常の書類に使われる形です。角印は、会社名などを入れる四角い印です。日付印は、名前と日付を1つにした印で、受領や確認の記録に使われます。</dd>
+      <dt>透明PNGとは</dt>
+      <dd>背景が透けた画像です。書類の上に重ねても、文字が隠れません。背景を白にするチェックを入れると、白い背景の画像になります。</dd>
+      <dt>書体と太さ、かすれ・にじみ</dt>
+      <dd>古印体風・行書体風・楷書体・隷書体風などから、書体を選べます。篆書体風は、均一な太さの線で近づけた近似で、本物の篆書体や印相体とは異なります。文字の太さを上げると、印影が太くなります。かすれ・にじみを上げると、輪郭が少しにじんだ、押印したような質感になります（0にすると、くっきりした印になります）。</dd>
+    </dl>
+    <p><strong>ご利用にあたって：</strong>この画像は、法的な効力を保証する印鑑ではありません。実印や銀行印の代わりには使えません。契約書など重要な書類に使う場合は、提出先の規定をご確認ください。他人や団体の名前を無断で使うことは、おやめください。</p>
+  </article>
+</main>
+<script>
+(function(){
+  var $=function(i){return document.getElementById(i)};
+  var S=300, K=2, W=S*K;
+  var SERIF='"Hiragino Mincho ProN","Yu Mincho","Noto Serif CJK JP",serif';
+  var FONTS={
+    antique:{fam:'"Zen Antique",'+SERIF,w:400,sx:1,sy:1,ld:'400 40px "Zen Antique"'},
+    gyosho:{fam:'"Yuji Mai",'+SERIF,w:400,sx:1,sy:1,ld:'400 40px "Yuji Mai"'},
+    kaisho:{fam:'"Yuji Syuku",'+SERIF,w:400,sx:1,sy:1,ld:'400 40px "Yuji Syuku"'},
+    reisho:{fam:'"Zen Antique",'+SERIF,w:400,sx:1.14,sy:0.88,ld:'400 40px "Zen Antique"'},
+    tensho:{fam:'"Zen Maru Gothic","Hiragino Maru Gothic ProN","Yu Gothic",sans-serif',w:500,sx:0.92,sy:1.06,ld:'500 40px "Zen Maru Gothic"'},
+    serif:{fam:'"Noto Serif JP",'+SERIF,w:700,sx:1,sy:1,ld:'700 40px "Noto Serif JP"'},
+    sans:{fam:'"Noto Sans JP","Hiragino Kaku Gothic ProN","Yu Gothic","Noto Sans CJK JP",sans-serif',w:700,sx:1,sy:1,ld:'700 40px "Noto Sans JP"'}
+  };
+  function rng(seed){return function(){seed|=0;seed=seed+0x6D2B79F5|0;var t=Math.imul(seed^seed>>>15,1|seed);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+  function groups(ch){
+    if(ch.length<=3)return [ch];
+    var a=Math.ceil(ch.length/2);
+    return [ch.slice(0,a),ch.slice(a)];
+  }
+  function place(ch,vert,L){
+    var g=groups(ch), cnt=g.length, mx=Math.max.apply(null,g.map(function(x){return x.length})), out=[], cw, chh, size;
+    if(vert){cw=L/cnt;chh=L/mx;}else{cw=L/mx;chh=L/cnt;}
+    size=Math.min(Math.min(cw,chh)*0.96,L*0.78);
+    g.forEach(function(row,gi){
+      row.forEach(function(c,k){
+        var x,y;
+        if(vert){
+          x=cnt===1?0:(gi===0?cw/2:-cw/2);
+          y=-(row.length*chh)/2+chh*(k+0.5);
+        }else{
+          y=cnt===1?0:(gi===0?-chh/2:chh/2);
+          x=-(row.length*cw)/2+cw*(k+0.5);
+        }
+        out.push({c:c,x:x,y:y,s:size});
+      });
+    });
+    return out;
+  }
+  function boxBlur(src,w,h,r){
+    var tmp=new Float32Array(w*h), dst=new Float32Array(w*h), k=2*r+1, x, y, s, a, b;
+    for(y=0;y<h;y++){
+      s=0;
+      for(x=-r;x<=r;x++)s+=src[y*w+Math.min(w-1,Math.max(0,x))];
+      for(x=0;x<w;x++){
+        tmp[y*w+x]=s/k;
+        a=Math.min(w-1,x+r+1); b=Math.max(0,x-r);
+        s+=src[y*w+a]-src[y*w+b];
+      }
+    }
+    for(x=0;x<w;x++){
+      s=0;
+      for(y=-r;y<=r;y++)s+=tmp[Math.min(h-1,Math.max(0,y))*w+x];
+      for(y=0;y<h;y++){
+        dst[y*w+x]=s/k;
+        a=Math.min(h-1,y+r+1); b=Math.max(0,y-r);
+        s+=tmp[a*w+x]-tmp[b*w+x];
+      }
+    }
+    return dst;
+  }
+  function inkSpread(c,lv,rgb){
+    var id=c.getImageData(0,0,W,W), d=id.data, n=W*W, a=new Float32Array(n), i;
+    for(i=0;i<n;i++)a[i]=d[i*4+3];
+    var b=boxBlur(a,W,W,2), rnd=rng(777), amp=lv/100*90;
+    for(i=0;i<n;i++){
+      var v=(b[i]+(rnd()-0.5)*amp-118)*3+127.5;
+      v=v<0?0:(v>255?255:v);
+      d[i*4]=rgb[0]; d[i*4+1]=rgb[1]; d[i*4+2]=rgb[2]; d[i*4+3]=v;
+    }
+    c.putImageData(id,0,0);
+  }
+  function draw(){
+    var kind=$("kind").value, ch=Array.from($("name").value.trim()).slice(0,6), vert=$("dir").value==="v";
+    var col=$("color").value, lw=parseInt($("lw").value,10), F=FONTS[$("font").value], tw=parseInt($("tw").value,10)/10;
+    $("dirRow").hidden=kind==="hizuke"; $("dateRow").hidden=kind!=="hizuke";
+    var off=document.createElement("canvas"); off.width=off.height=W;
+    var c=off.getContext("2d"); c.scale(K,K); c.translate(S/2,S/2);
+    c.strokeStyle=col; c.fillStyle=col; c.lineJoin="round"; c.lineCap="round"; c.textAlign="center"; c.textBaseline="alphabetic";
+    var R=S/2-lw/2-2;
+    var limit=R-lw/2-3;
+    function fitC(x,y,w,h){return Math.hypot(Math.abs(x)+w,Math.abs(y)+h)>limit}
+    function fitS(x,y,w,h){return Math.max(Math.abs(x)+w,Math.abs(y)+h)>limit}
+    function metr(s,size){
+      c.font=F.w+" "+size+"px "+F.fam;
+      var m=c.measureText(s);
+      if(m.actualBoundingBoxAscent===undefined)return {hw:size*0.5,hh:size*0.5,ox:0,oy:-size*0.36};
+      var pad=size*tw*0.012;
+      return {hw:(m.actualBoundingBoxLeft+m.actualBoundingBoxRight)/2+pad, hh:(m.actualBoundingBoxAscent+m.actualBoundingBoxDescent)/2+pad,
+              ox:(m.actualBoundingBoxRight-m.actualBoundingBoxLeft)/2, oy:(m.actualBoundingBoxDescent-m.actualBoundingBoxAscent)/2};
+    }
+    function fitK(x,y,mt,fit){
+      var k=1;
+      for(var i=0;i<24&&fit(x,y,mt.hw*F.sx*k,mt.hh*F.sy*k);i++)k*=0.96;
+      return k;
+    }
+    function put(s,x,y,size,mt,k){
+      c.save(); c.translate(x,y); c.scale(F.sx*k,F.sy*k);
+      c.font=F.w+" "+size+"px "+F.fam; c.fillText(s,-mt.ox,-mt.oy);
+      if(tw>0){c.lineWidth=size*tw*0.024;c.strokeText(s,-mt.ox,-mt.oy);}
+      c.restore();
+    }
+    function txt(s,x,y,size){var mt=metr(s,size);put(s,x,y,size,mt,fitK(x,y,mt,fitC));}
+    c.lineWidth=lw;
+    if(kind==="kaku"){
+      var r=14; c.beginPath();
+      c.moveTo(-R+r,-R);c.lineTo(R-r,-R);c.quadraticCurveTo(R,-R,R,-R+r);c.lineTo(R,R-r);c.quadraticCurveTo(R,R,R-r,R);
+      c.lineTo(-R+r,R);c.quadraticCurveTo(-R,R,-R,R-r);c.lineTo(-R,-R+r);c.quadraticCurveTo(-R,-R,-R+r,-R);c.closePath();c.stroke();
+    }else{c.beginPath();c.arc(0,0,R,0,Math.PI*2);c.stroke();}
+    if(kind==="hizuke"){
+      var nm=ch.join(""), dt=$("date").value.trim(), sb=Array.from($("sub").value.trim()).join(""), y1=-0.24*R, y2=0.24*R;
+      c.lineWidth=Math.max(2,lw*0.6);
+      [y1,y2].forEach(function(y){var hw=Math.sqrt(R*R-y*y);c.beginPath();c.moveTo(-hw,y);c.lineTo(hw,y);c.stroke();});
+      if(nm)txt(nm,0,-0.6*R,Math.min(R*0.42,R*1.4/Math.max(nm.length,1)));
+      if(dt)txt(dt,0,0,Math.min(R*0.3,R*1.7/(Math.max(dt.length,1)*0.62)));
+      if(sb)txt(sb,0,0.6*R,Math.min(R*0.34,R*1.4/Math.max(sb.length,1)));
+    }else if(ch.length){
+      var nn=ch.length, L=kind==="kaku"?R*1.85:(nn>=4?R*1.5:(nn===3?R*1.8:(nn===2?R*1.7:R*1.5)));
+      var fit=kind==="kaku"?fitS:fitC, ps=place(ch,vert,L), kk=1;
+      ps.forEach(function(q){q.mt=metr(q.c,q.s);kk=Math.min(kk,fitK(q.x,q.y,q.mt,fit));});
+      ps.forEach(function(q){put(q.c,q.x,q.y,q.s,q.mt,kk);});
+    }
+    var lv=parseInt($("rough").value,10);
+    if(lv>0){
+      inkSpread(c,lv,[parseInt(col.slice(1,3),16),parseInt(col.slice(3,5),16),parseInt(col.slice(5,7),16)]);
+      var rnd=rng(20261018), n=lv*3;
+      c.globalCompositeOperation="destination-out";
+      for(var i=0;i<n;i++){
+        var x=(rnd()-0.5)*S, y=(rnd()-0.5)*S, rr=0.4+rnd()*1.3;
+        c.beginPath();c.arc(x,y,rr,0,Math.PI*2);c.fill();
+      }
+      c.globalCompositeOperation="source-over";
+    }
+    var cv=document.createElement("canvas"); cv.width=cv.height=W;
+    var g=cv.getContext("2d");
+    if($("white").checked){g.fillStyle="#fff";g.fillRect(0,0,W,W);}
+    g.drawImage(off,0,0);
+    $("pv").src=cv.toDataURL("image/png");
+    draw.cv=cv;
+  }
+  function withFonts(){
+    var t=$("name").value+$("sub").value+$("date").value;
+    draw();
+    if(document.fonts&&document.fonts.load){document.fonts.load(FONTS[$("font").value].ld,t||"印").then(draw,draw);}
+  }
+  var tm;
+  function later(){clearTimeout(tm);tm=setTimeout(withFonts,120)}
+  ["name","date","sub"].forEach(function(id){$(id).addEventListener("input",later)});
+  ["kind","font","dir","color","lw","tw","rough","white"].forEach(function(id){$(id).addEventListener("input",later);$(id).addEventListener("change",withFonts)});
+  $("dl").addEventListener("click",function(){
+    if(!draw.cv){return;}
+    draw.cv.toBlob(function(b){
+      if(!b){$("msg").textContent="保存できませんでした。画像を長押しして保存してください。";return;}
+      var u=URL.createObjectURL(b), a=document.createElement("a");
+      a.href=u; a.download="denshi-inkan.png"; document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(function(){URL.revokeObjectURL(u)},4000);
+      $("msg").textContent="画像を保存しました。保存されないときは、プレビューの画像を長押ししてください。";
+    },"image/png");
+  });
+  var t=new Date(), p=function(x){return (x<10?"0":"")+x};
+  $("date").value=t.getFullYear()+"."+p(t.getMonth()+1)+"."+p(t.getDate());
+  withFonts();
+})();
+</script>
+</body>
+</html>
