@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-G1ZB4CKMD7"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-G1ZB4CKMD7');
+</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ZIP圧縮・解凍ツール｜ブラウザだけでZIPを作成・展開（日本語ファイル名の文字化け対応）</title>
+<meta name="description" content="複数のファイルをZIPにまとめる、ZIPの中身を確認して取り出す。日本語のファイル名の文字化けにも対応。ファイルは外部に送信されません。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#f3f5f8;--grid:#dfe5ee;--ink:#1b2433;--sub:#53607a;--card:#fff;--line:#c5cedd;--accent:#1f3a8a;--accent-ink:#fff;--ok:#1d6b45;--bad:#a12626;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--paper:#141a26;--grid:#1d2536;--ink:#e7ecf6;--sub:#9aa7c2;--card:#1b2334;--line:#34405a;--accent:#8fb0ff;--accent-ink:#0f1626;--ok:#6fd0a0;--bad:#ff9b9b}}
+:root[data-theme="dark"]{--paper:#141a26;--grid:#1d2536;--ink:#e7ecf6;--sub:#9aa7c2;--card:#1b2334;--line:#34405a;--accent:#8fb0ff;--accent-ink:#0f1626;--ok:#6fd0a0;--bad:#ff9b9b}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;color:var(--ink);background-color:var(--paper);background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:24px 24px;font-family:"Zen Kaku Gothic New","Hiragino Sans","Yu Gothic",Meiryo,sans-serif;line-height:1.8;font-size:16px}
+main{max-width:760px;margin:0 auto;padding:20px 16px 56px}
+.back{display:inline-block;margin-bottom:10px;color:var(--accent);text-decoration:none;font-weight:700;min-height:32px}
+h1{font-size:clamp(26px,6vw,36px);line-height:1.35;margin:0 0 6px}
+.lead{margin:0 0 22px;color:var(--sub)}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:6px;padding:16px}
+.panel + .panel{margin-top:14px}
+h2{font-size:18px;margin:0 0 10px}
+label.t{display:block;font-weight:700;margin:10px 0 4px}
+input[type=text],input[type=password],input[type=number],input[type=file],select,textarea{width:100%;font:inherit;font-size:16px;padding:8px 10px;min-height:44px;color:var(--ink);background:var(--paper);border:1px solid var(--line);border-radius:4px}
+textarea{min-height:150px;resize:vertical;line-height:1.6}
+input[type=range]{width:100%;accent-color:var(--accent);min-height:32px}
+input[type=color]{width:56px;height:44px;padding:2px;border:1px solid var(--line);border-radius:4px;background:var(--paper)}
+.row{display:grid;gap:0 14px;grid-template-columns:repeat(auto-fit,minmax(170px,1fr))}
+.chk label,.rad label{display:flex;align-items:center;gap:8px;min-height:40px;cursor:pointer}
+.chk input,.rad input{width:20px;height:20px;accent-color:var(--accent)}
+button,.btn{font:inherit;font-weight:700;min-height:44px;padding:0 18px;cursor:pointer;border-radius:4px;border:1px solid var(--accent);background:var(--accent);color:var(--accent-ink)}
+button.ghost{background:transparent;color:var(--accent)}
+button:disabled{opacity:.5;cursor:default}
+.bar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:12px}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.small{color:var(--sub);font-size:14px;margin:6px 0 0}
+.msg{min-height:1.8em;font-weight:700}
+.msg.ok{color:var(--ok)}.msg.bad{color:var(--bad)}
+.list{display:grid;gap:8px;margin:10px 0 0;padding:0;list-style:none}
+.item{display:flex;gap:10px;align-items:center;justify-content:space-between;padding:8px 10px;border:1px solid var(--line);border-radius:4px;background:var(--paper)}
+.item .nm{overflow-wrap:anywhere;flex:1;min-width:0}
+.item .sz{color:var(--sub);font-size:14px;white-space:nowrap}
+.item button{min-height:36px;padding:0 12px}
+.thumb{width:56px;height:56px;object-fit:contain;border:1px solid var(--line);border-radius:4px;background:#fff}
+.checker{background-color:#fff;background-image:linear-gradient(45deg,#d9d9d9 25%,transparent 25%,transparent 75%,#d9d9d9 75%),linear-gradient(45deg,#d9d9d9 25%,transparent 25%,transparent 75%,#d9d9d9 75%);background-size:16px 16px;background-position:0 0,8px 8px}
+article p{margin:0 0 12px}
+article dt{font-weight:700;margin-top:8px}
+article dd{margin:0 0 6px;color:var(--sub)}
+</style>
+</head>
+<body>
+<main>
+<a class="back" href="/">← tinytool-box</a>
+<h1>ZIP圧縮・解凍ツール</h1>
+<p class="lead">ファイルをZIPにまとめたり、ZIPの中身を取り出したりできます。ファイルは端末の外に送信されません。</p>
+<section class="panel">
+<label class="t" for="mode">やりたいこと</label>
+<select id="mode"><option value="make">ファイルをZIPにまとめる（圧縮）</option><option value="open">ZIPの中身を見る・取り出す（解凍）</option></select>
+
+<div id="mk">
+<label class="t" for="fin">ファイルを選ぶ（複数選択できます）</label>
+<input type="file" id="fin" multiple>
+<label class="t" for="din">フォルダごと追加（パソコン向け）</label>
+<input type="file" id="din" webkitdirectory multiple>
+<ul class="list" id="flist"></ul>
+<p class="small" id="ftot"></p>
+<div class="row">
+<div><label class="t" for="zname">ZIPファイル名</label><input type="text" id="zname" value="archive.zip" autocomplete="off"></div>
+</div>
+<div class="chk"><label><input type="checkbox" id="cmp" checked>圧縮する（オフなら、まとめるだけで、容量は変わりません）</label></div>
+<div class="bar"><button id="mkgo" type="button">ZIPを作成して保存</button><button id="mkclr" class="ghost" type="button">リストを空にする</button></div>
+</div>
+
+<div id="op" hidden>
+<label class="t" for="zin">ZIPファイルを選ぶ</label>
+<input type="file" id="zin" accept=".zip,application/zip">
+<ul class="list" id="elist"></ul>
+<div class="bar"><button id="allsave" type="button" hidden>すべて保存</button></div>
+</div>
+<p class="msg" id="msg" role="status"></p>
+</section>
+<article class="panel">
+<h2>使い方と解説</h2>
+<p>「やりたいこと」を切り替えて使います。ファイルは、お使いの端末の中だけで処理され、外部には送信されません。</p>
+<dl>
+<dt>ZIPを作る（圧縮）</dt>
+<dd>ファイルを選ぶと、リストに並びます。「ZIPを作成して保存」を押すと、1つのZIPファイルにまとまります。メール添付や、ファイル共有の前に、複数のファイルを1つにしたいときに使えます。パソコンでは、フォルダごと追加できます。</dd>
+<dt>ZIPを開く（解凍）</dt>
+<dd>ZIPを選ぶと、中のファイルが一覧で表示され、1つずつ保存できます。Windows で作られた、日本語のファイル名のZIPは、文字化けしやすいのですが、このツールは、文字コードを自動で判定して、できるだけ正しく表示します。</dd>
+<dt>できないこと</dt>
+<dd>パスワード付きのZIPの作成と解凍、4GBを超える巨大なZIPには対応していません。また、端末のメモリを使うため、合計で数百MBを超えるファイルは避けてください。PDFの容量を小さくする機能もありません。</dd>
+</dl>
+<p>重要なファイルは、解凍したあと、中身が開けるかを確認してください。</p>
+</article>
+</main>
+<script>
+(function(){
+  var $=function(i){return document.getElementById(i)};
+  var MAXTOTAL=400*1024*1024;
+  var T=new Uint32Array(256);
+  for(var n=0;n<256;n++){var c=n;for(var k=0;k<8;k++)c=c&1?0xEDB88320^(c>>>1):c>>>1;T[n]=c>>>0;}
+  function crc32(u){var c=0xFFFFFFFF;for(var i=0;i<u.length;i++)c=T[(c^u[i])&255]^(c>>>8);return(c^0xFFFFFFFF)>>>0;}
+  function hasStreams(){return typeof CompressionStream!=="undefined"&&typeof DecompressionStream!=="undefined"}
+  async function deflateRaw(u){var s=new Blob([u]).stream().pipeThrough(new CompressionStream("deflate-raw"));return new Uint8Array(await new Response(s).arrayBuffer());}
+  async function inflateRaw(u){var s=new Blob([u]).stream().pipeThrough(new DecompressionStream("deflate-raw"));return new Uint8Array(await new Response(s).arrayBuffer());}
+  function dosDT(ms){var d=new Date(ms);return [((d.getHours()<<11)|(d.getMinutes()<<5)|(d.getSeconds()>>1))&0xffff,(((d.getFullYear()-1980)<<9)|((d.getMonth()+1)<<5)|d.getDate())&0xffff];}
+  async function buildZip(files,compress){
+    var enc=new TextEncoder(), parts=[], central=[], offset=0;
+    for(var i=0;i<files.length;i++){
+      var f=files[i], name=enc.encode(f.name), crc=crc32(f.data), method=0, body=f.data;
+      if(compress&&f.data.length>0){var z=await deflateRaw(f.data);if(z.length<f.data.length){method=8;body=z;}}
+      var td=dosDT(f.mtime), loc=new Uint8Array(30+name.length), dv=new DataView(loc.buffer);
+      dv.setUint32(0,0x04034b50,true);dv.setUint16(4,20,true);dv.setUint16(6,0x0800,true);dv.setUint16(8,method,true);dv.setUint16(10,td[0],true);dv.setUint16(12,td[1],true);
+      dv.setUint32(14,crc,true);dv.setUint32(18,body.length,true);dv.setUint32(22,f.data.length,true);dv.setUint16(26,name.length,true);dv.setUint16(28,0,true);loc.set(name,30);
+      var cen=new Uint8Array(46+name.length), cv=new DataView(cen.buffer);
+      cv.setUint32(0,0x02014b50,true);cv.setUint16(4,20,true);cv.setUint16(6,20,true);cv.setUint16(8,0x0800,true);cv.setUint16(10,method,true);cv.setUint16(12,td[0],true);cv.setUint16(14,td[1],true);
+      cv.setUint32(16,crc,true);cv.setUint32(20,body.length,true);cv.setUint32(24,f.data.length,true);cv.setUint16(28,name.length,true);cv.setUint32(42,offset,true);cen.set(name,46);
+      parts.push(loc,body);central.push(cen);offset+=loc.length+body.length;
+    }
+    var cs=0;central.forEach(function(x){cs+=x.length});
+    var end=new Uint8Array(22), ev=new DataView(end.buffer);
+    ev.setUint32(0,0x06054b50,true);ev.setUint16(8,files.length,true);ev.setUint16(10,files.length,true);ev.setUint32(12,cs,true);ev.setUint32(16,offset,true);
+    return new Blob(parts.concat(central,[end]),{type:"application/zip"});
+  }
+  function parseZip(buf){
+    var dv=new DataView(buf.buffer,buf.byteOffset,buf.byteLength), i=buf.length-22, min=Math.max(0,buf.length-22-65535);
+    while(i>=min&&dv.getUint32(i,true)!==0x06054b50)i--;
+    if(i<min)throw new Error("ZIPファイルとして読み取れませんでした。");
+    var n=dv.getUint16(i+10,true), cdOff=dv.getUint32(i+16,true);
+    if(n===0xFFFF||cdOff===0xFFFFFFFF)throw new Error("ZIP64形式のファイルには対応していません。");
+    var p=cdOff, out=[];
+    for(var k=0;k<n;k++){
+      if(dv.getUint32(p,true)!==0x02014b50)throw new Error("ZIPの内部情報が壊れているようです。");
+      var nl=dv.getUint16(p+28,true), el=dv.getUint16(p+30,true), cl=dv.getUint16(p+32,true);
+      out.push({flag:dv.getUint16(p+8,true),method:dv.getUint16(p+10,true),crc:dv.getUint32(p+16,true),csz:dv.getUint32(p+20,true),usz:dv.getUint32(p+24,true),off:dv.getUint32(p+42,true),nb:buf.subarray(p+46,p+46+nl)});
+      p+=46+nl+el+cl;
+    }
+    return out;
+  }
+  function decodeName(nb,flag){
+    if(flag&0x800)return new TextDecoder("utf-8").decode(nb);
+    try{return new TextDecoder("utf-8",{fatal:true}).decode(nb);}catch(e){}
+    try{return new TextDecoder("shift_jis").decode(nb);}catch(e2){}
+    return new TextDecoder("utf-8").decode(nb);
+  }
+  async function extractEntry(buf,e){
+    if(e.flag&1)throw new Error("パスワード付きのファイルは、取り出せません。");
+    var dv=new DataView(buf.buffer,buf.byteOffset,buf.byteLength);
+    if(dv.getUint32(e.off,true)!==0x04034b50)throw new Error("ファイルの位置情報が壊れています。");
+    var start=e.off+30+dv.getUint16(e.off+26,true)+dv.getUint16(e.off+28,true), data=buf.subarray(start,start+e.csz);
+    if(e.method===0)return data;
+    if(e.method===8)return await inflateRaw(data);
+    throw new Error("未対応の圧縮方式です（方式 "+e.method+"）。");
+  }
+  function fmt(b){return b<1024?b+" B":b<1048576?(b/1024).toFixed(1)+" KB":(b/1048576).toFixed(2)+" MB";}
+  function dl(blob,name){var u=URL.createObjectURL(blob),a=document.createElement("a");a.href=u;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(u)},8000);}
+  function msg(t,c){var m=$("msg");m.textContent=t;m.className="msg"+(c?" "+c:"");}
+
+  var files=[];
+  function addFiles(list){
+    for(var i=0;i<list.length;i++){
+      var f=list[i], nm=(f.webkitRelativePath&&f.webkitRelativePath.length)?f.webkitRelativePath:f.name;
+      files.push({file:f,name:nm});
+    }
+    renderFiles();
+  }
+  function uniqueNames(){
+    var seen={},out=[];
+    files.forEach(function(x){
+      var nm=x.name, base=nm, k=1;
+      while(seen[nm]){k++;var d=base.lastIndexOf(".");nm=d>0?base.slice(0,d)+" ("+k+")"+base.slice(d):base+" ("+k+")";}
+      seen[nm]=1;out.push(nm);
+    });
+    return out;
+  }
+  function renderFiles(){
+    var ul=$("flist");ul.textContent="";var tot=0;
+    files.forEach(function(x,i){
+      tot+=x.file.size;
+      var li=document.createElement("li");li.className="item";
+      var a=document.createElement("span");a.className="nm";a.textContent=x.name;
+      var s=document.createElement("span");s.className="sz";s.textContent=fmt(x.file.size);
+      var b=document.createElement("button");b.className="ghost";b.type="button";b.textContent="外す";
+      b.addEventListener("click",function(){files.splice(i,1);renderFiles();});
+      li.appendChild(a);li.appendChild(s);li.appendChild(b);ul.appendChild(li);
+    });
+    $("ftot").textContent=files.length?files.length+"個／合計 "+fmt(tot):"";
+  }
+  $("fin").addEventListener("change",function(){addFiles(this.files);this.value="";});
+  $("din").addEventListener("change",function(){addFiles(this.files);this.value="";});
+  $("mkclr").addEventListener("click",function(){files=[];renderFiles();msg("");});
+  $("mkgo").addEventListener("click",async function(){
+    if(!hasStreams()){msg("お使いのブラウザは、圧縮機能に対応していません。最新のブラウザでお試しください。","bad");return;}
+    if(!files.length){msg("ファイルを選んでください。","bad");return;}
+    if(files.length>65000){msg("ファイル数が多すぎます。","bad");return;}
+    var tot=files.reduce(function(s,x){return s+x.file.size},0);
+    if(tot>MAXTOTAL){msg("合計サイズが大きすぎます（"+fmt(MAXTOTAL)+"まで）。分けて作成してください。","bad");return;}
+    this.disabled=true;msg("圧縮しています…");
+    try{
+      var names=uniqueNames(), arr=[];
+      for(var i=0;i<files.length;i++){
+        arr.push({name:names[i],data:new Uint8Array(await files[i].file.arrayBuffer()),mtime:files[i].file.lastModified||Date.now()});
+      }
+      var blob=await buildZip(arr,$("cmp").checked), zn=($("zname").value.trim()||"archive.zip");
+      if(!/\.zip$/i.test(zn))zn+=".zip";
+      dl(blob,zn);
+      msg("作成しました："+fmt(tot)+" → "+fmt(blob.size)+"（"+Math.round(blob.size/Math.max(tot,1)*100)+"%）","ok");
+    }catch(e){msg("作成できませんでした："+e.message,"bad");}
+    this.disabled=false;
+  });
+
+  var cur=null;
+  $("zin").addEventListener("change",async function(){
+    var f=this.files[0];this.value="";
+    var ul=$("elist");ul.textContent="";$("allsave").hidden=true;cur=null;
+    if(!f)return;
+    if(!hasStreams()){msg("お使いのブラウザは、解凍機能に対応していません。最新のブラウザでお試しください。","bad");return;}
+    if(f.size>MAXTOTAL){msg("ファイルが大きすぎます（"+fmt(MAXTOTAL)+"まで）。","bad");return;}
+    try{
+      var buf=new Uint8Array(await f.arrayBuffer()), ents=parseZip(buf), shown=0;
+      cur={buf:buf,list:[]};
+      ents.forEach(function(e){
+        var name=decodeName(e.nb,e.flag);
+        if(/\/$/.test(name))return;
+        shown++;cur.list.push({e:e,name:name});
+        var li=document.createElement("li");li.className="item";
+        var a=document.createElement("span");a.className="nm";a.textContent=name+((e.flag&1)?"（パスワード付き）":"");
+        var s=document.createElement("span");s.className="sz";s.textContent=fmt(e.usz);
+        var b=document.createElement("button");b.type="button";b.textContent="保存";b.disabled=!!(e.flag&1);
+        b.addEventListener("click",async function(){
+          try{var d=await extractEntry(buf,e);dl(new Blob([d]),name.split("/").pop()||"file");msg("保存しました："+name,"ok");}
+          catch(err){msg(err.message,"bad");}
+        });
+        li.appendChild(a);li.appendChild(s);li.appendChild(b);ul.appendChild(li);
+      });
+      msg(shown+"個のファイルが入っています。","ok");
+      $("allsave").hidden=!shown;
+    }catch(err){msg(err.message,"bad");}
+  });
+  $("allsave").addEventListener("click",async function(){
+    if(!cur)return;this.disabled=true;
+    for(var i=0;i<cur.list.length;i++){
+      var it=cur.list[i];
+      try{if(it.e.flag&1)continue;var d=await extractEntry(cur.buf,it.e);dl(new Blob([d]),it.name.split("/").pop()||"file");}catch(err){msg(err.message,"bad");}
+      await new Promise(function(r){setTimeout(r,350)});
+    }
+    this.disabled=false;
+  });
+  $("mode").addEventListener("change",function(){var m=this.value==="make";$("mk").hidden=!m;$("op").hidden=m;msg("");});
+})();
+</script>
+</body>
+</html>
