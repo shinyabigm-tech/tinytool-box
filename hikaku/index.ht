@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-G1ZB4CKMD7"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-G1ZB4CKMD7');
+</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>文章比較ツール｜2つの文章の違いを色分けで表示（差分チェック）</title>
+<meta name="description" content="2つの文章を貼り付けるだけで、追加・削除された部分を色分けして表示。文字単位・行単位の比較に対応。契約書や原稿の修正確認に。入力内容は送信されません。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#f3f5f8;--grid:#dfe5ee;--ink:#1b2433;--sub:#53607a;--card:#fff;--line:#c5cedd;--accent:#1f3a8a;--add:#c9f0d5;--addt:#0b5a2a;--del:#ffd5d5;--delt:#8a1a1a;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--paper:#141a26;--grid:#1d2536;--ink:#e7ecf6;--sub:#9aa7c2;--card:#1b2334;--line:#34405a;--accent:#8fb0ff;--add:#1d4d31;--addt:#b8f2cc;--del:#5a2323;--delt:#ffc4c4}}
+:root[data-theme="dark"]{--paper:#141a26;--grid:#1d2536;--ink:#e7ecf6;--sub:#9aa7c2;--card:#1b2334;--line:#34405a;--accent:#8fb0ff;--add:#1d4d31;--addt:#b8f2cc;--del:#5a2323;--delt:#ffc4c4}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;color:var(--ink);background-color:var(--paper);background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:24px 24px;font-family:"Zen Kaku Gothic New","Hiragino Sans","Yu Gothic",Meiryo,sans-serif;line-height:1.8;font-size:16px}
+main{max-width:760px;margin:0 auto;padding:20px 16px 56px}
+.back{display:inline-block;margin-bottom:10px;color:var(--accent);text-decoration:none;font-weight:700;min-height:32px}
+h1{font-size:clamp(26px,6vw,36px);line-height:1.35;margin:0 0 6px}
+.lead{margin:0 0 22px;color:var(--sub)}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:6px;padding:16px}
+.panel + .panel{margin-top:14px}
+h2{font-size:18px;margin:0 0 10px}
+label.t{display:block;font-weight:700;margin:6px 0 4px}
+textarea,select{width:100%;font:inherit;font-size:16px;padding:10px;color:var(--ink);background:var(--paper);border:1px solid var(--line);border-radius:4px}
+textarea{min-height:130px;resize:vertical;line-height:1.6}
+select{min-height:44px}
+.opts{display:flex;flex-wrap:wrap;gap:4px 18px;align-items:center}
+.opts label{display:flex;align-items:center;gap:8px;min-height:40px;cursor:pointer}
+.opts input{width:20px;height:20px;accent-color:var(--accent)}
+button{font:inherit;font-weight:700;min-height:44px;padding:0 18px;cursor:pointer;border-radius:4px;border:1px solid var(--accent);background:transparent;color:var(--accent)}
+.bar{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.stat{color:var(--sub);font-size:14px;margin:0 0 10px}
+#out{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.9;padding:12px;background:var(--paper);border:1px solid var(--line);border-radius:4px;min-height:60px}
+ins{background:var(--add);color:var(--addt);text-decoration:none;border-radius:2px}
+del{background:var(--del);color:var(--delt);text-decoration:line-through;border-radius:2px}
+.ln{display:block;padding:0 6px;border-radius:2px}
+.ln.i{background:var(--add);color:var(--addt)}
+.ln.d{background:var(--del);color:var(--delt)}
+.key{display:flex;gap:14px;font-size:14px;margin-bottom:8px;color:var(--sub)}
+article p{margin:0 0 12px}
+article dt{font-weight:700;margin-top:8px}
+article dd{margin:0 0 6px;color:var(--sub)}
+</style>
+</head>
+<body>
+<main>
+  <a class="back" href="/">← tinytool-box</a>
+  <h1>文章比較ツール</h1>
+  <p class="lead">2つの文章を貼り付けると、追加・削除された部分を色分けして表示します。入力した内容は送信されません。</p>
+
+  <section class="panel">
+    <label class="t" for="a">変更前の文章</label>
+    <textarea id="a" placeholder="ここに変更前の文章を貼り付けてください"></textarea>
+    <label class="t" for="b">変更後の文章</label>
+    <textarea id="b" placeholder="ここに変更後の文章を貼り付けてください"></textarea>
+    <div class="opts">
+      <label for="mode" style="min-height:0"><span>比較の単位</span></label>
+      <select id="mode" style="width:auto"><option value="char">文字単位</option><option value="line">行単位</option></select>
+      <label><input type="checkbox" id="ci">英字の大文字・小文字を区別しない</label>
+      <label><input type="checkbox" id="nk" checked>全角・半角を同じとみなす</label>
+    </div>
+    <div class="bar"><button id="swap" type="button">前後を入れ替える</button><button id="clr" type="button">クリア</button></div>
+  </section>
+
+  <section class="panel" aria-live="polite">
+    <h2>比較結果</h2>
+    <p class="stat" id="stat">2つの文章を入力すると、結果が表示されます。</p>
+    <div class="key"><span><ins>追加</ins></span><span><del>削除</del></span></div>
+    <div id="out"></div>
+  </section>
+
+  <article class="panel">
+    <h2>使い方と解説</h2>
+    <p>上の2つの欄に文章を貼り付けると、違いがすぐに色分けで表示されます。緑は追加された部分、赤の取り消し線は削除された部分です。</p>
+    <dl>
+      <dt>文字単位と行単位</dt>
+      <dd>文字単位は、1文字ずつ比べるので、誤字の修正や、言い回しの小さな変更を見つけるのに向いています。行単位は、行ごとに比べるので、箇条書きや契約書の条文、長い文書の差し替え確認に向いています。</dd>
+      <dt>大文字・小文字、全角・半角</dt>
+      <dd>英字の大文字と小文字、全角と半角の違いを、同じものとして比べるかを選べます。表記ゆれを無視して、内容の違いだけを見たいときに使います。</dd>
+      <dt>入力できる長さの目安</dt>
+      <dd>変更前・変更後それぞれ、20万文字程度まで比較できます。文字単位でも、まず行ごとに比べてから、変わった部分だけを1文字ずつ比べるので、長い文章でも素早く結果が出ます。全体がほとんど書き換わっている場合は、ブロック単位の表示になることがあります。</dd>
+    </dl>
+    <p>比較の結果は目安です。契約書など重要な文書は、最終的に原本を目視で確認してください。</p>
+  </article>
+</main>
+<script>
+(function(){
+  var $=function(i){return document.getElementById(i)}, timer, MAXLEN=200000, MAXD=3000;
+  function norm(s,ci,nk){if(nk)s=s.normalize("NFKC");if(ci)s=s.toLowerCase();return s}
+  function ids(toks,ci,nk,map){
+    var r=new Int32Array(toks.length);
+    for(var i=0;i<toks.length;i++){
+      var k=norm(toks[i],ci,nk), v=map.get(k);
+      if(v===undefined){v=map.size;map.set(k,v);}
+      r[i]=v;
+    }
+    return r;
+  }
+  function core(A,B,p,n,m,maxD){
+    var r=[],x,y,d,k,i;
+    if(n===0){for(y=0;y<m;y++)r.push(["i",p+y]);return r;}
+    if(m===0){for(x=0;x<n;x++)r.push(["d",p+x]);return r;}
+    var cap=Math.min(n+m,maxD), V=new Int32Array(2*cap+3), off=cap+1, trace=[], found=-1;
+    for(d=0;d<=cap&&found<0;d++){
+      for(k=-d;k<=d;k+=2){
+        if(d===0)x=0;
+        else if(k===-d||(k!==d&&V[off+k-1]<V[off+k+1]))x=V[off+k+1];
+        else x=V[off+k-1]+1;
+        y=x-k;
+        while(x<n&&y<m&&A[p+x]===B[p+y]){x++;y++;}
+        V[off+k]=x;
+        if(x>=n&&y>=m){found=d;break;}
+      }
+      var snap=new Int32Array(2*d+1);
+      for(k=-d;k<=d;k+=2)snap[k+d]=V[off+k];
+      trace.push(snap);
+    }
+    if(found<0)return null;
+    x=n;y=m;
+    for(d=found;d>0;d--){
+      var pv=trace[d-1], base=d-1, pk;
+      k=x-y;
+      if(k===-d||(k!==d&&pv[k-1+base]<pv[k+1+base]))pk=k+1;else pk=k-1;
+      var px=pv[pk+base], py=px-pk, mx, my;
+      if(pk===k+1){mx=px;my=py+1;}else{mx=px+1;my=py;}
+      while(x>mx&&y>my){x--;y--;r.push(["e",p+x,p+y]);}
+      if(pk===k+1)r.push(["i",p+py]);else r.push(["d",p+px]);
+      x=px;y=py;
+    }
+    while(x>0&&y>0){x--;y--;r.push(["e",p+x,p+y]);}
+    return r.reverse();
+  }
+  function myers(A,B,maxD){
+    var N=A.length, M=B.length, p=0, s=0, ops=[], i;
+    while(p<N&&p<M&&A[p]===B[p])p++;
+    while(s<N-p&&s<M-p&&A[N-1-s]===B[M-1-s])s++;
+    for(i=0;i<p;i++)ops.push(["e",i,i]);
+    var mid=core(A,B,p,N-p-s,M-p-s,maxD);
+    if(mid===null)return null;
+    for(i=0;i<mid.length;i++)ops.push(mid[i]);
+    for(i=0;i<s;i++)ops.push(["e",N-s+i,M-s+i]);
+    return ops;
+  }
+  function lineTokens(s){return s===""?[]:s.match(/[^\n]*\n|[^\n]+$/g)}
+  function compare(A,B,mode,ci,nk){
+    var res=[], map=new Map(), ops;
+    if(mode==="line"){
+      var la=A.split(/\r?\n/), lb=B.split(/\r?\n/);
+      ops=myers(ids(la,ci,nk,map),ids(lb,ci,nk,map),MAXD);
+      if(!ops)return null;
+      ops.forEach(function(o){res.push([o[0],o[0]==="d"?la[o[1]]:lb[o[0]==="e"?o[2]:o[1]]]);});
+      return res;
+    }
+    var xa=lineTokens(A), xb=lineTokens(B);
+    ops=myers(ids(xa,ci,nk,map),ids(xb,ci,nk,map),MAXD);
+    var dels="", inss="";
+    function hunk(){
+      if(dels===""&&inss==="")return;
+      if(dels===""||inss===""){
+        res.push(dels===""?["i",inss]:["d",dels]);
+      }else{
+        var ca=Array.from(dels), cb=Array.from(inss), m2=new Map();
+        var cops=myers(ids(ca,ci,nk,m2),ids(cb,ci,nk,m2),MAXD);
+        if(!cops){res.push(["d",dels]);res.push(["i",inss]);}
+        else cops.forEach(function(o){res.push([o[0],o[0]==="d"?ca[o[1]]:cb[o[0]==="e"?o[2]:o[1]]]);});
+      }
+      dels="";inss="";
+    }
+    if(!ops){dels=A;inss=B;hunk();return res;}
+    ops.forEach(function(o){
+      if(o[0]==="e"){hunk();res.push(["e",xb[o[2]]]);}
+      else if(o[0]==="d")dels+=xa[o[1]];
+      else inss+=xb[o[1]];
+    });
+    hunk();
+    return res;
+  }
+  function run(){
+    var A=$("a").value, B=$("b").value, out=$("out"), mode=$("mode").value;
+    out.textContent="";
+    if(A===""&&B===""){$("stat").textContent="2つの文章を入力すると、結果が表示されます。";return;}
+    if(A.length>MAXLEN||B.length>MAXLEN){$("stat").textContent="文章が長すぎます。各"+MAXLEN.toLocaleString()+"文字までにしてください。";return;}
+    var res=compare(A,B,mode,$("ci").checked,$("nk").checked);
+    if(!res){$("stat").textContent="違いが非常に多いため、比較できません。文章を分けて比べてください。";return;}
+    var add=0,del=0,eq=0,unit=mode==="char"?"文字":"行";
+    res.forEach(function(o){
+      var n=mode==="char"?Array.from(o[1]).length:1;
+      if(o[0]==="i")add+=n;else if(o[0]==="d")del+=n;else eq+=n;
+    });
+    var tot=2*eq+add+del, sim=tot?Math.round(eq*2/tot*100):100;
+    $("stat").textContent="追加 "+add+unit+"／削除 "+del+unit+"／一致 "+eq+unit+"（一致率 約"+sim+"%）";
+    var frag=document.createDocumentFragment();
+    if(mode==="char"){
+      var cur=null, t="";
+      var flush=function(){
+        if(cur===null)return;
+        var el=cur==="e"?document.createTextNode(t):document.createElement(cur==="i"?"ins":"del");
+        if(cur!=="e")el.textContent=t;
+        frag.appendChild(el); t=""; cur=null;
+      };
+      res.forEach(function(o){
+        if(cur!==o[0]&&cur!==null)flush();
+        cur=o[0]; t+=o[1];
+      });
+      flush();
+    }else{
+      res.forEach(function(o){
+        var d=document.createElement("span");
+        d.className="ln"+(o[0]==="e"?"":" "+o[0]);
+        d.textContent=(o[0]==="i"?"＋ ":o[0]==="d"?"－ ":"　 ")+o[1];
+        frag.appendChild(d);
+      });
+    }
+    out.appendChild(frag);
+  }
+  function later(){clearTimeout(timer);timer=setTimeout(run,250)}
+  ["a","b"].forEach(function(id){$(id).addEventListener("input",later)});
+  ["mode","ci","nk"].forEach(function(id){$(id).addEventListener("change",run)});
+  $("swap").addEventListener("click",function(){var t=$("a").value;$("a").value=$("b").value;$("b").value=t;run();});
+  $("clr").addEventListener("click",function(){$("a").value="";$("b").value="";run();});
+  run();
+})();
+</script>
+</body>
+</html>
