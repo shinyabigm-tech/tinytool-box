@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-G1ZB4CKMD7"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-G1ZB4CKMD7');
+</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>背景透過ツール｜単色背景を透明にして透過PNGを作成</title>
+<meta name="description" content="白や単色の背景を自動で透明にして、透過PNGを作成。ロゴ・署名・印影・商品画像の切り抜きに。画像は外部に送信されません。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#f3f5f8;--grid:#dfe5ee;--ink:#1b2433;--sub:#53607a;--card:#fff;--line:#c5cedd;--accent:#1f3a8a;--accent-ink:#fff;--ok:#1d6b45;--bad:#a12626;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--paper:#141a26;--grid:#1d2536;--ink:#e7ecf6;--sub:#9aa7c2;--card:#1b2334;--line:#34405a;--accent:#8fb0ff;--accent-ink:#0f1626;--ok:#6fd0a0;--bad:#ff9b9b}}
+:root[data-theme="dark"]{--paper:#141a26;--grid:#1d2536;--ink:#e7ecf6;--sub:#9aa7c2;--card:#1b2334;--line:#34405a;--accent:#8fb0ff;--accent-ink:#0f1626;--ok:#6fd0a0;--bad:#ff9b9b}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;color:var(--ink);background-color:var(--paper);background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:24px 24px;font-family:"Zen Kaku Gothic New","Hiragino Sans","Yu Gothic",Meiryo,sans-serif;line-height:1.8;font-size:16px}
+main{max-width:760px;margin:0 auto;padding:20px 16px 56px}
+.back{display:inline-block;margin-bottom:10px;color:var(--accent);text-decoration:none;font-weight:700;min-height:32px}
+h1{font-size:clamp(26px,6vw,36px);line-height:1.35;margin:0 0 6px}
+.lead{margin:0 0 22px;color:var(--sub)}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:6px;padding:16px}
+.panel + .panel{margin-top:14px}
+h2{font-size:18px;margin:0 0 10px}
+label.t{display:block;font-weight:700;margin:10px 0 4px}
+input[type=text],input[type=password],input[type=number],input[type=file],select,textarea{width:100%;font:inherit;font-size:16px;padding:8px 10px;min-height:44px;color:var(--ink);background:var(--paper);border:1px solid var(--line);border-radius:4px}
+textarea{min-height:150px;resize:vertical;line-height:1.6}
+input[type=range]{width:100%;accent-color:var(--accent);min-height:32px}
+input[type=color]{width:56px;height:44px;padding:2px;border:1px solid var(--line);border-radius:4px;background:var(--paper)}
+.row{display:grid;gap:0 14px;grid-template-columns:repeat(auto-fit,minmax(170px,1fr))}
+.chk label,.rad label{display:flex;align-items:center;gap:8px;min-height:40px;cursor:pointer}
+.chk input,.rad input{width:20px;height:20px;accent-color:var(--accent)}
+button,.btn{font:inherit;font-weight:700;min-height:44px;padding:0 18px;cursor:pointer;border-radius:4px;border:1px solid var(--accent);background:var(--accent);color:var(--accent-ink)}
+button.ghost{background:transparent;color:var(--accent)}
+button:disabled{opacity:.5;cursor:default}
+.bar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:12px}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.small{color:var(--sub);font-size:14px;margin:6px 0 0}
+.msg{min-height:1.8em;font-weight:700}
+.msg.ok{color:var(--ok)}.msg.bad{color:var(--bad)}
+.list{display:grid;gap:8px;margin:10px 0 0;padding:0;list-style:none}
+.item{display:flex;gap:10px;align-items:center;justify-content:space-between;padding:8px 10px;border:1px solid var(--line);border-radius:4px;background:var(--paper)}
+.item .nm{overflow-wrap:anywhere;flex:1;min-width:0}
+.item .sz{color:var(--sub);font-size:14px;white-space:nowrap}
+.item button{min-height:36px;padding:0 12px}
+.thumb{width:56px;height:56px;object-fit:contain;border:1px solid var(--line);border-radius:4px;background:#fff}
+.checker{background-color:#fff;background-image:linear-gradient(45deg,#d9d9d9 25%,transparent 25%,transparent 75%,#d9d9d9 75%),linear-gradient(45deg,#d9d9d9 25%,transparent 25%,transparent 75%,#d9d9d9 75%);background-size:16px 16px;background-position:0 0,8px 8px}
+article p{margin:0 0 12px}
+article dt{font-weight:700;margin-top:8px}
+article dd{margin:0 0 6px;color:var(--sub)}
+</style>
+</head>
+<body>
+<main>
+<a class="back" href="/">← tinytool-box</a>
+<h1>背景透過ツール</h1>
+<p class="lead">白や単色の背景を透明にして、透過PNGを作ります。画像は端末の外に送信されません。</p>
+<section class="panel">
+<label class="t" for="fin">画像を選ぶ</label>
+<input type="file" id="fin" accept="image/*">
+<div class="rad">
+<label><input type="radio" name="bgm" value="auto" checked>背景の色を自動で決める（四隅の色）</label>
+<label><input type="radio" name="bgm" value="pick">画像をタップして、背景の色を指定する</label>
+</div>
+<div class="row">
+<div><label class="t" for="tol">消す色の範囲：<span id="tv">14</span></label><input type="range" id="tol" min="0" max="60" value="14"></div>
+<div><label class="t" for="soft">輪郭のなめらかさ：<span id="sv">6</span></label><input type="range" id="soft" min="0" max="20" value="6"></div>
+</div>
+<div class="chk"><label><input type="checkbox" id="conn" checked>外側とつながった背景だけを消す（文字や図形の内側は残す）</label></div>
+<div class="row">
+<div><label class="t" for="fill">背景を塗る色</label>
+<select id="fill"><option value="none">透明のまま</option><option value="#ffffff">白</option><option value="custom">好きな色</option></select></div>
+<div id="fcw" hidden><label class="t" for="fcol">色を選ぶ</label><input type="color" id="fcol" value="#ffffff"></div>
+</div>
+<p class="msg" id="msg" role="status"></p>
+<div class="checker" id="wrap" style="display:none;margin-top:8px;border:1px solid var(--line);border-radius:4px;overflow:hidden"><canvas id="cv" style="display:block;width:100%;height:auto;cursor:crosshair"></canvas></div>
+<p class="small" id="info"></p>
+<div class="bar"><button id="save" type="button" disabled>PNG画像として保存</button></div>
+</section>
+<article class="panel">
+<h2>使い方と解説</h2>
+<p>画像を選ぶと、背景の色を自動で見つけて、その色に近い部分を透明にします。画像は端末の中だけで処理され、外部には送信されません。</p>
+<dl>
+<dt>向いている画像</dt>
+<dd>白や単色の背景に、ロゴ、署名、印影、イラスト、商品が写っている画像に向いています。書類のスキャン画像から、署名や印影だけを取り出したいときにも使えます。</dd>
+<dt>うまくいかないとき</dt>
+<dd>背景の一部が残る場合は、「消す色の範囲」を上げてください。逆に、残したい部分まで消える場合は、範囲を下げます。背景が自動で決まらないときは、「タップして指定」にして、背景の部分をタップしてください。</dd>
+<dt>輪郭のなめらかさ</dt>
+<dd>切り抜きの輪郭の、ギザギザや白い縁を和らげます。値を上げると、輪郭がなめらかになり、背景の色の混ざりも、取り除かれます。</dd>
+<dt>できないこと</dt>
+<dd>写真の人物の切り抜きなど、複雑な背景は、このツールでは切り抜けません。背景が単色に近い画像でお試しください。大きな画像は、長辺3000ピクセルに縮小して処理します。</dd>
+</dl>
+</article>
+</main>
+<script>
+(function(){
+  var $=function(i){return document.getElementById(i)};
+  function dist(d,i,bg){var dr=d[i]-bg[0],dg=d[i+1]-bg[1],db=d[i+2]-bg[2];return Math.sqrt(dr*dr+dg*dg+db*db)/441.673*100;}
+  function cutout(src,w,h,bg,tol,soft,conn){
+    var n=w*h, ds=new Float32Array(n), rem=new Uint8Array(n), out=new Uint8ClampedArray(src), i, x, y;
+    for(i=0;i<n;i++)ds[i]=dist(src,i*4,bg);
+    if(conn){
+      var st=new Int32Array(n), sp=0;
+      var push=function(p){if(!rem[p]&&ds[p]<=tol){rem[p]=1;st[sp++]=p;}};
+      for(x=0;x<w;x++){push(x);push((h-1)*w+x);}
+      for(y=0;y<h;y++){push(y*w);push(y*w+w-1);}
+      while(sp>0){
+        var p=st[--sp], px=p%w, py=(p-px)/w;
+        if(px>0)push(p-1);if(px<w-1)push(p+1);if(py>0)push(p-w);if(py<h-1)push(p+w);
+      }
+    }else{for(i=0;i<n;i++)rem[i]=ds[i]<=tol?1:0;}
+    for(var q=0;q<n;q++){
+      var o=q*4;
+      if(rem[q]){out[o+3]=0;continue;}
+      if(soft>0&&ds[q]<=tol+soft){
+        var qx=q%w, qy=(q-qx)/w;
+        var nb=(qx>0&&rem[q-1])||(qx<w-1&&rem[q+1])||(qy>0&&rem[q-w])||(qy<h-1&&rem[q+w]);
+        if(nb){
+          var a=(ds[q]-tol)/soft;a=a<0?0:(a>1?1:a);
+          if(a>0.02){for(var c=0;c<3;c++){var v=(src[o+c]-bg[c]*(1-a))/a;out[o+c]=v<0?0:(v>255?255:v);}}
+          out[o+3]=Math.min(src[o+3],Math.round(255*a));
+        }
+      }
+    }
+    return out;
+  }
+  function avgAt(d,w,h,cx,cy){
+    var r=0,g=0,b=0,n=0;
+    for(var y=Math.max(0,cy-2);y<=Math.min(h-1,cy+2);y++)for(var x=Math.max(0,cx-2);x<=Math.min(w-1,cx+2);x++){var i=(y*w+x)*4;r+=d[i];g+=d[i+1];b+=d[i+2];n++;}
+    return [r/n,g/n,b/n];
+  }
+  function autoBg(d,w,h){
+    var cols=[avgAt(d,w,h,0,0),avgAt(d,w,h,w-1,0),avgAt(d,w,h,0,h-1),avgAt(d,w,h,w-1,h-1)], best=null, bc=-1;
+    function dd(a,b){var x=a[0]-b[0],y=a[1]-b[1],z=a[2]-b[2];return Math.sqrt(x*x+y*y+z*z)/441.673*100;}
+    cols.forEach(function(c){
+      var grp=cols.filter(function(o){return dd(c,o)<12});
+      if(grp.length>bc){bc=grp.length;best=grp;}
+    });
+    var s=[0,0,0];best.forEach(function(c){s[0]+=c[0];s[1]+=c[1];s[2]+=c[2];});
+    return [s[0]/best.length,s[1]/best.length,s[2]/best.length];
+  }
+  var srcData=null, W=0, H=0, bg=[255,255,255], name="image", last=null, raf=0;
+  function msg(t,c){var m=$("msg");m.textContent=t;m.className="msg"+(c?" "+c:"");}
+  function hex(c){return "#"+c.map(function(v){return ("0"+Math.round(v).toString(16)).slice(-2)}).join("");}
+  function draw(){
+    raf=0;if(!srcData)return;
+    var tol=parseInt($("tol").value,10), soft=parseInt($("soft").value,10), conn=$("conn").checked;
+    var mode=document.querySelector('input[name="bgm"]:checked').value;
+    if(mode==="auto")bg=autoBg(srcData.data,W,H);
+    var res=cutout(srcData.data,W,H,bg,tol,soft,conn);
+    var tmp=document.createElement("canvas");tmp.width=W;tmp.height=H;
+    tmp.getContext("2d").putImageData(new ImageData(res,W,H),0,0);
+    var cv=$("cv");cv.width=W;cv.height=H;
+    var c=cv.getContext("2d");c.clearRect(0,0,W,H);
+    var fv=$("fill").value;
+    if(fv!=="none"){c.fillStyle=fv==="custom"?$("fcol").value:fv;c.fillRect(0,0,W,H);}
+    c.drawImage(tmp,0,0);
+    last=cv;$("save").disabled=false;
+    $("info").textContent="背景色：" +hex(bg)+"／"+W+"×"+H+"px";
+  }
+  function later(){if(!raf)raf=requestAnimationFrame(draw);}
+  $("fin").addEventListener("change",async function(){
+    var f=this.files[0];this.value="";if(!f)return;
+    try{
+      if(f.size>40*1048576)throw new Error("ファイルが大きすぎます（40MBまで）");
+      var bmp;try{bmp=await createImageBitmap(f,{imageOrientation:"from-image"});}catch(e){bmp=await createImageBitmap(f);}
+      var k=Math.min(1,3000/Math.max(bmp.width,bmp.height));
+      W=Math.max(1,Math.round(bmp.width*k));H=Math.max(1,Math.round(bmp.height*k));
+      var cv=document.createElement("canvas");cv.width=W;cv.height=H;
+      var c=cv.getContext("2d",{willReadFrequently:true});c.drawImage(bmp,0,0,W,H);
+      if(bmp.close)bmp.close();
+      srcData=c.getImageData(0,0,W,H);name=f.name.replace(/\.[^.]+$/,"");
+      $("wrap").style.display="block";msg(k<1?"大きな画像のため、長辺3000pxに縮小して処理します。":"",k<1?"":"");
+      draw();
+    }catch(e){msg("画像を読み込めませんでした："+(e.message||"未対応の形式です"),"bad");}
+  });
+  $("cv").addEventListener("click",function(ev){
+    if(!srcData)return;
+    if(document.querySelector('input[name="bgm"]:checked').value!=="pick")return;
+    var r=this.getBoundingClientRect(), x=Math.round((ev.clientX-r.left)*W/r.width), y=Math.round((ev.clientY-r.top)*H/r.height);
+    bg=avgAt(srcData.data,W,H,Math.min(W-1,Math.max(0,x)),Math.min(H-1,Math.max(0,y)));
+    draw();
+  });
+  ["tol","soft"].forEach(function(id){$(id).addEventListener("input",function(){$(id==="tol"?"tv":"sv").textContent=this.value;later();});});
+  ["conn","fill","fcol"].forEach(function(id){$(id).addEventListener("input",later);$(id).addEventListener("change",later);});
+  Array.prototype.forEach.call(document.getElementsByName("bgm"),function(r){r.addEventListener("change",function(){if(this.value==="pick")msg("画像の、消したい背景の部分をタップしてください。");else msg("");later();});});
+  $("fill").addEventListener("change",function(){$("fcw").hidden=this.value!=="custom";});
+  $("save").addEventListener("click",function(){
+    if(!last)return;
+    last.toBlob(function(b){
+      if(!b){msg("保存できませんでした。","bad");return;}
+      var u=URL.createObjectURL(b),a=document.createElement("a");a.href=u;a.download=name+"-haikei.png";document.body.appendChild(a);a.click();a.remove();
+      setTimeout(function(){URL.revokeObjectURL(u)},8000);msg("保存しました。","ok");
+    },"image/png");
+  });
+})();
+</script>
+</body>
+</html>
