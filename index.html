@@ -48,6 +48,7 @@ main{max-width:760px; margin:0 auto; padding:40px 16px 56px}
 h1{font-size:clamp(28px,7vw,42px); line-height:1.3; margin:0 0 8px; letter-spacing:.02em}
 .lead{margin:0 0 28px; color:var(--sub)}
 h2{font-size:18px; margin:0 0 12px}
+section + section{margin-top:26px}
 ul{list-style:none; margin:0; padding:0; display:grid; gap:12px}
 a.tool{
   display:block; padding:16px; color:inherit; text-decoration:none;
@@ -67,15 +68,35 @@ a.tool:focus-visible{outline:3px solid var(--accent); outline-offset:2px}
 <h1>tinytool-box</h1>
 <p class="lead">登録不要・無料で使える、ブラウザ上の小さなツール集です。</p>
 <section>
-<h2>ツール一覧</h2>
+<h2>文書・テキスト</h2>
 <ul>
+<li><a class="tool" href="/yoyaku/"><span class="name">文書要約ツール</span><span class="desc">長い文章から、重要な文を抜き出して要約。決定事項やToDoの候補も一覧にします。</span></a></li>
 <li><a class="tool" href="/text-seiri/"><span class="name">テキスト整形ツール</span><span class="desc">重複行の削除、並べ替え、空白・空行の除去をまとめて実行できます。</span></a></li>
+<li><a class="tool" href="/hikaku/"><span class="name">文章比較ツール</span><span class="desc">2つの文章の違いを、追加・削除で色分けして表示します。</span></a></li>
+</ul>
+</section>
+<section>
+<h2>ファイル・画像</h2>
+<ul>
+<li><a class="tool" href="/zip/"><span class="name">ZIP圧縮・解凍ツール</span><span class="desc">ファイルをZIPにまとめる、ZIPの中身を取り出す。日本語のファイル名にも対応。</span></a></li>
+<li><a class="tool" href="/gazou/"><span class="name">画像リサイズ・圧縮ツール</span><span class="desc">サイズや容量（KB）を指定して、画像を軽くします。</span></a></li>
+<li><a class="tool" href="/haikei/"><span class="name">背景透過ツール</span><span class="desc">白や単色の背景を透明にして、透過PNGを作成します。</span></a></li>
+<li><a class="tool" href="/inkan/"><span class="name">電子印鑑作成ツール</span><span class="desc">名前を入れるだけで、認印・角印・日付印の画像を作成できます。</span></a></li>
+</ul>
+</section>
+<section>
+<h2>セキュリティ</h2>
+<ul>
+<li><a class="tool" href="/password/"><span class="name">パスワード生成ツール</span><span class="desc">ランダム生成に加えて、入力した言葉を組み込んだパスワードも作れます。</span></a></li>
+</ul>
+</section>
+<section>
+<h2>日付・計算・変換</h2>
+<ul>
 <li><a class="tool" href="/eigyobi/"><span class="name">営業日計算ツール</span><span class="desc">〇営業日後の日付や、期間内の営業日数を祝日込みで計算できます。</span></a></li>
-<li><a class="tool" href="/tsubo/"><span class="name">坪・畳・㎡ 換算ツール</span><span class="desc">坪と畳と平方メートルを相互に換算。畳の基準も選べます。</span></a></li>
 <li><a class="tool" href="/nissu/"><span class="name">日数・年齢計算ツール</span><span class="desc">日付の差、〇日後の日付、満年齢をすぐに計算できます。</span></a></li>
 <li><a class="tool" href="/wareki/"><span class="name">和暦・西暦 変換ツール</span><span class="desc">令和・平成・昭和などの和暦と西暦を相互に変換。早見表つきです。</span></a></li>
-<li><a class="tool" href="/hikaku/"><span class="name">文章比較ツール</span><span class="desc">2つの文章の違いを、追加・削除で色分けして表示します。</span></a></li>
-<li><a class="tool" href="/inkan/"><span class="name">電子印鑑作成ツール</span><span class="desc">名前を入れるだけで、認印・角印・日付印の画像を作成できます。</span></a></li>
+<li><a class="tool" href="/tsubo/"><span class="name">坪・畳・㎡ 換算ツール</span><span class="desc">坪と畳と平方メートルを相互に換算。畳の基準も選べます。</span></a></li>
 </ul>
 </section>
 <p class="note">入力したデータはお使いのブラウザの中だけで処理され、サーバーには送信されません。新しいツールは順次追加します。</p>
