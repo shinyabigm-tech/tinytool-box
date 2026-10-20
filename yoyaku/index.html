@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-G1ZB4CKMD7"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-G1ZB4CKMD7');
+</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>文書要約ツール｜長い文章から重要な文を自動で抜き出す（AI不使用）</title>
+<meta name="description" content="議事録・報告書・長いメールなどから、重要な文を自動で抜き出して要約。決定事項やToDoの候補も一覧にします。AI不使用で、文章は外部に送信されません。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#f3f5f8;--grid:#dfe5ee;--ink:#1b2433;--sub:#53607a;--card:#fff;--line:#c5cedd;--accent:#1f3a8a;--accent-ink:#fff;--ok:#1d6b45;--bad:#a12626;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--paper:#141a26;--grid:#1d2536;--ink:#e7ecf6;--sub:#9aa7c2;--card:#1b2334;--line:#34405a;--accent:#8fb0ff;--accent-ink:#0f1626;--ok:#6fd0a0;--bad:#ff9b9b}}
+:root[data-theme="dark"]{--paper:#141a26;--grid:#1d2536;--ink:#e7ecf6;--sub:#9aa7c2;--card:#1b2334;--line:#34405a;--accent:#8fb0ff;--accent-ink:#0f1626;--ok:#6fd0a0;--bad:#ff9b9b}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;color:var(--ink);background-color:var(--paper);background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:24px 24px;font-family:"Zen Kaku Gothic New","Hiragino Sans","Yu Gothic",Meiryo,sans-serif;line-height:1.8;font-size:16px}
+main{max-width:760px;margin:0 auto;padding:20px 16px 56px}
+.back{display:inline-block;margin-bottom:10px;color:var(--accent);text-decoration:none;font-weight:700;min-height:32px}
+h1{font-size:clamp(26px,6vw,36px);line-height:1.35;margin:0 0 6px}
+.lead{margin:0 0 22px;color:var(--sub)}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:6px;padding:16px}
+.panel + .panel{margin-top:14px}
+h2{font-size:18px;margin:0 0 10px}
+label.t{display:block;font-weight:700;margin:10px 0 4px}
+input[type=text],input[type=password],input[type=number],input[type=file],select,textarea{width:100%;font:inherit;font-size:16px;padding:8px 10px;min-height:44px;color:var(--ink);background:var(--paper);border:1px solid var(--line);border-radius:4px}
+textarea{min-height:150px;resize:vertical;line-height:1.6}
+input[type=range]{width:100%;accent-color:var(--accent);min-height:32px}
+input[type=color]{width:56px;height:44px;padding:2px;border:1px solid var(--line);border-radius:4px;background:var(--paper)}
+.row{display:grid;gap:0 14px;grid-template-columns:repeat(auto-fit,minmax(170px,1fr))}
+.chk label,.rad label{display:flex;align-items:center;gap:8px;min-height:40px;cursor:pointer}
+.chk input,.rad input{width:20px;height:20px;accent-color:var(--accent)}
+button,.btn{font:inherit;font-weight:700;min-height:44px;padding:0 18px;cursor:pointer;border-radius:4px;border:1px solid var(--accent);background:var(--accent);color:var(--accent-ink)}
+button.ghost{background:transparent;color:var(--accent)}
+button:disabled{opacity:.5;cursor:default}
+.bar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:12px}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.small{color:var(--sub);font-size:14px;margin:6px 0 0}
+.msg{min-height:1.8em;font-weight:700}
+.msg.ok{color:var(--ok)}.msg.bad{color:var(--bad)}
+.list{display:grid;gap:8px;margin:10px 0 0;padding:0;list-style:none}
+.item{display:flex;gap:10px;align-items:center;justify-content:space-between;padding:8px 10px;border:1px solid var(--line);border-radius:4px;background:var(--paper)}
+.item .nm{overflow-wrap:anywhere;flex:1;min-width:0}
+.item .sz{color:var(--sub);font-size:14px;white-space:nowrap}
+.item button{min-height:36px;padding:0 12px}
+.thumb{width:56px;height:56px;object-fit:contain;border:1px solid var(--line);border-radius:4px;background:#fff}
+.checker{background-color:#fff;background-image:linear-gradient(45deg,#d9d9d9 25%,transparent 25%,transparent 75%,#d9d9d9 75%),linear-gradient(45deg,#d9d9d9 25%,transparent 25%,transparent 75%,#d9d9d9 75%);background-size:16px 16px;background-position:0 0,8px 8px}
+article p{margin:0 0 12px}
+article dt{font-weight:700;margin-top:8px}
+article dd{margin:0 0 6px;color:var(--sub)}
+</style>
+</head>
+<body>
+<main>
+<a class="back" href="/">← tinytool-box</a>
+<h1>文書要約ツール</h1>
+<p class="lead">長い文章から、重要な文を抜き出して短くまとめます。AIは使わず、文章は端末の外に送信されません。</p>
+<section class="panel">
+<label class="t" for="src">要約したい文章</label>
+<textarea id="src" placeholder="ここに、議事録、報告書、長いメールなどの文章を貼り付けてください" style="min-height:200px"></textarea>
+<p class="small">前提：日本語の文章／文は「。」「！」「？」で区切る（ない場合は、改行ごとに1文）／20文字以上、5文以上が目安</p>
+<label class="t" for="fin">テキストファイル（.txt）から読み込む</label>
+<input type="file" id="fin" accept=".txt,text/plain">
+<div class="row">
+<div><label class="t" for="len">要約の長さ</label>
+<select id="len"><option value="10">短め（全体の約10%）</option><option value="20" selected>ふつう（約20%）</option><option value="35">長め（約35%）</option><option value="n">文の数で指定</option></select></div>
+<div id="nw" hidden><label class="t" for="nn">抜き出す文の数</label><input type="number" id="nn" min="1" max="100" value="5" inputmode="numeric"></div>
+<div><label class="t" for="ord">並べ方</label>
+<select id="ord"><option value="orig">原文の順</option><option value="score">重要度の順</option></select></div>
+<div><label class="t" for="fmt">表示形式</label>
+<select id="fmt"><option value="para">文章のまま</option><option value="bullet">箇条書き</option></select></div>
+</div>
+<div class="chk"><label><input type="checkbox" id="cue" checked>決定事項・ToDo候補も抜き出す</label></div>
+<div class="bar"><button id="go" type="button">要約する</button><button id="clr" class="ghost" type="button">クリア</button></div>
+</section>
+
+<section class="panel" aria-live="polite">
+<h2>要約結果</h2>
+<p class="small" id="stat">文章を入力すると、結果が表示されます。</p>
+<div id="out" style="white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.9;padding:12px;background:var(--paper);border:1px solid var(--line);border-radius:4px;min-height:60px"></div>
+<div class="bar"><button id="copy" class="ghost" type="button" hidden>結果をコピー</button></div>
+<p class="small" id="kwt" hidden>よく出てくる言葉</p>
+<div id="kw" style="display:flex;flex-wrap:wrap;gap:6px"></div>
+<div id="cues"></div>
+</section>
+<article class="panel">
+<h2>使い方と解説</h2>
+<p>長い文章を貼り付けると、重要そうな文を抜き出して、短くまとめます。AI を使わず、お使いのブラウザの中で処理するので、文章は外部に送信されません。</p>
+<dl>
+<dt>入力する文章の前提</dt>
+<dd>・日本語の文章を想定しています。「。」「！」「？」で文を区切り、改行は、段落や箇条書きの区切りとして扱います。句点のない箇条書きは、1行を1文とみなします。<br>
+・PDF などからコピーして、文の途中で改行が入っている場合は、先に、その改行を取り除いてから貼り付けてください。文が途中で切れて、うまく選べません。<br>
+・20文字以上が必要で、5文以上が目安です。同じ話題の文が、数十文以上あるほど、精度が上がります。<br>
+・同じ言葉が2回以上出てくると、重要な言葉とみなします。漢字・カタカナ・英数字の言葉を数え、ひらがなだけの言葉は数えません。<br>
+・読み込めるファイルは、.txt（UTF-8 または Shift_JIS を自動判定）で、5MBまでです。Word や PDF は、本文をコピーして、貼り付けてください。<br>
+・英語の文章は、ピリオドでは文を区切りません。改行で区切られた文章であれば、使えます。<br>
+・表や、数字の羅列のような文章には向いていません。</dd>
+<dt>要約の仕組み</dt>
+<dd>文章の中で、何度も出てくる言葉を重要な言葉とみなし、そうした言葉を多く含む文を選びます。すでに選んだ文と同じ言葉ばかりの文は、選ばれにくくして、内容の重複を減らしています。文章を書き直す要約ではなく、元の文をそのまま抜き出します。</dd>
+<dt>向いている文章</dt>
+<dd>議事録、報告書、ニュース記事、長いメールなど、同じ話題について、順序立てて書かれた文章に向いています。短い文章や、話題がバラバラの文章は、重要な文が選びにくくなります。</dd>
+<dt>決定事項・ToDo候補</dt>
+<dd>「決定」「合意」「までに」「依頼」「確認する」のような、決まり事や、やることを表す言葉を含む文を、別に一覧にします。見落とし防止の目安として使ってください。</dd>
+</dl>
+<p>抜き出された文は、前後の文脈が省かれるため、意味が変わって見えることがあります。重要な内容は、必ず原文で確認してください。</p>
+</article>
+</main>
+<script>
+(function(){
+  var $=function(i){return document.getElementById(i)};
+  function splitSentences(text){
+    var out=[];
+    text.replace(/\r/g,"").split(/\n+/).forEach(function(p,pi){
+      p=p.trim();if(!p)return;
+      var parts=p.match(/[^。！？!?]+[。！？!?]*/g)||[p];
+      parts.forEach(function(s,si){s=s.trim();if(s.length<2)return;out.push({t:s,first:si===0});});
+    });
+    return out;
+  }
+  function terms(s){
+    var m=s.match(/[\u4E00-\u9FFF々〆]{2,}|[\u30A1-\u30FA\u30FC]{2,}|[A-Za-z][A-Za-z0-9]+/g)||[], out=[];
+    m.forEach(function(w){
+      w=w.toLowerCase();out.push([w,1]);
+      if(/^[\u4E00-\u9FFF々〆]+$/.test(w)&&w.length>=3){for(var i=0;i<w.length-1;i++)out.push([w.substr(i,2),0.5]);}
+    });
+    return out;
+  }
+  var CUE=/(結論|まず|重要|課題|決定|目的|ポイント|要点|リスク|対応|必要)/;
+  function summarize(text,k){
+    var ss=splitSentences(text);
+    if(!ss.length)return null;
+    var tf={};
+    ss.forEach(function(s,i){
+      s.i=i;s.terms=terms(s.t.normalize("NFKC"));
+      s.terms.forEach(function(x){tf[x[0]]=(tf[x[0]]||0)+x[1];});
+    });
+    var wt={};Object.keys(tf).forEach(function(w){wt[w]=tf[w]>=2?Math.log(1+tf[w]):0;});
+    var decay={}, chosen=[], used={};
+    k=Math.max(1,Math.min(k,ss.length));
+    while(chosen.length<k){
+      var best=null,bs=-1;
+      ss.forEach(function(s){
+        if(used[s.i])return;
+        var seen={},sum=0,n=0;
+        s.terms.forEach(function(x){if(seen[x[0]])return;seen[x[0]]=1;n++;sum+=wt[x[0]]*(decay[x[0]]===undefined?1:decay[x[0]]);});
+        var sc=sum/Math.sqrt(n+4), len=s.t.length;
+        if(s.first)sc*=1.1;if(s.i===0)sc*=1.3;
+        if(/\d/.test(s.t))sc*=1.05;if(CUE.test(s.t))sc*=1.1;
+        if(len<10)sc*=0.5;else if(len>120)sc*=0.85;
+        if(sc>bs){bs=sc;best=s;}
+      });
+      if(!best)break;
+      used[best.i]=1;best.rank=chosen.length;chosen.push(best);
+      best.terms.forEach(function(x){decay[x[0]]=(decay[x[0]]===undefined?1:decay[x[0]])*0.35;});
+    }
+    return {all:ss,chosen:chosen,tf:tf};
+  }
+  function keywords(tf,n){
+    var arr=Object.keys(tf).filter(function(w){return tf[w]>=2}).sort(function(a,b){return tf[b]-tf[a]||b.length-a.length}), out=[];
+    for(var i=0;i<arr.length&&out.length<n;i++){
+      var w=arr[i];
+      if(out.some(function(o){return o.indexOf(w)>=0}))continue;
+      out.push(w);
+    }
+    return out;
+  }
+  var DEC=/(決定|決まり|合意|承認|了承|確定|方針|採用|見送り)/, TODO=/(までに|期限|締切|締め切り|お願い|依頼|対応す|確認す|検討す|提出|共有す|実施す|予定|宿題|アクション|ToDo|TODO|担当|ください)/;
+  function cues(all){
+    var d=[],t=[];
+    all.forEach(function(s){if(DEC.test(s.t))d.push(s.t);else if(TODO.test(s.t))t.push(s.t);});
+    return {dec:d.slice(0,15),todo:t.slice(0,15)};
+  }
+  function render(){
+    var text=$("src").value, out=$("out");
+    out.textContent="";$("kw").textContent="";$("cues").textContent="";$("copy").hidden=true;$("kwt").hidden=true;
+    if(text.trim().length<20){$("stat").textContent="文章を入力すると、結果が表示されます（20文字以上）。";return;}
+    var res0=summarize(text,1);
+    if(!res0){$("stat").textContent="文章を読み取れませんでした。";return;}
+    var total=res0.all.length, v=$("len").value, k=v==="n"?(parseInt($("nn").value,10)||1):Math.max(1,Math.round(total*parseInt(v,10)/100));
+    var r=summarize(text,k), ch=r.chosen.slice();
+    if($("ord").value==="orig")ch.sort(function(a,b){return a.i-b.i;});
+    var lines=ch.map(function(s){return s.t;}), bullet=$("fmt").value==="bullet";
+    out.textContent=bullet?lines.map(function(x){return "・"+x;}).join("\n"):lines.join("");
+    var sumLen=lines.join("").length;
+    $("stat").textContent="原文 "+text.replace(/\s/g,"").length+"文字（"+total+"文）→ 要約 "+sumLen+"文字（"+lines.length+"文）／原文の約"+Math.round(sumLen/Math.max(1,text.replace(/\s/g,"").length)*100)+"%";
+    $("copy").hidden=false;
+    var kws=keywords(r.tf,10);
+    if(kws.length){
+      $("kwt").hidden=false;
+      kws.forEach(function(w){var sp=document.createElement("span");sp.textContent=w;sp.style.cssText="padding:2px 10px;border:1px solid var(--line);border-radius:12px;background:var(--paper);font-size:14px";$("kw").appendChild(sp);});
+    }
+    if($("cue").checked){
+      var c=cues(r.all);
+      function block(title,arr){
+        if(!arr.length)return;
+        var h=document.createElement("h2");h.textContent=title;h.style.marginTop="16px";$("cues").appendChild(h);
+        var ul=document.createElement("ul");ul.className="list";
+        arr.forEach(function(x){var li=document.createElement("li");li.className="item";var s=document.createElement("span");s.className="nm";s.textContent=x;li.appendChild(s);ul.appendChild(li);});
+        $("cues").appendChild(ul);
+      }
+      block("決定事項の候補",c.dec);block("ToDoの候補",c.todo);
+    }
+  }
+  var tm;function later(){clearTimeout(tm);tm=setTimeout(render,300);}
+  $("src").addEventListener("input",later);
+  ["len","nn","ord","fmt","cue"].forEach(function(id){$(id).addEventListener("change",render);});
+  $("len").addEventListener("change",function(){$("nw").hidden=this.value!=="n";});
+  $("go").addEventListener("click",render);
+  $("clr").addEventListener("click",function(){$("src").value="";render();});
+  $("copy").addEventListener("click",function(){
+    var t=$("out").textContent;
+    if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(function(){$("copy").textContent="コピーしました";setTimeout(function(){$("copy").textContent="結果をコピー"},1500);});}
+  });
+  $("fin").addEventListener("change",async function(){
+    var f=this.files[0];this.value="";if(!f)return;
+    if(f.size>5*1048576){$("stat").textContent="ファイルが大きすぎます（5MBまで）。";return;}
+    var buf=await f.arrayBuffer(), txt;
+    try{txt=new TextDecoder("utf-8",{fatal:true}).decode(buf);}catch(e){try{txt=new TextDecoder("shift_jis").decode(buf);}catch(e2){txt=new TextDecoder("utf-8").decode(buf);}}
+    $("src").value=txt;render();
+  });
+  render();
+})();
+</script>
+</body>
+</html>
