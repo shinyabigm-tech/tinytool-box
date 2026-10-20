@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-G1ZB4CKMD7"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-G1ZB4CKMD7');
+</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>パスワード生成ツール｜ランダム生成＋入力した言葉を組み込んだ生成</title>
+<meta name="description" content="安全なランダムパスワードの生成に加えて、入力した言葉を組み込む生成、同じ入力で再現できる生成に対応。すべてブラウザ内で処理され、送信されません。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#f3f5f8;--grid:#dfe5ee;--ink:#1b2433;--sub:#53607a;--card:#fff;--line:#c5cedd;--accent:#1f3a8a;--accent-ink:#fff;--ok:#1d6b45;--bad:#a12626;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--paper:#141a26;--grid:#1d2536;--ink:#e7ecf6;--sub:#9aa7c2;--card:#1b2334;--line:#34405a;--accent:#8fb0ff;--accent-ink:#0f1626;--ok:#6fd0a0;--bad:#ff9b9b}}
+:root[data-theme="dark"]{--paper:#141a26;--grid:#1d2536;--ink:#e7ecf6;--sub:#9aa7c2;--card:#1b2334;--line:#34405a;--accent:#8fb0ff;--accent-ink:#0f1626;--ok:#6fd0a0;--bad:#ff9b9b}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;color:var(--ink);background-color:var(--paper);background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:24px 24px;font-family:"Zen Kaku Gothic New","Hiragino Sans","Yu Gothic",Meiryo,sans-serif;line-height:1.8;font-size:16px}
+main{max-width:760px;margin:0 auto;padding:20px 16px 56px}
+.back{display:inline-block;margin-bottom:10px;color:var(--accent);text-decoration:none;font-weight:700;min-height:32px}
+h1{font-size:clamp(26px,6vw,36px);line-height:1.35;margin:0 0 6px}
+.lead{margin:0 0 22px;color:var(--sub)}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:6px;padding:16px}
+.panel + .panel{margin-top:14px}
+h2{font-size:18px;margin:0 0 10px}
+label.t{display:block;font-weight:700;margin:10px 0 4px}
+input[type=text],input[type=password],input[type=number],input[type=file],select,textarea{width:100%;font:inherit;font-size:16px;padding:8px 10px;min-height:44px;color:var(--ink);background:var(--paper);border:1px solid var(--line);border-radius:4px}
+textarea{min-height:150px;resize:vertical;line-height:1.6}
+input[type=range]{width:100%;accent-color:var(--accent);min-height:32px}
+input[type=color]{width:56px;height:44px;padding:2px;border:1px solid var(--line);border-radius:4px;background:var(--paper)}
+.row{display:grid;gap:0 14px;grid-template-columns:repeat(auto-fit,minmax(170px,1fr))}
+.chk label,.rad label{display:flex;align-items:center;gap:8px;min-height:40px;cursor:pointer}
+.chk input,.rad input{width:20px;height:20px;accent-color:var(--accent)}
+button,.btn{font:inherit;font-weight:700;min-height:44px;padding:0 18px;cursor:pointer;border-radius:4px;border:1px solid var(--accent);background:var(--accent);color:var(--accent-ink)}
+button.ghost{background:transparent;color:var(--accent)}
+button:disabled{opacity:.5;cursor:default}
+.bar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:12px}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.small{color:var(--sub);font-size:14px;margin:6px 0 0}
+.msg{min-height:1.8em;font-weight:700}
+.msg.ok{color:var(--ok)}.msg.bad{color:var(--bad)}
+.list{display:grid;gap:8px;margin:10px 0 0;padding:0;list-style:none}
+.item{display:flex;gap:10px;align-items:center;justify-content:space-between;padding:8px 10px;border:1px solid var(--line);border-radius:4px;background:var(--paper)}
+.item .nm{overflow-wrap:anywhere;flex:1;min-width:0}
+.item .sz{color:var(--sub);font-size:14px;white-space:nowrap}
+.item button{min-height:36px;padding:0 12px}
+.thumb{width:56px;height:56px;object-fit:contain;border:1px solid var(--line);border-radius:4px;background:#fff}
+.checker{background-color:#fff;background-image:linear-gradient(45deg,#d9d9d9 25%,transparent 25%,transparent 75%,#d9d9d9 75%),linear-gradient(45deg,#d9d9d9 25%,transparent 25%,transparent 75%,#d9d9d9 75%);background-size:16px 16px;background-position:0 0,8px 8px}
+article p{margin:0 0 12px}
+article dt{font-weight:700;margin-top:8px}
+article dd{margin:0 0 6px;color:var(--sub)}
+</style>
+</head>
+<body>
+<main>
+<a class="back" href="/">← tinytool-box</a>
+<h1>パスワード生成ツール</h1>
+<p class="lead">ランダムなパスワードに加えて、入力した言葉を組み込んだパスワードも作れます。すべて端末の中で作られ、送信されません。</p>
+<section class="panel">
+<label class="t" for="mode">作り方</label>
+<select id="mode">
+<option value="rand">ランダムに生成する（定番）</option>
+<option value="mix">入力した言葉を組み込んで生成する（毎回変わる）</option>
+<option value="repro">マスターフレーズから生成する（同じ入力なら同じ結果）</option>
+</select>
+
+<div id="p-mix" hidden>
+<label class="t" for="word">組み込む言葉（英数字・記号）</label>
+<input type="text" id="word" placeholder="例：test" autocomplete="off" maxlength="30">
+<div class="row">
+<div><label class="t" for="mlen">ランダム部分の文字数：<span id="mv">7</span></label><input type="range" id="mlen" min="4" max="40" value="7"></div>
+<div><label class="t" for="pos">言葉の位置</label>
+<select id="pos"><option value="front">先頭（言葉のあとにランダムな文字）</option><option value="end">末尾（ランダムな文字のあとに言葉）</option><option value="rand">ランダムな位置</option></select></div>
+</div>
+<div class="chk"><label><input type="checkbox" id="twt">言葉を少し変形する（大文字・小文字や記号に置き換える）</label></div>
+<p class="small">入力した言葉は、そのまま残して、ランダムな文字をつなげます。記号は、1文字だけ使います。</p>
+</div>
+
+<div id="p-repro" hidden>
+<div class="row">
+<div><label class="t" for="master">マスターフレーズ（自分だけが知る秘密）</label><input type="password" id="master" autocomplete="off" placeholder="長くて推測されにくい文章"></div>
+<div><label class="t" for="svc">サービス名など（入力値）</label><input type="text" id="svc" autocomplete="off" placeholder="例：company-mail"></div>
+<div><label class="t" for="gen">世代番号（変更したいとき上げる）</label><input type="number" id="gen" min="1" max="99" value="1" inputmode="numeric"></div>
+</div>
+<p class="small">マスターフレーズと入力値が同じなら、いつでも、同じパスワードを作り直せます。パスワード自体は、どこにも保存されません。</p>
+</div>
+
+<div class="row">
+<div id="lenw"><label class="t" for="len">文字数：<span id="lv">16</span></label><input type="range" id="len" min="8" max="64" value="16"></div>
+<div id="cntw"><label class="t" for="cnt">作る個数</label><select id="cnt"><option>1</option><option>3</option><option>5</option><option>10</option></select></div>
+</div>
+<div class="chk">
+<label><input type="checkbox" id="s-lower" checked>小文字（a–z）</label>
+<label><input type="checkbox" id="s-upper" checked>大文字（A–Z）</label>
+<label><input type="checkbox" id="s-digit" checked>数字（0–9）</label>
+<label><input type="checkbox" id="s-symbol" checked>記号（!@#$ など）</label>
+<label><input type="checkbox" id="amb" checked>紛らわしい文字を除く（O と 0、l と 1 など）</label>
+</div>
+<p class="small" id="ex"></p>
+<div class="bar"><button id="go" type="button">生成する</button></div>
+<p class="msg" id="msg" role="status"></p>
+<ul class="list" id="out"></ul>
+<p class="small" id="strength"></p>
+</section>
+<article class="panel">
+<h2>使い方と解説</h2>
+<p>パスワードは、すべて、お使いのブラウザの中で作られ、外部には送信されません。ランダムな部分には、ブラウザの暗号用の乱数（crypto.getRandomValues）を使っています。</p>
+<dl>
+<dt>出力の例（実際の結果は、毎回変わります）</dt>
+<dd>ランダム：<code>m4Kt#9Zq!Wx2Rp7B</code><br>言葉を組み込む（言葉「test」、ランダム部分7文字）：<code>test23gmtm%</code><br>マスターフレーズから生成（下の説明の入力例）：<code>&amp;=(BDt![2(EuwByr</code></dd>
+<dt>ランダムに生成する</dt>
+<dd>文字の種類と長さを選ぶと、毎回違うパスワードが作られます。パスワード管理ソフトに保存して使う、いちばん安全な方法です。</dd>
+<dt>入力した言葉を組み込んで生成する</dt>
+<dd>サービス名や、覚えやすい言葉を入れると、その言葉を大文字・小文字や記号に少し変えて、ランダムな文字の中に混ぜます。覚えるきっかけが欲しいときに向いています。強度の見積もりには、ランダム部分だけを数えています。言葉の部分は、推測されるおそれがあるためです。</dd>
+<dt>マスターフレーズから生成する</dt>
+<dd>マスターフレーズと、サービス名などの入力値から、同じ結果を再現できます。保存せずに、サービスごとに別のパスワードを使えるのが利点です。パスワードを変えたいときは、世代番号を上げてください。ただし、マスターフレーズが推測されやすいと、すべてのパスワードが危険になります。長く、他で使っていない文章にしてください。</dd>
+</dl>
+<p>作ったパスワードは、画面を閉じる前に、パスワード管理ソフトなどに安全に保管してください。このサイトは、入力や結果を記録しません。</p>
+</article>
+</main>
+<script>
+(function(){
+  var $=function(i){return document.getElementById(i)};
+  var SETS={lower:"abcdefghijklmnopqrstuvwxyz",upper:"ABCDEFGHIJKLMNOPQRSTUVWXYZ",digit:"0123456789",symbol:"!@#$%^&*()-_=+[]{};:,.?/"};
+  var AMB="O0oIl1|";
+  function rndInt(n){
+    var a=new Uint32Array(1), lim=Math.floor(4294967296/n)*n;
+    do{crypto.getRandomValues(a);}while(a[0]>=lim);
+    return a[0]%n;
+  }
+  function pick(s){return s.charAt(rndInt(s.length));}
+  function shuffle(arr){for(var i=arr.length-1;i>0;i--){var j=rndInt(i+1),t=arr[i];arr[i]=arr[j];arr[j]=t;}return arr;}
+  function sets(ex){
+    var out=[];
+    ["lower","upper","digit","symbol"].forEach(function(k){
+      if(!$("s-"+k).checked)return;
+      var s=SETS[k];
+      if(ex)s=s.split("").filter(function(c){return AMB.indexOf(c)<0}).join("");
+      if(s)out.push(s);
+    });
+    return out;
+  }
+  function genRandom(len,ss){
+    var pool=ss.join(""), chars=ss.map(pick);
+    while(chars.length<len)chars.push(pick(pool));
+    return shuffle(chars).join("");
+  }
+  var LEET={a:"@",o:"0",i:"!",e:"3",s:"$",l:"1",t:"7"};
+  function twist(word){
+    return word.split("").map(function(c){
+      var lc=c.toLowerCase();
+      if(LEET[lc]&&rndInt(2)===0)return LEET[lc];
+      if(/[a-z]/i.test(c))return rndInt(2)===0?c.toUpperCase():c.toLowerCase();
+      return c;
+    }).join("");
+  }
+  function symOf(ss){return ss.filter(function(x){return x.indexOf("@")>=0})[0];}
+  function genMix(rlen,ss,word,place,tw){
+    var w=tw?twist(word):word, sym=symOf(ss), alnum=ss.filter(function(x){return x!==sym}), pool=alnum.join("");
+    var need=ss.filter(function(x){return !w.split("").some(function(c){return x.indexOf(c)>=0})});
+    if(need.length>rlen)throw new Error("ランダム部分の文字数を増やしてください。");
+    var rnd=need.map(pick);
+    // symbols are used only once (when required), so the result stays readable, e.g. test23gmtm%
+    while(rnd.length<rlen)rnd.push(pool?pick(pool):pick(sym));
+    var r=shuffle(rnd).join("");
+    if(place==="front")return w+r;
+    if(place==="end")return r+w;
+    var pos=rndInt(r.length+1);
+    return r.slice(0,pos)+w+r.slice(pos);
+  }
+  function mixBits(ss,rl){
+    var sym=symOf(ss), alnum=ss.filter(function(x){return x!==sym}).join("");
+    if(sym&&alnum)return Math.round(Math.log2(alnum.length)*(rl-1)+Math.log2(sym.length)+Math.log2(rl));
+    return bitsOf((alnum||sym).length,rl);
+  }
+  async function genRepro(len,ss,master,svc,gen){
+    var enc=new TextEncoder();
+    var key=await crypto.subtle.importKey("raw",enc.encode(master),"PBKDF2",false,["deriveBits"]);
+    var bits=await crypto.subtle.deriveBits({name:"PBKDF2",hash:"SHA-256",salt:enc.encode("tinytool-box|"+svc+"|"+gen),iterations:200000},key,256);
+    var seed=new Uint8Array(bits), stream=[];
+    for(var c=0;c<32;c++){
+      var inp=new Uint8Array(seed.length+1);inp.set(seed);inp[seed.length]=c;
+      stream=stream.concat(Array.from(new Uint8Array(await crypto.subtle.digest("SHA-256",inp))));
+    }
+    var p=0;
+    function nextInt(n){
+      var lim=Math.floor(65536/n)*n;
+      for(;;){
+        if(p+2>stream.length)throw new Error("生成に失敗しました。もう一度お試しください。");
+        var v=(stream[p]<<8)|stream[p+1];p+=2;
+        if(v<lim)return v%n;
+      }
+    }
+    var pool=ss.join(""), chars=ss.map(function(s){return s.charAt(nextInt(s.length))});
+    while(chars.length<len)chars.push(pool.charAt(nextInt(pool.length)));
+    for(var i=chars.length-1;i>0;i--){var j=nextInt(i+1),t=chars[i];chars[i]=chars[j];chars[j]=t;}
+    return chars.join("");
+  }
+  function bitsOf(poolSize,n){return Math.round(Math.log2(poolSize)*n);}
+  function label(b){return b<50?"弱い":b<70?"ふつう":b<100?"強い":"非常に強い";}
+  function msg(t,c){var m=$("msg");m.textContent=t;m.className="msg"+(c?" "+c:"");}
+  function addItem(pw){
+    var li=document.createElement("li");li.className="item";
+    var s=document.createElement("span");s.className="nm";s.textContent=pw;s.style.fontFamily="ui-monospace,Menlo,Consolas,monospace";s.style.fontSize="17px";
+    var b=document.createElement("button");b.type="button";b.textContent="コピー";
+    b.addEventListener("click",function(){
+      if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(pw).then(function(){msg("コピーしました。","ok")},function(){msg("コピーできませんでした。長押しで選択してください。","bad")});}
+      else{msg("コピーできませんでした。長押しで選択してください。","bad");}
+    });
+    li.appendChild(s);li.appendChild(b);$("out").appendChild(li);
+  }
+  $("go").addEventListener("click",async function(){
+    var mode=$("mode").value, len=parseInt($("len").value,10), ss=sets($("amb").checked);
+    $("out").textContent="";$("strength").textContent="";msg("");
+    if(!ss.length){msg("文字の種類を1つ以上選んでください。","bad");return;}
+    if(mode!=="mix"&&ss.length>len){msg("文字数が少なすぎます。","bad");return;}
+    var pool=ss.join("").length;
+    try{
+      if(mode==="rand"){
+        var n=parseInt($("cnt").value,10);
+        for(var i=0;i<n;i++)addItem(genRandom(len,ss));
+        var b=bitsOf(pool,len);$("strength").textContent="強度の目安：約"+b+"ビット（"+label(b)+"）";
+      }else if(mode==="mix"){
+        var w=$("word").value.trim(), rl=parseInt($("mlen").value,10);
+        if(!w){msg("組み込む言葉を入力してください。","bad");return;}
+        var n2=parseInt($("cnt").value,10);
+        for(var k=0;k<n2;k++)addItem(genMix(rl,ss,w,$("pos").value,$("twt").checked));
+        var rb=mixBits(ss,rl);$("strength").textContent="強度の目安：ランダム部分のみで約"+rb+"ビット（"+label(rb)+"）。入力した言葉の部分は数えていません。";
+      }else{
+        var m=$("master").value, sv=$("svc").value.trim();
+        if(!m||!sv){msg("マスターフレーズと、サービス名などを入力してください。","bad");return;}
+        this.disabled=true;msg("生成しています…");
+        var pw=await genRepro(len,ss,m,sv,parseInt($("gen").value,10)||1);
+        msg("");addItem(pw);
+        var rb2=bitsOf(pool,len);$("strength").textContent="文字数としての強度は約"+rb2+"ビットですが、実際の強さは、マスターフレーズの強さが上限です。";
+        this.disabled=false;
+      }
+    }catch(e){msg("生成できませんでした："+e.message,"bad");this.disabled=false;}
+  });
+  $("len").addEventListener("input",function(){$("lv").textContent=this.value;});
+  var EX={
+    rand:"例：文字数16 → m4Kt#9Zq!Wx2Rp7B（実際の結果は、毎回変わります）",
+    mix:"例：言葉「test」、ランダム部分7文字 → test23gmtm%（ランダム部分は、毎回変わります）",
+    repro:"例：マスターフレーズ「correct horse battery staple」、サービス名「company-mail」、世代1、16文字 → &=(BDt![2(EuwByr（同じ入力なら、いつでも同じ結果）。この例のマスターフレーズは、実際には使わないでください。"
+  };
+  function setMode(){
+    var v=$("mode").value;
+    $("p-mix").hidden=v!=="mix";$("p-repro").hidden=v!=="repro";$("cntw").hidden=v==="repro";$("lenw").hidden=v==="mix";
+    $("s-upper").checked=(v!=="mix");
+    $("ex").textContent=EX[v];
+    $("out").textContent="";$("strength").textContent="";msg("");
+  }
+  $("mode").addEventListener("change",setMode);
+  $("mlen").addEventListener("input",function(){$("mv").textContent=this.value;});
+  setMode();
+})();
+</script>
+</body>
+</html>
