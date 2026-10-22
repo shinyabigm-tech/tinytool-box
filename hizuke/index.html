@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-G1ZB4CKMD7"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-G1ZB4CKMD7');
+</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>日付一括変換ツール｜文書内の和暦・西暦をまとめて変換（令和・平成・昭和対応）</title>
+<meta name="description" content="契約書や届出書の文章を貼るだけで、中の日付（令和8年10月21日、2026/10/21、R8.10.21 など）を、和暦・西暦にまとめて変換。元号の境目も正しく判定。文章は外部に送信されません。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#f3f5f8;--grid:#dfe5ee;--ink:#1b2433;--sub:#53607a;--card:#fff;--line:#c5cedd;--accent:#1f3a8a;--accent-ink:#fff;--ok:#1d6b45;--bad:#a12626;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--paper:#141a26;--grid:#1d2536;--ink:#e7ecf6;--sub:#9aa7c2;--card:#1b2334;--line:#34405a;--accent:#8fb0ff;--accent-ink:#0f1626;--ok:#6fd0a0;--bad:#ff9b9b}}
+:root[data-theme="dark"]{--paper:#141a26;--grid:#1d2536;--ink:#e7ecf6;--sub:#9aa7c2;--card:#1b2334;--line:#34405a;--accent:#8fb0ff;--accent-ink:#0f1626;--ok:#6fd0a0;--bad:#ff9b9b}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;color:var(--ink);background-color:var(--paper);background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:24px 24px;font-family:"Zen Kaku Gothic New","Hiragino Sans","Yu Gothic",Meiryo,sans-serif;line-height:1.8;font-size:16px}
+main{max-width:760px;margin:0 auto;padding:20px 16px 56px}
+.back{display:inline-block;margin-bottom:10px;color:var(--accent);text-decoration:none;font-weight:700;min-height:32px}
+h1{font-size:clamp(26px,6vw,36px);line-height:1.35;margin:0 0 6px}
+.lead{margin:0 0 22px;color:var(--sub)}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:6px;padding:16px}
+.panel + .panel{margin-top:14px}
+h2{font-size:18px;margin:0 0 10px}
+label.t{display:block;font-weight:700;margin:10px 0 4px}
+input[type=text],input[type=password],input[type=number],input[type=file],select,textarea{width:100%;font:inherit;font-size:16px;padding:8px 10px;min-height:44px;color:var(--ink);background:var(--paper);border:1px solid var(--line);border-radius:4px}
+textarea{min-height:150px;resize:vertical;line-height:1.6}
+input[type=range]{width:100%;accent-color:var(--accent);min-height:32px}
+input[type=color]{width:56px;height:44px;padding:2px;border:1px solid var(--line);border-radius:4px;background:var(--paper)}
+.row{display:grid;gap:0 14px;grid-template-columns:repeat(auto-fit,minmax(170px,1fr))}
+.chk label,.rad label{display:flex;align-items:center;gap:8px;min-height:40px;cursor:pointer}
+.chk input,.rad input{width:20px;height:20px;accent-color:var(--accent)}
+button,.btn{font:inherit;font-weight:700;min-height:44px;padding:0 18px;cursor:pointer;border-radius:4px;border:1px solid var(--accent);background:var(--accent);color:var(--accent-ink)}
+button.ghost{background:transparent;color:var(--accent)}
+button:disabled{opacity:.5;cursor:default}
+.bar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:12px}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.small{color:var(--sub);font-size:14px;margin:6px 0 0}
+.msg{min-height:1.8em;font-weight:700}
+.msg.ok{color:var(--ok)}.msg.bad{color:var(--bad)}
+.list{display:grid;gap:8px;margin:10px 0 0;padding:0;list-style:none}
+.item{display:flex;gap:10px;align-items:center;justify-content:space-between;padding:8px 10px;border:1px solid var(--line);border-radius:4px;background:var(--paper)}
+.item .nm{overflow-wrap:anywhere;flex:1;min-width:0}
+.item .sz{color:var(--sub);font-size:14px;white-space:nowrap}
+.item button{min-height:36px;padding:0 12px}
+.thumb{width:56px;height:56px;object-fit:contain;border:1px solid var(--line);border-radius:4px;background:#fff}
+.checker{background-color:#fff;background-image:linear-gradient(45deg,#d9d9d9 25%,transparent 25%,transparent 75%,#d9d9d9 75%),linear-gradient(45deg,#d9d9d9 25%,transparent 25%,transparent 75%,#d9d9d9 75%);background-size:16px 16px;background-position:0 0,8px 8px}
+article p{margin:0 0 12px}
+article dt{font-weight:700;margin-top:8px}
+article dd{margin:0 0 6px;color:var(--sub)}
+:root{--hl:#c9f0d5;--hlt:#0b5a2a;--wn:#ffe2b8;--wnt:#7a4a00}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--hl:#1d4d31;--hlt:#b8f2cc;--wn:#5a4318;--wnt:#ffdca3}}
+:root[data-theme="dark"]{--hl:#1d4d31;--hlt:#b8f2cc;--wn:#5a4318;--wnt:#ffdca3}
+mark.ok{background:var(--hl);color:var(--hlt);border-radius:2px;padding:0 1px}
+mark.wn{background:var(--wn);color:var(--wnt);border-radius:2px;padding:0 1px}
+.key{display:flex;gap:14px;font-size:14px;margin:0 0 8px;color:var(--sub);flex-wrap:wrap}
+.chkrow{display:flex;align-items:center;gap:10px;flex:1;min-width:0;cursor:pointer}
+.chkrow input{width:20px;height:20px;accent-color:var(--accent);flex:none}
+.arrow{color:var(--sub)}
+</style>
+</head>
+<body>
+<main>
+<a class="back" href="/">← tinytool-box</a>
+<h1>日付一括変換ツール（和暦・西暦）</h1>
+<p class="lead">文章の中の日付を、和暦・西暦に、まとめて変換します。文章は端末の外に送信されません。</p>
+<section class="panel">
+<label class="t" for="src">文章を貼り付ける</label>
+<textarea id="src" placeholder="契約書、届出書、議事録などの文章を貼り付けてください" style="min-height:180px"></textarea>
+<div class="bar"><button id="sample" class="ghost" type="button">サンプルを入れる</button><button id="clr" class="ghost" type="button">クリア</button></div>
+<div class="row">
+<div><label class="t" for="to">変換後の形式</label>
+<select id="to">
+<option value="wareki">和暦　令和8年10月21日</option>
+<option value="seireki">西暦　2026年10月21日</option>
+<option value="p1">西暦（和暦を併記）　2026年10月21日（令和8年10月21日）</option>
+<option value="p2">和暦（西暦を併記）　令和8年10月21日（2026年10月21日）</option>
+<option value="slash">西暦　2026/10/21</option>
+<option value="iso">西暦　2026-10-21（ISO形式）</option>
+<option value="abbr">和暦の略号　R8.10.21</option>
+<option value="kanji">和暦・漢数字　令和八年十月二十一日</option>
+</select></div>
+</div>
+<div class="chk">
+<label><input type="checkbox" id="gan" checked>1年は「元年」と書く（令和元年）</label>
+<label><input type="checkbox" id="pad">月日をゼロ埋めする（2026/01/05）</label>
+<label><input type="checkbox" id="yr" checked>年・年度だけの表記（令和8年度、2026年度）も変換する</label>
+</div>
+</section>
+
+<section class="panel" aria-live="polite">
+<h2>変換結果</h2>
+<p class="small" id="stat">文章を貼り付けると、日付が見つかり次第、変換されます。</p>
+<div class="key"><span><mark class="ok">変換した箇所</mark></span><span><mark class="wn">要確認（変換していません）</mark></span></div>
+<div id="out" style="white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.9;padding:12px;background:var(--paper);border:1px solid var(--line);border-radius:4px;min-height:60px"></div>
+<div class="bar"><button id="copy" type="button" disabled>変換後の文章をコピー</button><button id="all" class="ghost" type="button">すべて選択</button><button id="none" class="ghost" type="button">すべて解除</button></div>
+<p class="small">下の一覧で、チェックを外した日付は、元のままにします。</p>
+<ul class="list" id="rows"></ul>
+</section>
+<article class="panel">
+<h2>使い方と解説</h2>
+<p>文章を貼り付けると、中の日付を探して、選んだ形式に、まとめて書き換えます。変換した箇所は色が付き、一覧で、1つずつ確認して、チェックを外せます。文章は端末の中だけで処理され、外部には送信されません。1つの日付だけを調べるときは、<a href="/wareki/" style="color:var(--accent)">和暦・西暦変換ツール</a>が便利です。</p>
+<dl>
+<dt>変換できる書き方</dt>
+<dd>・西暦：2026年10月21日、2026/10/21、2026-10-21、2026.10.21、全角数字の２０２６年１０月２１日<br>
+・和暦：令和8年10月21日、令和元年5月1日、令和八年十月二十一日、㋿8年10月21日<br>
+・略号：R8.10.21、H31.4.30、S64.1.7<br>
+・年月まで、または年度の表記：令和8年4月、2026年度、令和元年度</dd>
+<dt>書き方もそろえます</dt>
+<dd>変換後の形式を選ぶと、すでに同じ西暦や和暦の日付も、書き方をそろえます（たとえば、「西暦　2026年10月21日」を選ぶと、2027/3/31 も、2027年3月31日に直ります）。一覧で、チェックを外せば、その日付は、そのままにできます。</dd>
+<dt>変換しないもの・要確認になるもの</dt>
+<dd>・年だけの西暦（「2026年」だけ）は、年号が切り替わる年に、決められないため、変換しません。「2026年度」は、4月1日の元号で判断します。<br>
+・元号の範囲外の日付（平成31年5月1日など）、存在しない日付（2月30日など）は、オレンジ色で「要確認」にして、そのままにします。<br>
+・元号が切り替わった月（1989年1月など）は、日がないと判断できないので、要確認です。<br>
+・1873年より前の日付（旧暦の時代）は、対応していません。</dd>
+<dt>元号の切り替わり</dt>
+<dd>令和は2019年5月1日、平成は1989年1月8日、昭和は1926年12月25日、大正は1912年7月30日から始まりました。日付ごとに、この境目を使って、元号を決めます。</dd>
+<dt>併記の形式</dt>
+<dd>「西暦（和暦を併記）」を選ぶと、2026年10月21日（令和8年10月21日）のように、両方が書かれます。すでに併記されている日付は、二重にしません。</dd>
+</dl>
+<p>日付以外の数字（バージョン番号、金額など）を、日付と間違えないよう、書き方を厳しく見ていますが、誤って変換される場合もあります。契約書や届出書など、重要な文書は、変換後に、必ず原文と見比べてください。</p>
+</article>
+</main>
+<script>
+(function(){
+  var $=function(i){return document.getElementById(i)};
+  var ERAS=[{n:"令和",y:2019,m:5,d:1,ab:"R"},{n:"平成",y:1989,m:1,d:8,ab:"H"},{n:"昭和",y:1926,m:12,d:25,ab:"S"},{n:"大正",y:1912,m:7,d:30,ab:"T"},{n:"明治",y:1868,m:1,d:1,ab:"M"}];
+  var START={"令和":2019,"平成":1989,"昭和":1926,"大正":1912,"明治":1868};
+  var MAXN={"令和":82,"平成":31,"昭和":64,"大正":15,"明治":45};
+  var ALIAS={"㋿":"令和","㍻":"平成","㍼":"昭和","㍽":"大正","㍾":"明治"};
+  var ABBR={R:"令和",H:"平成",S:"昭和",T:"大正",M:"明治"};
+  var KD={"〇":0,"零":0,"一":1,"二":2,"三":3,"四":4,"五":5,"六":6,"七":7,"八":8,"九":9};
+  var KS=["〇","一","二","三","四","五","六","七","八","九"];
+  function dim(y,m){return new Date(Date.UTC(y,m,0)).getUTCDate();}
+  function kNum(s){
+    var m=s.match(/^(?:([一二三四五六七八九])?(百))?(?:([一二三四五六七八九])?(十))?([一二三四五六七八九])?$/);
+    if(m&&(m[2]||m[4])){
+      return (m[2]?(m[1]?KD[m[1]]:1)*100:0)+(m[4]?(m[3]?KD[m[3]]:1)*10:0)+(m[5]?KD[m[5]]:0);
+    }
+    if(/^[〇零一二三四五六七八九]+$/.test(s)){var t="";for(var i=0;i<s.length;i++)t+=KD[s.charAt(i)];return parseInt(t,10);}
+    return NaN;
+  }
+  function toN(s){if(s==="元")return 1;s=s.normalize("NFKC");if(/^[0-9]+$/.test(s))return parseInt(s,10);return kNum(s);}
+  function numToK(n){
+    if(n>=100)return String(n);
+    var t=Math.floor(n/10), o=n%10;
+    if(t===0)return KS[o];
+    return (t>1?KS[t]:"")+"十"+(o?KS[o]:"");
+  }
+  function eraOf(y,m,d){
+    if(y<1873||y>2100)return null;
+    for(var i=0;i<ERAS.length;i++){
+      var e=ERAS[i];
+      if(y>e.y||(y===e.y&&(m>e.m||(m===e.m&&d>=e.d))))return {n:e.n,k:y-e.y+1,ab:e.ab};
+    }
+    return null;
+  }
+  function abOf(n){for(var i=0;i<ERAS.length;i++)if(ERAS[i].n===n)return ERAS[i].ab;}
+  function resolveEra(name,n,m,d,yl,nendo){
+    if(!(n>=1))return {warn:"年の数字を読み取れません"};
+    if(name==="明治"&&n<6)return {warn:"明治5年以前は旧暦のため、未対応です"};
+    if(n>MAXN[name])return {warn:name+"は"+MAXN[name]+"年までです（元号の範囲外）"};
+    var y=START[name]+n-1;
+    if(y>2100)return {warn:"2100年を超える日付は、未対応です"};
+    var r={y:y,m:m||0,d:d||0,e:{n:name,k:n,ab:abOf(name)},yl:yl,nendo:nendo};
+    if(yl)return r;
+    if(!(m>=1&&m<=12))return {warn:"存在しない月です"};
+    if(d){
+      if(d<1||d>dim(y,m))return {warn:"存在しない日付です"};
+      var e=eraOf(y,m,d);
+      if(!e||e.n!==name)return {warn:"その日は"+name+"ではありません（元号の範囲外）"};
+    }else{
+      var a=eraOf(y,m,1), b=eraOf(y,m,dim(y,m));
+      if(!((a&&a.n===name)||(b&&b.n===name)))return {warn:"その月は"+name+"ではありません（元号の範囲外）"};
+    }
+    return r;
+  }
+  function resolveGreg(y,m,d,nendo){
+    if(y<1873||y>2100)return {warn:"1873〜2100年の範囲外です"};
+    if(nendo){var e0=eraOf(y,4,1);return {y:y,m:0,d:0,e:e0,yl:true,nendo:true};}
+    if(!(m>=1&&m<=12))return {warn:"存在しない月です"};
+    if(d){
+      if(d<1||d>dim(y,m))return {warn:"存在しない日付です"};
+      return {y:y,m:m,d:d,e:eraOf(y,m,d),yl:false};
+    }
+    if((y===1989&&m===1)||(y===1926&&m===12)||(y===1912&&m===7))return {warn:"元号が切り替わる月です。日まで必要です"};
+    return {y:y,m:m,d:0,e:eraOf(y,m,1),yl:false};
+  }
+  function fmt(r,o,to){
+    var pd=function(n,force){return ((force||o.pad)&&n<10)?"0"+n:String(n);};
+    var tail=function(f){return r.yl?(r.nendo?"度":""):((r.m?f(r.m)+"月":"")+(r.d?f(r.d)+"日":""));};
+    var ep=function(kan){var k=r.e.k;return r.e.n+((k===1&&o.gan)?"元":(kan?numToK(k):k))+"年";};
+    var W=function(){return ep(false)+tail(String);};
+    var K=function(){return ep(true)+tail(numToK);};
+    var S=function(){return r.y+"年"+tail(String);};
+    var join=function(sep,force){return [r.y].concat(r.m?[pd(r.m,force)]:[]).concat(r.d?[pd(r.d,force)]:[]).join(sep);};
+    var AB=function(){return r.e.ab+r.e.k+(r.m?"."+pd(r.m):"")+(r.d?"."+pd(r.d):"");};
+    var res={wareki:W,kanji:K,seireki:S,slash:function(){return r.yl?S():join("/");},iso:function(){return r.yl?S():join("-",true);},abbr:function(){return r.yl?W():AB();},
+      p1:function(){return S()+"（"+W()+"）";},p2:function(){return W()+"（"+S()+"）";}};
+    return {main:res[to](),S:S(),W:W()};
+  }
+  function collect(text){
+    var NUMS="[0-9０-９]+", KN="[〇零一二三四五六七八九十百]+", NK="(?:"+NUMS+"|"+KN+")", EYR="(?:元|"+NK+")", out=[], m;
+    var reA=new RegExp("(令和|平成|昭和|大正|明治|[㋿㍻㍼㍽㍾])("+EYR+")年(?:(度)|("+NK+")月(?:("+NK+")日)?)?","g");
+    var reB=new RegExp("(^|[^0-9０-９])([0-9０-９]{4})年(?:(度)|("+NUMS+")月(?:("+NUMS+")日)?)?","g");
+    var reC=new RegExp("(^|[^0-9０-９./／．\\-－])([0-9０-９]{4})([/.／．\\-－])([0-9０-９]{1,2})\\3([0-9０-９]{1,2})(?![0-9０-９]|[/.／．\\-－][0-9０-９])","g");
+    var reD=new RegExp("(^|[^A-Za-z0-9])([RHSTM])([0-9]{1,2})([./\\-])([0-9]{1,2})\\4([0-9]{1,2})(?![0-9]|[./\\-][0-9])","g");
+    while((m=reA.exec(text))){
+      var name=ALIAS[m[1]]||m[1];
+      out.push({s:m.index,e:m.index+m[0].length,src:"era",era:name,n:toN(m[2]),nendo:!!m[3],mo:m[4]?toN(m[4]):0,da:m[5]?toN(m[5]):0,yl:!m[4]});
+    }
+    while((m=reB.exec(text))){
+      var yl=!m[3]&&!m[4];
+      if(yl)continue;
+      out.push({s:m.index+m[1].length,e:m.index+m[0].length,src:"greg",y:parseInt(m[2].normalize("NFKC"),10),nendo:!!m[3],mo:m[4]?parseInt(m[4].normalize("NFKC"),10):0,da:m[5]?parseInt(m[5].normalize("NFKC"),10):0,yl:!!m[3]});
+    }
+    while((m=reC.exec(text))){
+      out.push({s:m.index+m[1].length,e:m.index+m[0].length,src:"greg",y:parseInt(m[2].normalize("NFKC"),10),nendo:false,mo:parseInt(m[4].normalize("NFKC"),10),da:parseInt(m[5].normalize("NFKC"),10),yl:false});
+    }
+    while((m=reD.exec(text))){
+      out.push({s:m.index+m[1].length,e:m.index+m[0].length,src:"era",era:ABBR[m[2]],n:parseInt(m[3],10),nendo:false,mo:parseInt(m[5],10),da:parseInt(m[6],10),yl:false});
+    }
+    out.sort(function(a,b){return a.s-b.s;});
+    var res=[],end=-1;
+    out.forEach(function(x){if(x.s>=end){res.push(x);end=x.e;}});
+    return res;
+  }
+  function scan(text,o){
+    var items=[];
+    collect(text).forEach(function(x){
+      var before=text.slice(x.s,x.e);
+      if(x.yl&&!o.yr)return;
+      var r=x.src==="era"?resolveEra(x.era,x.n,x.mo,x.da,x.yl,x.nendo):resolveGreg(x.y,x.mo,x.da,x.nendo);
+      if(r.warn){items.push({s:x.s,e:x.e,before:before,after:null,reason:r.warn,on:false});return;}
+      var f=fmt(r,o,o.to), after=f.main;
+      if(o.to==="p1"||o.to==="p2"){
+        var primary=o.to==="p1"?f.S:f.W, inner=o.to==="p1"?f.W:f.S;
+        var tailTxt=text.slice(x.e).replace(/^\s*[（(]\s*/,function(mm){return mm;});
+        var mt=text.slice(x.e).match(/^\s*[（(]\s*/);
+        if(mt&&text.slice(x.e+mt[0].length).indexOf(inner)===0)return;
+        var pre=text.slice(Math.max(0,x.s-primary.length-2),x.s);
+        if(pre.slice(-1)==="（"||pre.slice(-1)==="("){if(pre.slice(0,-1).slice(-primary.length)===primary)return;}
+      }
+      if(after===before)return;
+      items.push({s:x.s,e:x.e,before:before,after:after,on:true});
+    });
+    return items;
+  }
+  function apply(text,items){
+    var out="",pos=0;
+    items.forEach(function(it){if(it.after!==null&&it.on){out+=text.slice(pos,it.s)+it.after;pos=it.e;}});
+    return out+text.slice(pos);
+  }
+  if(typeof window!=="undefined"&&window.__hizukeTest){window.__hizukeTest.scan=scan;window.__hizukeTest.apply=apply;}
+  var items=[], text="";
+  function opts(){return {to:$("to").value,gan:$("gan").checked,pad:$("pad").checked,yr:$("yr").checked};}
+  function draw(){
+    var out=$("out"),rows=$("rows");out.textContent="";rows.textContent="";
+    var conv=items.filter(function(i){return i.after!==null}), warn=items.filter(function(i){return i.after===null});
+    var pos=0,frag=document.createDocumentFragment();
+    items.forEach(function(it){
+      if(it.s<pos)return;
+      if(it.s>pos)frag.appendChild(document.createTextNode(text.slice(pos,it.s)));
+      if(it.after===null){var w=document.createElement("mark");w.className="wn";w.textContent=it.before;frag.appendChild(w);}
+      else if(it.on){var g=document.createElement("mark");g.className="ok";g.textContent=it.after;frag.appendChild(g);}
+      else frag.appendChild(document.createTextNode(it.before));
+      pos=it.e;
+    });
+    frag.appendChild(document.createTextNode(text.slice(pos)));
+    out.appendChild(frag);
+    var onN=conv.filter(function(i){return i.on}).length;
+    if(!text.trim()){$("stat").textContent="文章を貼り付けると、日付が見つかり次第、変換されます。";}
+    else if(!items.length){$("stat").textContent="変換できる日付は、見つかりませんでした。";}
+    else{$("stat").textContent=conv.length+"か所の日付を見つけました（変換する："+onN+"か所／要確認："+warn.length+"か所）";}
+    $("copy").disabled=!onN;
+    var LIM=300;
+    items.slice(0,LIM).forEach(function(it){
+      var li=document.createElement("li");li.className="item";
+      if(it.after===null){
+        var s=document.createElement("span");s.className="nm";s.textContent=it.before+"　要確認："+it.reason;li.appendChild(s);
+      }else{
+        var lb=document.createElement("label");lb.className="chkrow";
+        var cb=document.createElement("input");cb.type="checkbox";cb.checked=it.on;
+        cb.addEventListener("change",function(){it.on=cb.checked;draw();});
+        var sp=document.createElement("span");sp.className="nm";sp.textContent=it.before+" → "+it.after;
+        lb.appendChild(cb);lb.appendChild(sp);li.appendChild(lb);
+      }
+      rows.appendChild(li);
+    });
+    if(items.length>LIM){var more=document.createElement("li");more.className="small";more.textContent="ほか"+(items.length-LIM)+"か所（一覧には、最初の"+LIM+"か所だけを表示しています）";rows.appendChild(more);}
+  }
+  function run(){text=$("src").value;items=scan(text,opts());draw();}
+  var tm;function later(){clearTimeout(tm);tm=setTimeout(run,250);}
+  $("src").addEventListener("input",later);
+  ["to","gan","pad","yr"].forEach(function(id){$(id).addEventListener("change",run);});
+  $("all").addEventListener("click",function(){items.forEach(function(i){if(i.after!==null)i.on=true;});draw();});
+  $("none").addEventListener("click",function(){items.forEach(function(i){i.on=false;});draw();});
+  $("clr").addEventListener("click",function(){$("src").value="";run();});
+  $("sample").addEventListener("click",function(){
+    $("src").value="業務委託契約書\n\n本契約は、令和8年4月1日から効力を生じ、2027/3/31に満了する。\nなお、平成31年4月30日付の覚書（H30.10.1締結）は、令和元年5月1日をもって失効している。\n令和7年度の報告は2026年6月末までに提出し、2026年度の計画書は令和八年十月二十一日までに作成する。\n契約書のバージョンは 2.1.3、金額は1,500,000円とする。\n平成31年5月1日の記載は、元号の範囲外のため、要確認とする。";
+    run();
+  });
+  $("copy").addEventListener("click",function(){
+    var t=apply(text,items), b=this;
+    if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(function(){b.textContent="コピーしました";setTimeout(function(){b.textContent="変換後の文章をコピー";},1500);});}
+  });
+  run();
+})();
+</script>
+</body>
+</html>
