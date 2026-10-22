@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-G1ZB4CKMD7"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-G1ZB4CKMD7');
+</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>電子帳簿保存法 ファイル名一括リネームツール｜日付_取引先_金額の形に整える</title>
+<meta name="description" content="請求書・領収書などのファイル名を、「日付_取引先_金額」の形にまとめて変更。電子帳簿保存法の検索要件に向けたファイル名づけを手伝います。インストール不要で、ファイルは外部に送信されません。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#f3f5f8;--grid:#dfe5ee;--ink:#1b2433;--sub:#53607a;--card:#fff;--line:#c5cedd;--accent:#1f3a8a;--accent-ink:#fff;--ok:#1d6b45;--bad:#a12626;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--paper:#141a26;--grid:#1d2536;--ink:#e7ecf6;--sub:#9aa7c2;--card:#1b2334;--line:#34405a;--accent:#8fb0ff;--accent-ink:#0f1626;--ok:#6fd0a0;--bad:#ff9b9b}}
+:root[data-theme="dark"]{--paper:#141a26;--grid:#1d2536;--ink:#e7ecf6;--sub:#9aa7c2;--card:#1b2334;--line:#34405a;--accent:#8fb0ff;--accent-ink:#0f1626;--ok:#6fd0a0;--bad:#ff9b9b}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;color:var(--ink);background-color:var(--paper);background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:24px 24px;font-family:"Zen Kaku Gothic New","Hiragino Sans","Yu Gothic",Meiryo,sans-serif;line-height:1.8;font-size:16px}
+main{max-width:760px;margin:0 auto;padding:20px 16px 56px}
+.back{display:inline-block;margin-bottom:10px;color:var(--accent);text-decoration:none;font-weight:700;min-height:32px}
+h1{font-size:clamp(26px,6vw,36px);line-height:1.35;margin:0 0 6px}
+.lead{margin:0 0 22px;color:var(--sub)}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:6px;padding:16px}
+.panel + .panel{margin-top:14px}
+h2{font-size:18px;margin:0 0 10px}
+label.t{display:block;font-weight:700;margin:10px 0 4px}
+input[type=text],input[type=password],input[type=number],input[type=file],select,textarea{width:100%;font:inherit;font-size:16px;padding:8px 10px;min-height:44px;color:var(--ink);background:var(--paper);border:1px solid var(--line);border-radius:4px}
+textarea{min-height:150px;resize:vertical;line-height:1.6}
+input[type=range]{width:100%;accent-color:var(--accent);min-height:32px}
+input[type=color]{width:56px;height:44px;padding:2px;border:1px solid var(--line);border-radius:4px;background:var(--paper)}
+.row{display:grid;gap:0 14px;grid-template-columns:repeat(auto-fit,minmax(170px,1fr))}
+.chk label,.rad label{display:flex;align-items:center;gap:8px;min-height:40px;cursor:pointer}
+.chk input,.rad input{width:20px;height:20px;accent-color:var(--accent)}
+button,.btn{font:inherit;font-weight:700;min-height:44px;padding:0 18px;cursor:pointer;border-radius:4px;border:1px solid var(--accent);background:var(--accent);color:var(--accent-ink)}
+button.ghost{background:transparent;color:var(--accent)}
+button:disabled{opacity:.5;cursor:default}
+.bar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:12px}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.small{color:var(--sub);font-size:14px;margin:6px 0 0}
+.msg{min-height:1.8em;font-weight:700}
+.msg.ok{color:var(--ok)}.msg.bad{color:var(--bad)}
+.list{display:grid;gap:8px;margin:10px 0 0;padding:0;list-style:none}
+.item{display:flex;gap:10px;align-items:center;justify-content:space-between;padding:8px 10px;border:1px solid var(--line);border-radius:4px;background:var(--paper)}
+.item .nm{overflow-wrap:anywhere;flex:1;min-width:0}
+.item .sz{color:var(--sub);font-size:14px;white-space:nowrap}
+.item button{min-height:36px;padding:0 12px}
+.thumb{width:56px;height:56px;object-fit:contain;border:1px solid var(--line);border-radius:4px;background:#fff}
+.checker{background-color:#fff;background-image:linear-gradient(45deg,#d9d9d9 25%,transparent 25%,transparent 75%,#d9d9d9 75%),linear-gradient(45deg,#d9d9d9 25%,transparent 25%,transparent 75%,#d9d9d9 75%);background-size:16px 16px;background-position:0 0,8px 8px}
+article p{margin:0 0 12px}
+article dt{font-weight:700;margin-top:8px}
+article dd{margin:0 0 6px;color:var(--sub)}
+.rc{border:1px solid var(--line);border-radius:6px;background:var(--paper);padding:10px;margin-top:10px}
+.rc h3{font-size:15px;margin:0 0 6px;overflow-wrap:anywhere}
+.rg{display:grid;gap:6px 10px;grid-template-columns:repeat(auto-fit,minmax(130px,1fr))}
+.rg label{font-size:13px;color:var(--sub);display:block}
+.rg input{min-height:40px;margin-top:2px}
+.pv{font-weight:700;color:var(--accent);overflow-wrap:anywhere;margin-top:8px}
+.wn2{color:var(--bad);font-size:14px}
+.rc .top{display:flex;gap:8px;align-items:flex-start;justify-content:space-between}
+.rc .top button{min-height:34px;padding:0 10px;flex:none}
+</style>
+</head>
+<body>
+<main>
+<a class="back" href="/">← tinytool-box</a>
+<h1>電子帳簿保存法 ファイル名一括リネームツール</h1>
+<p class="lead">請求書・領収書などのファイル名を、「日付_取引先_金額」のような形に、まとめて整えます。ファイルは端末の外に送信されません。</p>
+<section class="panel">
+<label class="t" for="fin">ファイルを選ぶ（請求書・領収書などの PDF や画像。100件まで）</label>
+<input type="file" id="fin" multiple>
+<div class="row">
+<div><label class="t" for="pre">名前の付け方</label>
+<select id="pre">
+<option value="{日付}_{取引先}_{金額}">日付_取引先_金額</option>
+<option value="{日付}_{取引先}_{金額}_{種別}">日付_取引先_金額_種別</option>
+<option value="{日付}_{種別}_{取引先}_{金額}">日付_種別_取引先_金額</option>
+<option value="{取引先}_{日付}_{金額}">取引先_日付_金額</option>
+<option value="{日付}_{取引先}_{金額}_{番号}">日付_取引先_金額_番号</option>
+</select></div>
+<div><label class="t" for="tpl">名前のテンプレート（自由に書き換えられます）</label><input type="text" id="tpl" value="{日付}_{取引先}_{金額}" autocomplete="off"></div>
+</div>
+<p class="small">使える項目：{日付}　{取引先}　{金額}　{種別}　{番号}　{元の名前}　{連番}<br>例：20261021_株式会社サンプル_110000.pdf</p>
+<div class="row">
+<div><label class="t" for="ds">日付の形式</label><select id="ds"><option value="plain">20261021（おすすめ）</option><option value="hyphen">2026-10-21</option></select></div>
+<div><label class="t" for="as">金額の形式</label><select id="as"><option value="plain">110000（数字のみ）</option><option value="comma">110,000（カンマ付き）</option><option value="yen">110000円</option></select></div>
+</div>
+<div class="chk">
+<label><input type="checkbox" id="nk" checked>取引先の全角英数字・記号を半角にそろえ、空白を省く</label>
+<label><input type="checkbox" id="corp">取引先から「株式会社」などの法人格を省く</label>
+<label><input type="checkbox" id="cmp">ZIPを圧縮する（PDF や画像は、ほとんど小さくなりません）</label>
+<label><input type="checkbox" id="hash">対応表に、ファイルの SHA-256 ハッシュ値を入れる</label>
+</div>
+</section>
+
+<section class="panel">
+<h2>まとめて入力</h2>
+<div class="bar" style="margin-top:0"><button id="bm" class="ghost" type="button">更新日を、日付に入れる</button><button id="bg" class="ghost" type="button">元のファイル名から、日付を探す</button></div>
+<div class="row">
+<div><label class="t" for="bf">入れる項目</label><select id="bf"><option value="party">取引先</option><option value="kind">種別</option><option value="date">日付（2026-10-21 の形）</option></select></div>
+<div><label class="t" for="bv">入れる内容</label><input type="text" id="bv" autocomplete="off" placeholder="例：株式会社サンプル"></div>
+</div>
+<div class="bar" style="margin-top:6px"><button id="ba" class="ghost" type="button">全部に入れる</button><button id="be" class="ghost" type="button">空欄だけに入れる</button></div>
+<label class="t" for="paste">表から貼り付ける（Excel などからコピー）</label>
+<textarea id="paste" style="min-height:90px" placeholder="1行が1ファイル（上のファイルから順）。列の順番：日付、取引先、金額、種別、番号&#10;2026/10/21&#9;株式会社サンプル&#9;110000&#9;請求書"></textarea>
+<div class="bar" style="margin-top:6px"><button id="pg" class="ghost" type="button">表の内容を反映する</button></div>
+<p class="small">日付は、西暦で入力してください（2026/10/21、2026-10-21、20261021、2026年10月21日 など）。</p>
+</section>
+
+<section class="panel">
+<h2>ファイルごとの入力</h2>
+<p class="small" id="cnt">ファイルを選ぶと、ここに並びます。</p>
+<div id="rows"></div>
+</section>
+
+<section class="panel" aria-live="polite">
+<h2>保存</h2>
+<div class="bar" style="margin-top:0"><button id="zip" type="button" disabled>新しい名前で、ZIPに保存</button><button id="csv" class="ghost" type="button" disabled>対応表（CSV）を保存</button></div>
+<p class="msg" id="msg" role="status"></p>
+<p class="small">ZIPの中身は、元のファイルと同じで、名前だけが新しくなります。元のファイルは、そのまま残ります。</p>
+</section>
+<datalist id="kinds"><option value="請求書"><option value="領収書"><option value="見積書"><option value="納品書"><option value="注文書"><option value="契約書"></datalist>
+<article class="panel">
+<h2>使い方と解説</h2>
+<p>請求書や領収書などのファイルに、「日付_取引先_金額」のような、決まりのある名前を付けるツールです。ファイルは端末の中だけで処理され、外部には送信されません。ファイルの中身は変更せず、名前だけを付け替えたコピーを作ります。</p>
+<dl>
+<dt>なぜ、ファイル名を整えるのか</dt>
+<dd>電子帳簿保存法の「電子取引データ保存」では、メールやクラウドで受け取った請求書・領収書などの電子データを、保存することが求められます。その際の検索機能の確保として、取引年月日、取引金額、取引先で検索できることなどが求められ、そのための方法の1つとして、ファイル名に規則性を持たせる方法が、広く紹介されています。</dd>
+<dt>使い方</dt>
+<dd>1. ファイルを選ぶ。2. 名前の付け方を選ぶ。3. 各ファイルの日付・取引先・金額を入力する（表からの貼り付けや、まとめて入力も使えます）。4. 「ZIPに保存」を押す。<br>保存したZIPを開き、中のファイルを、保存先のフォルダに移してください。</dd>
+<dt>対応表（CSV）</dt>
+<dd>元のファイル名と、新しい名前、日付、取引先、金額を並べた一覧です。Excel で開けます。元の名前との対応を残したいときや、検索用の一覧にしたいときに便利です。</dd>
+<dt>ブラウザの制約</dt>
+<dd>ブラウザは、パソコン内のファイルの名前を、直接書き換えられません。そのため、新しい名前を付けたコピーを、ZIPまたは1件ずつ保存する形になります。</dd>
+</dl>
+<p><strong>ご利用にあたって：</strong>電子取引データは、受け取ったままの状態で保存することが求められます。ファイルの中身を、編集しないでください。また、要件は、事業の規模や、税務調査でのダウンロードの求めへの対応状況などによって、緩和されている場合があります。自社が、どの要件に当てはまるかは、国税庁の資料や、税理士にご確認ください。このツールは、ファイル名を整える作業を、手伝うものです。電子帳簿保存法への適合を、保証するものではありません。</p>
+</article>
+</main>
+<script>
+(function(){
+  var $=function(i){return document.getElementById(i)};
+  var MAXTOTAL=400*1024*1024;
+  var T=new Uint32Array(256);
+  for(var n=0;n<256;n++){var c=n;for(var k=0;k<8;k++)c=c&1?0xEDB88320^(c>>>1):c>>>1;T[n]=c>>>0;}
+  function crc32(u){var c=0xFFFFFFFF;for(var i=0;i<u.length;i++)c=T[(c^u[i])&255]^(c>>>8);return(c^0xFFFFFFFF)>>>0;}
+  async function deflateRaw(u){var s=new Blob([u]).stream().pipeThrough(new CompressionStream("deflate-raw"));return new Uint8Array(await new Response(s).arrayBuffer());}
+  function dosDT(ms){var d=new Date(ms);return [((d.getHours()<<11)|(d.getMinutes()<<5)|(d.getSeconds()>>1))&0xffff,(((d.getFullYear()-1980)<<9)|((d.getMonth()+1)<<5)|d.getDate())&0xffff];}
+  async function buildZip(files,compress){
+    var enc=new TextEncoder(), parts=[], central=[], offset=0;
+    for(var i=0;i<files.length;i++){
+      var f=files[i], name=enc.encode(f.name), crc=crc32(f.data), method=0, body=f.data;
+      if(compress&&f.data.length>0&&typeof CompressionStream!=="undefined"){var z=await deflateRaw(f.data);if(z.length<f.data.length){method=8;body=z;}}
+      var td=dosDT(f.mtime), loc=new Uint8Array(30+name.length), dv=new DataView(loc.buffer);
+      dv.setUint32(0,0x04034b50,true);dv.setUint16(4,20,true);dv.setUint16(6,0x0800,true);dv.setUint16(8,method,true);dv.setUint16(10,td[0],true);dv.setUint16(12,td[1],true);
+      dv.setUint32(14,crc,true);dv.setUint32(18,body.length,true);dv.setUint32(22,f.data.length,true);dv.setUint16(26,name.length,true);dv.setUint16(28,0,true);loc.set(name,30);
+      var cen=new Uint8Array(46+name.length), cv=new DataView(cen.buffer);
+      cv.setUint32(0,0x02014b50,true);cv.setUint16(4,20,true);cv.setUint16(6,20,true);cv.setUint16(8,0x0800,true);cv.setUint16(10,method,true);cv.setUint16(12,td[0],true);cv.setUint16(14,td[1],true);
+      cv.setUint32(16,crc,true);cv.setUint32(20,body.length,true);cv.setUint32(24,f.data.length,true);cv.setUint16(28,name.length,true);cv.setUint32(42,offset,true);cen.set(name,46);
+      parts.push(loc,body);central.push(cen);offset+=loc.length+body.length;
+    }
+    var cs=0;central.forEach(function(x){cs+=x.length});
+    var end=new Uint8Array(22), ev=new DataView(end.buffer);
+    ev.setUint32(0,0x06054b50,true);ev.setUint16(8,files.length,true);ev.setUint16(10,files.length,true);ev.setUint32(12,cs,true);ev.setUint32(16,offset,true);
+    return new Blob(parts.concat(central,[end]),{type:"application/zip"});
+  }
+  function p2(n){return n<10?"0"+n:String(n);}
+  function dimo(y,m){return new Date(Date.UTC(y,m,0)).getUTCDate();}
+  function parseDate(s){
+    s=(s||"").normalize("NFKC").trim();
+    var m=s.match(/^(\d{4})[-\/.年](\d{1,2})[-\/.月](\d{1,2})日?$/)||s.match(/^(\d{4})(\d{2})(\d{2})$/);
+    if(!m)return "";
+    var y=+m[1],mo=+m[2],d=+m[3];
+    if(y<1900||y>2100||mo<1||mo>12||d<1||d>dimo(y,mo))return "";
+    return y+"-"+p2(mo)+"-"+p2(d);
+  }
+  function guessDate(name){
+    var base=name.replace(/\.[^.]+$/,"").normalize("NFKC"), m, d;
+    var res=[/(?:^|\D)((?:19|20)\d{2})(\d{2})(\d{2})(?:\D|$)/, /((?:19|20)\d{2})[-_.\/年](\d{1,2})[-_.\/月](\d{1,2})/];
+    for(var i=0;i<res.length;i++){m=base.match(res[i]);if(m){d=parseDate(m[1]+"-"+m[2]+"-"+m[3]);if(d)return d;}}
+    return "";
+  }
+  function fmtDate(v,st){var m=(v||"").match(/^(\d{4})-(\d{2})-(\d{2})$/);if(!m)return "";return st==="hyphen"?v:m[1]+m[2]+m[3];}
+  function fmtAmt(v,st){
+    var s=(v||"").normalize("NFKC").replace(/[,\s円¥￥]/g,"");
+    var m=s.match(/^\d+/);if(!m)return "";
+    var d=String(parseInt(m[0],10));
+    if(st==="comma")return d.replace(/\B(?=(\d{3})+(?!\d))/g,",");
+    if(st==="yen")return d+"円";
+    return d;
+  }
+  var CORP=/株式会社|有限会社|合同会社|合資会社|合名会社|一般社団法人|一般財団法人|公益社団法人|公益財団法人|医療法人|社会福祉法人|学校法人|\(株\)|\(有\)|\(合\)|\(社\)|\(一社\)|\(一財\)/g;
+  function sanitize(s){return s.replace(/[\u0000-\u001f\u007f]/g,"").replace(/[\\\/:*?"<>|]/g,"_").replace(/^[\s.]+|[\s.]+$/g,"");}
+  function cleanParty(s,o){
+    s=(s||"").trim();
+    if(o.nk){s=s.normalize("NFKC").replace(/\s+/g,"");}
+    if(o.corp){s=s.normalize("NFKC").replace(CORP,"");}
+    return sanitize(s);
+  }
+  function cleanPlain(s){return sanitize((s||"").trim());}
+  function buildName(r,o,idx){
+    var nm=r.file.name, em=nm.match(/\.[^.\\\/]+$/), ext=em?em[0]:"", base=nm.replace(/\.[^.]+$/,"");
+    var v={"日付":fmtDate(r.date,o.ds),"取引先":cleanParty(r.party,o),"金額":fmtAmt(r.amt,o.as),"種別":cleanPlain(r.kind),"番号":cleanPlain(r.no),"元の名前":cleanPlain(base),"連番":("00"+(idx+1)).slice(-3)};
+    var used=[];
+    var name=o.tpl.replace(/\{(日付|取引先|金額|種別|番号|元の名前|連番)\}/g,function(_,k){used.push(k);return v[k];});
+    name=sanitize(name.replace(/_{2,}/g,"_").replace(/^_+|_+$/g,""));
+    var missing=[],soft=[];
+    ["日付","取引先","金額"].forEach(function(k){if(used.indexOf(k)>=0&&!v[k])missing.push(k);});
+    ["種別","番号"].forEach(function(k){if(used.indexOf(k)>=0&&!v[k])soft.push(k);});
+    if(!name)name="file";
+    return {name:name+ext,missing:missing,soft:soft,tooLong:(name+ext).length>120};
+  }
+  function namesFor(rows,o){
+    var seen={},out=rows.map(function(r,i){return buildName(r,o,i);});
+    out.forEach(function(x){
+      var key=x.name.toLowerCase(), c=(seen[key]||0)+1;seen[key]=c;
+      if(c>1){var d=x.name.lastIndexOf("."),b=d>0?x.name.slice(0,d):x.name,e=d>0?x.name.slice(d):"";x.name=b+"_"+c+e;x.dup=true;}
+    });
+    return out;
+  }
+  function csvCell(s){s=String(s==null?"":s);return /[",\r\n]/.test(s)?'"'+s.replace(/"/g,'""')+'"':s;}
+  function parseLine(line,delim){
+    var out=[],cur="",q=false;
+    for(var i=0;i<line.length;i++){
+      var ch=line.charAt(i);
+      if(q){if(ch==='"'){if(line.charAt(i+1)==='"'){cur+='"';i++;}else q=false;}else cur+=ch;}
+      else if(ch==='"')q=true;
+      else if(ch===delim){out.push(cur);cur="";}
+      else cur+=ch;
+    }
+    out.push(cur);return out;
+  }
+  if(typeof window!=="undefined"&&window.__denTest){window.__denTest.buildName=buildName;window.__denTest.namesFor=namesFor;window.__denTest.parseDate=parseDate;window.__denTest.guessDate=guessDate;window.__denTest.fmtAmt=fmtAmt;window.__denTest.parseLine=parseLine;window.__denTest.buildZip=buildZip;window.__denTest.csvCell=csvCell;}
+
+  var rows=[];
+  function opts(){return {tpl:$("tpl").value,ds:$("ds").value,as:$("as").value,nk:$("nk").checked,corp:$("corp").checked};}
+  function fmtSize(b){return b<1024?b+" B":b<1048576?(b/1024).toFixed(1)+" KB":(b/1048576).toFixed(2)+" MB";}
+  function msg(t,c){var m=$("msg");m.textContent=t;m.className="msg"+(c?" "+c:"");}
+  function dl(blob,name){var u=URL.createObjectURL(blob),a=document.createElement("a");a.href=u;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(u)},8000);}
+  var last=[];
+  function refresh(){
+    last=namesFor(rows,opts());
+    rows.forEach(function(r,i){
+      var x=last[i];
+      r.els.prev.textContent=x.name;
+      var w=[];
+      if(x.missing.length)w.push("未入力："+x.missing.join("・"));
+      if(x.soft.length)w.push("空欄の項目："+x.soft.join("・"));
+      if(x.dup)w.push("同じ名前があるため、番号を付けました");
+      if(x.tooLong)w.push("名前が長めです（120文字超）");
+      r.els.warn.textContent=w.join("／");
+    });
+    var any=rows.length>0;
+    $("zip").disabled=!any;$("csv").disabled=!any;
+    $("cnt").textContent=any?rows.length+"件":"ファイルを選ぶと、ここに並びます。";
+  }
+  function field(r,key,label,type,ph){
+    var d=document.createElement("div"), lb=document.createElement("label"), inp=document.createElement("input");
+    lb.textContent=label;inp.type=type||"text";if(ph)inp.placeholder=ph;
+    if(key==="amt")inp.setAttribute("inputmode","numeric");
+    if(key==="kind")inp.setAttribute("list","kinds");
+    inp.autocomplete="off";inp.value=r[key]||"";
+    inp.addEventListener("input",function(){r[key]=inp.value;refresh();});
+    inp.addEventListener("change",function(){r[key]=inp.value;refresh();});
+    lb.appendChild(inp);d.appendChild(lb);r.els[key]=inp;return d;
+  }
+  function renderRows(){
+    var box=$("rows");box.textContent="";
+    rows.forEach(function(r,i){
+      r.els={};
+      var card=document.createElement("div");card.className="rc";
+      var top=document.createElement("div");top.className="top";
+      var h=document.createElement("h3");h.textContent=(i+1)+". "+r.file.name+"（"+fmtSize(r.file.size)+"）";
+      var rm=document.createElement("button");rm.type="button";rm.className="ghost";rm.textContent="外す";
+      rm.addEventListener("click",function(){rows.splice(i,1);renderRows();});
+      top.appendChild(h);top.appendChild(rm);card.appendChild(top);
+      var g=document.createElement("div");g.className="rg";
+      g.appendChild(field(r,"date","取引年月日","date"));
+      g.appendChild(field(r,"party","取引先","text","例：株式会社サンプル"));
+      g.appendChild(field(r,"amt","金額（円）","text","例：110000"));
+      g.appendChild(field(r,"kind","種別（任意）","text","請求書など"));
+      g.appendChild(field(r,"no","番号（任意）","text"));
+      card.appendChild(g);
+      var pv=document.createElement("div");pv.className="pv";r.els.prev=pv;card.appendChild(pv);
+      var w=document.createElement("div");w.className="wn2";r.els.warn=w;card.appendChild(w);
+      var sv=document.createElement("button");sv.type="button";sv.className="ghost";sv.style.marginTop="6px";sv.style.minHeight="36px";sv.textContent="この1件だけ保存";
+      sv.addEventListener("click",function(){refresh();dl(new Blob([r.file]),last[i].name);});
+      card.appendChild(sv);
+      box.appendChild(card);
+    });
+    refresh();
+  }
+  $("fin").addEventListener("change",function(){
+    var list=this.files;
+    for(var i=0;i<list.length&&rows.length<100;i++)rows.push({file:list[i],date:"",party:"",amt:"",kind:"",no:"",els:{}});
+    if(list.length+rows.length>100&&rows.length>=100)msg("100件までです。","bad");
+    this.value="";renderRows();
+  });
+  $("pre").addEventListener("change",function(){$("tpl").value=this.value;refresh();});
+  ["tpl","ds","as","nk","corp"].forEach(function(id){$(id).addEventListener("input",refresh);$(id).addEventListener("change",refresh);});
+  function setAll(key,val,onlyEmpty){
+    rows.forEach(function(r){if(onlyEmpty&&r[key])return;r[key]=val;if(r.els[key])r.els[key].value=val;});
+    refresh();
+  }
+  $("bm").addEventListener("click",function(){
+    rows.forEach(function(r){var d=new Date(r.file.lastModified||Date.now());r.date=d.getFullYear()+"-"+p2(d.getMonth()+1)+"-"+p2(d.getDate());if(r.els.date)r.els.date.value=r.date;});
+    refresh();msg(rows.length?"更新日を日付に入れました。内容を確認してください。":"","");
+  });
+  $("bg").addEventListener("click",function(){
+    var n=0;rows.forEach(function(r){var d=guessDate(r.file.name);if(d){r.date=d;if(r.els.date)r.els.date.value=d;n++;}});
+    refresh();msg(n+"件で、ファイル名から日付を見つけました。","ok");
+  });
+  function bulk(onlyEmpty){
+    var f=$("bf").value, v=$("bv").value.trim();
+    if(!rows.length){msg("先にファイルを選んでください。","bad");return;}
+    if(f==="date"){var d=parseDate(v);if(!d){msg("日付を、西暦（例：2026-10-21）で入力してください。","bad");return;}v=d;}
+    setAll(f,v,onlyEmpty);msg("入力しました。","ok");
+  }
+  $("ba").addEventListener("click",function(){bulk(false);});
+  $("be").addEventListener("click",function(){bulk(true);});
+  $("pg").addEventListener("click",function(){
+    if(!rows.length){msg("先にファイルを選んでください。","bad");return;}
+    var lines=$("paste").value.replace(/\r/g,"").split("\n").filter(function(l){return l.trim()!=="";}), bad=0;
+    lines.forEach(function(l,i){
+      if(i>=rows.length)return;
+      var cols=parseLine(l,l.indexOf("\t")>=0?"\t":","), r=rows[i], d=parseDate(cols[0]);
+      if(cols[0]&&!d)bad++;
+      r.date=d;r.party=(cols[1]||"").trim();r.amt=(cols[2]||"").trim();r.kind=(cols[3]||"").trim();r.no=(cols[4]||"").trim();
+      ["date","party","amt","kind","no"].forEach(function(k){if(r.els[k])r.els[k].value=r[k];});
+    });
+    refresh();
+    msg(Math.min(lines.length,rows.length)+"件を反映しました。"+(lines.length>rows.length?"（ファイルより行が多いため、余りは使っていません）":"")+(bad?"日付を読めなかった行が"+bad+"件あります。":""),bad?"bad":"ok");
+  });
+  async function sha(buf){var h=await crypto.subtle.digest("SHA-256",buf);return Array.prototype.map.call(new Uint8Array(h),function(b){return ("0"+b.toString(16)).slice(-2);}).join("");}
+  $("zip").addEventListener("click",async function(){
+    refresh();
+    var bad=[];last.forEach(function(x,i){if(x.missing.length)bad.push((i+1)+"件目（"+rows[i].file.name+"）："+x.missing.join("・"));});
+    if(bad.length){msg("未入力があります。"+bad.slice(0,3).join("／")+(bad.length>3?"／ほか"+(bad.length-3)+"件":"")+"　入力するか、テンプレートから、その項目を外してください。","bad");return;}
+    var tot=rows.reduce(function(s,r){return s+r.file.size;},0);
+    if(tot>MAXTOTAL){msg("合計サイズが大きすぎます（"+fmtSize(MAXTOTAL)+"まで）。分けて保存してください。","bad");return;}
+    this.disabled=true;msg("ZIPを作成しています…");
+    try{
+      var arr=[];
+      for(var i=0;i<rows.length;i++)arr.push({name:last[i].name,data:new Uint8Array(await rows[i].file.arrayBuffer()),mtime:rows[i].file.lastModified||Date.now()});
+      var blob=await buildZip(arr,$("cmp").checked);
+      dl(blob,"renamed-files.zip");
+      msg(rows.length+"件を、新しい名前で、ZIPに保存しました（"+fmtSize(blob.size)+"）。","ok");
+    }catch(e){msg("作成できませんでした："+e.message,"bad");}
+    this.disabled=false;
+  });
+  $("csv").addEventListener("click",async function(){
+    refresh();this.disabled=true;
+    try{
+      var wantHash=$("hash").checked, head=["元のファイル名","新しいファイル名","取引年月日","取引先","取引金額","種別","番号"];
+      if(wantHash)head.push("SHA-256");
+      var lines=[head.map(csvCell).join(",")];
+      for(var i=0;i<rows.length;i++){
+        var r=rows[i], cells=[r.file.name,last[i].name,r.date,r.party,fmtAmt(r.amt,"plain"),r.kind,r.no];
+        if(wantHash)cells.push(await sha(await r.file.arrayBuffer()));
+        lines.push(cells.map(csvCell).join(","));
+      }
+      dl(new Blob(["\ufeff"+lines.join("\r\n")+"\r\n"],{type:"text/csv"}),"taiouhyou.csv");
+      msg("対応表を保存しました。","ok");
+    }catch(e){msg("作成できませんでした："+e.message,"bad");}
+    this.disabled=false;
+  });
+  refresh();
+})();
+</script>
+</body>
+</html>
