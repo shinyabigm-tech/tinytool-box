@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-G1ZB4CKMD7"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-G1ZB4CKMD7');
+</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>暮らしの期限カレンダー作成ツール｜免許更新・車検・引っ越し・退職・出産の手続き期限</title>
+<meta name="description" content="免許・パスポート・車検などの更新日や、引っ越し・退職・出産の日を入れると、手続きの期限日を日付順に表示。通知つきのカレンダー（.ics）に登録できます。入力は送信されません。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#f3f5f8;--grid:#dfe5ee;--ink:#1b2433;--sub:#53607a;--card:#fff;--line:#c5cedd;--accent:#1f3a8a;--accent-ink:#fff;--ok:#1d6b45;--bad:#a12626;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--paper:#141a26;--grid:#1d2536;--ink:#e7ecf6;--sub:#9aa7c2;--card:#1b2334;--line:#34405a;--accent:#8fb0ff;--accent-ink:#0f1626;--ok:#6fd0a0;--bad:#ff9b9b}}
+:root[data-theme="dark"]{--paper:#141a26;--grid:#1d2536;--ink:#e7ecf6;--sub:#9aa7c2;--card:#1b2334;--line:#34405a;--accent:#8fb0ff;--accent-ink:#0f1626;--ok:#6fd0a0;--bad:#ff9b9b}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;color:var(--ink);background-color:var(--paper);background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:24px 24px;font-family:"Zen Kaku Gothic New","Hiragino Sans","Yu Gothic",Meiryo,sans-serif;line-height:1.8;font-size:16px}
+main{max-width:760px;margin:0 auto;padding:20px 16px 56px}
+.back{display:inline-block;margin-bottom:10px;color:var(--accent);text-decoration:none;font-weight:700;min-height:32px}
+h1{font-size:clamp(26px,6vw,36px);line-height:1.35;margin:0 0 6px}
+.lead{margin:0 0 22px;color:var(--sub)}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:6px;padding:16px}
+.panel + .panel{margin-top:14px}
+h2{font-size:18px;margin:0 0 10px}
+label.t{display:block;font-weight:700;margin:10px 0 4px}
+input[type=text],input[type=password],input[type=number],input[type=file],select,textarea{width:100%;font:inherit;font-size:16px;padding:8px 10px;min-height:44px;color:var(--ink);background:var(--paper);border:1px solid var(--line);border-radius:4px}
+textarea{min-height:150px;resize:vertical;line-height:1.6}
+input[type=range]{width:100%;accent-color:var(--accent);min-height:32px}
+input[type=color]{width:56px;height:44px;padding:2px;border:1px solid var(--line);border-radius:4px;background:var(--paper)}
+.row{display:grid;gap:0 14px;grid-template-columns:repeat(auto-fit,minmax(170px,1fr))}
+.chk label,.rad label{display:flex;align-items:center;gap:8px;min-height:40px;cursor:pointer}
+.chk input,.rad input{width:20px;height:20px;accent-color:var(--accent)}
+button,.btn{font:inherit;font-weight:700;min-height:44px;padding:0 18px;cursor:pointer;border-radius:4px;border:1px solid var(--accent);background:var(--accent);color:var(--accent-ink)}
+button.ghost{background:transparent;color:var(--accent)}
+button:disabled{opacity:.5;cursor:default}
+.bar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:12px}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.small{color:var(--sub);font-size:14px;margin:6px 0 0}
+.msg{min-height:1.8em;font-weight:700}
+.msg.ok{color:var(--ok)}.msg.bad{color:var(--bad)}
+.list{display:grid;gap:8px;margin:10px 0 0;padding:0;list-style:none}
+.item{display:flex;gap:10px;align-items:center;justify-content:space-between;padding:8px 10px;border:1px solid var(--line);border-radius:4px;background:var(--paper)}
+.item .nm{overflow-wrap:anywhere;flex:1;min-width:0}
+.item .sz{color:var(--sub);font-size:14px;white-space:nowrap}
+.item button{min-height:36px;padding:0 12px}
+.thumb{width:56px;height:56px;object-fit:contain;border:1px solid var(--line);border-radius:4px;background:#fff}
+.checker{background-color:#fff;background-image:linear-gradient(45deg,#d9d9d9 25%,transparent 25%,transparent 75%,#d9d9d9 75%),linear-gradient(45deg,#d9d9d9 25%,transparent 25%,transparent 75%,#d9d9d9 75%);background-size:16px 16px;background-position:0 0,8px 8px}
+article p{margin:0 0 12px}
+article dt{font-weight:700;margin-top:8px}
+article dd{margin:0 0 6px;color:var(--sub)}
+:root{--b1:#ffd5d5;--b1t:#8a1a1a;--b3:#c9f0d5;--b3t:#0b5a2a}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--b1:#5a2323;--b1t:#ffc4c4;--b3:#1d4d31;--b3t:#b8f2cc}}
+:root[data-theme="dark"]{--b1:#5a2323;--b1t:#ffc4c4;--b3:#1d4d31;--b3t:#b8f2cc}
+.kg{border:1px solid var(--line);border-radius:6px;background:var(--paper);padding:10px 12px;margin-top:10px}
+.kg label.row1{display:flex;gap:10px;align-items:flex-start;cursor:pointer}
+.kg input[type=checkbox]{width:20px;height:20px;accent-color:var(--accent);flex:none;margin-top:4px}
+.kg .dt{font-weight:700;font-size:17px;color:var(--accent)}
+.kg .tt{font-weight:700;overflow-wrap:anywhere}
+.kg .wh,.kg .nt{font-size:14px;color:var(--sub);overflow-wrap:anywhere}
+.kg .wn{font-size:14px;color:var(--bad)}
+.kg.past{opacity:.6}
+.badge{display:inline-block;font-size:12px;font-weight:700;padding:0 8px;border-radius:10px;margin-right:6px;border:1px solid var(--line)}
+.badge.b1{background:var(--b1);color:var(--b1t);border-color:transparent}
+.badge.b3{background:var(--b3);color:var(--b3t);border-color:transparent}
+</style>
+</head>
+<body>
+<main>
+<a class="back" href="/">← tinytool-box</a>
+<h1>暮らしの期限カレンダー作成ツール</h1>
+<p class="lead">更新日や、引っ越し・退職・出産の日を入れると、手続きの期限が分かります。カレンダーにも登録できます。入力は端末の外に送信されません。</p>
+<section class="panel">
+<label class="t" for="kind">調べたいこと</label>
+<select id="kind">
+<optgroup label="更新・満期の日付から">
+<option value="license">運転免許証の更新</option>
+<option value="passport">パスポートの更新</option>
+<option value="shaken">車検</option>
+<option value="mynumber">マイナンバーカード・電子証明書の更新</option>
+<option value="insurance">保険の満期（自動車・火災など）</option>
+<option value="tax">確定申告</option>
+</optgroup>
+<optgroup label="ライフイベントから">
+<option value="move">引っ越し</option>
+<option value="retire">退職</option>
+<option value="birth">出産（出生）</option>
+</optgroup>
+</select>
+
+<div id="dateRow">
+<label class="t" for="d" id="dlabel">日付</label>
+<input type="date" id="d">
+<p class="small" id="dhint"></p>
+</div>
+<div id="yearRow" hidden>
+<label class="t" for="yr">どの年分の申告ですか</label>
+<select id="yr"></select>
+</div>
+
+<div id="opt-move" hidden>
+<label class="t" for="mvk">引っ越し先</label>
+<select id="mvk"><option value="other">他の市区町村へ引っ越す</option><option value="same">同じ市区町村内で引っ越す</option></select>
+<div class="chk">
+<label><input type="checkbox" id="mvnhi">国民健康保険・国民年金に加入している</label>
+<label><input type="checkbox" id="mvchild">児童手当を受けている</label>
+<label><input type="checkbox" id="mvcar">車・バイクがある</label>
+</div>
+</div>
+<div id="opt-retire" hidden>
+<div class="chk">
+<label><input type="checkbox" id="rtopt" checked>健康保険の任意継続も検討する</label>
+<label><input type="checkbox" id="rtui" checked>失業手当（雇用保険）の手続きをする</label>
+<label><input type="checkbox" id="rttax">年内に再就職しない（確定申告が必要）</label>
+</div>
+</div>
+<div id="opt-birth" hidden>
+<label class="t" for="bins">子の健康保険</label>
+<select id="bins"><option value="shaho">勤務先の健康保険（被扶養者にする）</option><option value="kokuho">国民健康保険</option></select>
+</div>
+</section>
+
+<section class="panel" aria-live="polite">
+<h2>期限と、やること</h2>
+<p class="small" id="stat">日付を入力すると、ここに、日付順で並びます。</p>
+<div id="list"></div>
+<h2 style="margin-top:18px">カレンダーに登録</h2>
+<p class="small">チェックを入れた項目を、カレンダーのファイル（.ics）にして保存します。お使いのカレンダーアプリに、取り込めます。</p>
+<div class="chk">
+<label><input type="checkbox" id="a7" checked>1週間前の朝9時に通知</label>
+<label><input type="checkbox" id="a1" checked>前日の朝9時に通知</label>
+<label><input type="checkbox" id="a0">当日の朝9時に通知</label>
+</div>
+<div class="bar"><button id="ics" type="button" disabled>カレンダーのファイル（.ics）を保存</button><button id="copy" class="ghost" type="button" disabled>一覧をコピー</button></div>
+<p class="msg" id="msg" role="status"></p>
+<p class="small">iPhone では、保存したファイルを開くと、カレンダーに追加できます。Google カレンダーでは、「設定」→「インポート」から、取り込めます。</p>
+</section>
+<article class="panel">
+<h2>使い方と解説</h2>
+<p>免許やパスポートなどの更新日、引っ越し・退職・出産の日を入れると、関係する手続きの期限日を、日付順に並べます。チェックした項目は、通知つきのカレンダーのファイルにできます。入力した日付は、端末の外には送信されません。</p>
+<dl>
+<dt>対応している項目</dt>
+<dd>・更新・満期：運転免許証、パスポート、車検、マイナンバーカード（電子証明書）、保険の満期、確定申告<br>
+・ライフイベント：引っ越し（転出届・転入届・マイナンバーカード・国民健康保険・国民年金・児童手当・車など）、退職（国民健康保険・任意継続・国民年金・失業手当・確定申告）、出産（出生届・児童手当・子の健康保険など）</dd>
+<dt>3種類の表示</dt>
+<dd>「期限」は、法令や制度で、日数が決まっているものです。「受付開始」は、手続きが、できるようになる日です。「目安」は、期限ではなく、早めに済ませるとよい時期です。</dd>
+<dt>休日の扱い</dt>
+<dd>役所の手続きの期限日が、土日祝日・年末年始（12月29日〜1月3日）にあたる場合は、次の開庁日まで延びることがあります。その場合は、一覧に、次の開庁日を表示します。カレンダーには、延びる前の日付を登録するので、余裕を持って、通知が届きます。</dd>
+<dt>決まりの確認日と、情報源</dt>
+<dd>ここの日数や期間は、2026年10月時点で、警察・外務省・国土交通省・厚生労働省・自治体などの公式な案内で、確認したものです。制度は、改正で変わります。たとえば、車検を受けられる時期は、2025年4月から、満了日の2か月前に広がりました。</dd>
+</dl>
+<p><strong>ご利用にあたって：</strong>表示される日付は、目安です。制度の内容や期限は、お住まいの自治体や、勤務先、加入している保険などで、異なる場合があります。実際の手続きの前に、必ず、窓口や公式サイトで、最新の情報を確認してください。このツールは、期限を忘れないための、補助です。</p>
+</article>
+</main>
+<script>
+(function(){
+  var $=function(i){return document.getElementById(i)};
+var _hc={};
+function UD(y,m,d){return new Date(Date.UTC(y,m-1,d));}
+function addDays(d,n){return new Date(d.getTime()+n*864e5);}
+function lastDay(y,m){return new Date(Date.UTC(y,m,0)).getUTCDate();}
+function addMonths(d,n){
+  var t=new Date(Date.UTC(d.getUTCFullYear(),d.getUTCMonth()+n,1));
+  t.setUTCDate(Math.min(d.getUTCDate(),lastDay(t.getUTCFullYear(),t.getUTCMonth()+1)));
+  return t;
+}
+function dkey(d){return d.toISOString().slice(0,10);}
+function nthMon(y,m,n){var f=UD(y,m,1).getUTCDay();return 1+((8-f)%7)+(n-1)*7;}
+function hol(y){
+  if(_hc[y])return _hc[y];
+  var h={},a=function(m,d){h[dkey(UD(y,m,d))]=1;},c=y-1980,q=Math.floor((y-1980)/4);
+  a(1,1);a(1,nthMon(y,1,2));a(2,11);a(2,23);a(3,Math.floor(20.8431+0.242194*c-q));a(4,29);a(5,3);a(5,4);a(5,5);
+  if(y===2020)a(7,23);else if(y===2021)a(7,22);else a(7,nthMon(y,7,3));
+  if(y===2020)a(8,10);else if(y===2021)a(8,8);else a(8,11);
+  a(9,nthMon(y,9,3));a(9,Math.floor(23.2488+0.242194*c-q));
+  if(y===2020)a(7,24);else if(y===2021)a(7,23);else a(10,nthMon(y,10,2));
+  a(11,3);a(11,23);
+  var ks=Object.keys(h);
+  ks.forEach(function(k){var d=new Date(k+"T00:00:00Z");if(d.getUTCDay()===0){var n=addDays(d,1);while(h[dkey(n)])n=addDays(n,1);h[dkey(n)]=1;}});
+  ks.forEach(function(k){var d=new Date(k+"T00:00:00Z"),mid=addDays(d,1),nx=addDays(d,2);if(h[dkey(nx)]&&!h[dkey(mid)]&&mid.getUTCDay()!==0)h[dkey(mid)]=1;});
+  return (_hc[y]=h);
+}
+function isBiz(d){
+  var w=d.getUTCDay(),m=d.getUTCMonth()+1,dd=d.getUTCDate();
+  if(w===0||w===6)return false;
+  if((m===12&&dd>=29)||(m===1&&dd<=3))return false;
+  var y=d.getUTCFullYear();
+  if(y>=2020&&y<=2050&&hol(y)[dkey(d)])return false;
+  return true;
+}
+function nextBiz(d){var n=d;while(!isBiz(n))n=addDays(n,1);return n;}
+// E: Date (UTC); o: options; returns items [{id,title,where,type,date,note,office}]
+function calc(kind,E,o){
+  o=o||{};var items=[];
+  function add(id,title,where,type,date,note,office){items.push({id:id,title:title,where:where,type:type,date:date,note:note||"",office:!!office});}
+  var Y=E.getUTCFullYear();
+  if(kind==="license"){
+    var B=addMonths(E,-1);
+    add("lic-card","更新連絡書（はがき）が届く目安","自宅（公安委員会から）","目安",addDays(B,-38),"誕生日の約35〜40日前に届くのが一般的です。届かないときは、住所の変更漏れがないか確認を。");
+    add("lic-start","運転免許の更新が、できるようになる日","運転免許センター・警察署など","受付開始",addMonths(B,-1),"更新期間は、誕生日の1か月前から、誕生日の1か月後（有効期間の末日）までです。");
+    add("lic-end","運転免許の更新期限（有効期間の末日）","運転免許センター・警察署など","期限",E,"末日が土日祝日・年末年始（12/29〜1/3）のときは、翌日の平日まで更新できます。",false);
+  }else if(kind==="passport"){
+    add("pp-start","パスポートの切替申請が、できるようになる日（目安）","パスポートセンターなど","受付開始",addMonths(E,-12),"残りの有効期間が1年未満になると、切替申請ができます。申請窓口で確認してください。");
+    add("pp-6m","海外渡行の目安：残りの有効期間が6か月を切る日","—","目安",addMonths(E,-6),"渡航先によっては、入国時に、6か月以上の残りの有効期間が必要です。渡航先の条件を確認してください。");
+    add("pp-end","パスポートの有効期限","—","期限",E,"");
+  }else if(kind==="shaken"){
+    add("sk-book","車検の予約・見積もりの目安","整備工場・ディーラーなど","目安",addMonths(E,-3),"満了日の直前は混み合います。早めの予約が安心です。");
+    add("sk-start","車検を受けられる日（満了日の2か月前から）","整備工場・運輸支局など","受付開始",addMonths(E,-2),"2025年4月以降は、満了日の2か月前から受けても、次の車検の満了日が、そのままになります。");
+    add("sk-end","車検の有効期間の満了日","—","期限",E,"");
+  }else if(kind==="mynumber"){
+    add("mn-start","更新の手続きが、できるようになる日（有効期限の3か月前）","市区町村の窓口など","受付開始",addMonths(E,-3),"カード本体と、電子証明書は、有効期限が別です。それぞれの有効期限を入力して、調べてください。");
+    add("mn-end","マイナンバーカード（電子証明書）の有効期限","—","期限",E,"");
+  }else if(kind==="insurance"){
+    add("in-notice","更新の案内が届く目安","保険会社・代理店","目安",addMonths(E,-2),"案内が届かないときは、保険会社に確認してください。");
+    add("in-review","補償内容や保険料の見直しの目安","保険会社・代理店","目安",addMonths(E,-1),"");
+    add("in-end","保険の満期日","—","期限",E,"満期日を過ぎると、補償が切れます。更新の手続きは、余裕を持って。");
+  }else if(kind==="tax"){
+    var s=nextBiz(UD(Y+1,2,16)), e=nextBiz(UD(Y+1,3,15));
+    add("tx-start","確定申告の受付開始日","税務署・e-Tax","受付開始",s,"原則、翌年の2月16日から3月15日です。休日の場合は、翌日の平日にずれます。");
+    add("tx-end","確定申告の申告期限","税務署・e-Tax","期限",e,Y+"年分の所得税の申告です。");
+  }else if(kind==="move"){
+    if(o.other){
+      add("mv-out0","転出届を出せる日（14日前から）","今お住まいの市区町村役場","受付開始",addDays(E,-14),"他の市区町村へ引っ越す場合は、引っ越しの前に、転出届を出します。");
+      add("mv-out","転出届の期限","今お住まいの市区町村役場","期限",addDays(E,14),"引っ越し後14日以内にも、出せます。マイナンバーカードがあれば、転出証明書が不要な場合があります。",true);
+      add("mv-in","転入届の期限","新しい住所の市区町村役場","期限",addDays(E,14),"住み始めてから14日以内。正当な理由なく遅れると、過料の対象になることがあります。",true);
+    }else{
+      add("mv-same","転居届の期限","市区町村役場","期限",addDays(E,14),"同じ市区町村内の引っ越しは、住み始めてから14日以内に、転居届を出します。",true);
+    }
+    add("mv-card","マイナンバーカードの住所変更","新しい住所の市区町村役場","期限",addDays(E,14),"転入届・転居届と同時に手続きします。手続きをしないと、カードが失効する場合があります。",true);
+    if(o.nhi){
+      add("mv-nhi","国民健康保険の手続き","市区町村役場","期限",addDays(E,14),"加入している場合の、住所変更や、資格の手続きです。",true);
+      add("mv-pen","国民年金（第1号被保険者）の住所変更","市区町村役場","期限",addDays(E,14),"",true);
+    }
+    if(o.child)add("mv-child","児童手当の手続き","新しい住所の市区町村役場（公務員は勤務先）","期限",addDays(E,15),"引っ越し後15日以内。遅れると、支給されない月が出ることがあります。",true);
+    if(o.car)add("mv-car","車検証の住所変更・車庫証明","運輸支局・警察署（軽自動車は軽自動車検査協会）","期限",addDays(E,15),"変更後15日以内。",true);
+    add("mv-lic","運転免許証の住所変更（目安）","警察署・運転免許センター","目安",addDays(E,14),"日数の定めはありませんが、早めの手続きが必要です。");
+    add("mv-life","電気・ガス・水道・インターネットの連絡（目安）","各事業者","目安",addDays(E,-14),"引っ越しの1〜2週間前までに、連絡するのが目安です。");
+    add("mv-post","郵便物の転送の届出（目安）","郵便局・e転居","目安",addDays(E,-7),"");
+    add("mv-seal","印鑑登録（目安）","新しい住所の市区町村役場","目安",addDays(E,14),"必要な人だけ。");
+  }else if(kind==="retire"){
+    add("rt-ret","健康保険証・会社の貸与品を返す","勤務先","目安",E,"退職日の翌日からは、会社の保険証を使えません。");
+    add("rt-nhi","国民健康保険に加入する（他に加入しない場合）","お住まいの市区町村役場","期限",addDays(E,14),"退職日の翌日から14日以内。家族の扶養に入る場合は、家族の勤務先へ。",true);
+    if(o.opt)add("rt-opt","健康保険の任意継続の申込み","協会けんぽの支部・健康保険組合","期限",addDays(E,20),"退職日の翌日から20日以内。原則、この期限を過ぎると認められません。",false);
+    add("rt-pen","国民年金への切り替え","お住まいの市区町村役場","期限",addDays(E,14),"退職日の翌日から14日以内。",true);
+    if(o.ui){
+      add("rt-ui","離職票が届く目安・ハローワークへ","ハローワーク","目安",addDays(E,14),"離職票が届いたら、ハローワークで、求職の申込みと、受給の手続きを。届かないときは、会社に確認してください。");
+      add("rt-ui-end","失業手当の受給期間の終わり（原則）","ハローワーク","期限",addMonths(E,12),"原則、離職日の翌日から1年間です。この期間内に、受け取る必要があります。延長の制度もあります。");
+    }
+    if(o.tax){
+      add("rt-tx-s","確定申告の受付開始（年内に再就職しない場合）","税務署・e-Tax","受付開始",nextBiz(UD(Y+1,2,16)),"退職した年に、再就職しなかった場合は、確定申告が必要です。");
+      add("rt-tx-e","確定申告の申告期限","税務署・e-Tax","期限",nextBiz(UD(Y+1,3,15)),"");
+    }
+  }else if(kind==="birth"){
+    add("bt-reg","出生届の期限","市区町村役場（出生地・本籍地・届出人の所在地のいずれか）","期限",addDays(E,13),"生まれた日を含めて14日以内。14日目が閉庁日のときは、次の開庁日まで延びます。",true);
+    add("bt-child","児童手当の認定請求","お住まいの市区町村役場（公務員は勤務先）","期限",addDays(E,15),"出生日の翌日から15日以内。遅れると、支給が遅れることがあります。",true);
+    if(o.ins==="shaho")add("bt-ins","勤務先の健康保険に、子を加える（目安）","勤務先","目安",addDays(E,14),"できるだけ早く、勤務先の担当窓口へ。");
+    else add("bt-ins","子の国民健康保険の加入（目安）","市区町村役場","目安",addDays(E,14),"出生届のあと、できるだけ早く。期限は自治体で確認してください。");
+    add("bt-med","子ども医療費の助成の手続き（目安）","市区町村役場","目安",addDays(E,14),"制度と期限は、自治体で異なります。");
+  }
+  items.sort(function(a,b){return a.date-b.date;});
+  return items;
+}
+// ---------- ICS ----------
+function icsEsc(s){return String(s).replace(/\\/g,"\\\\").replace(/;/g,"\\;").replace(/,/g,"\\,").replace(/\r?\n/g,"\\n");}
+function fold(line){
+  var enc=new TextEncoder(),out=[],cur="",n=0;
+  for(var ch of line){var b=enc.encode(ch).length;if(n+b>(out.length?74:75)){out.push(cur);cur="";n=0;}cur+=ch;n+=b;}
+  out.push(cur);return out.join("\r\n ");
+}
+function ymd8(d){return dkey(d).replace(/-/g,"");}
+function buildIcs(items,alarms,now,rid){
+  var L=["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//tinytool-box//kigen//JA","CALSCALE:GREGORIAN","METHOD:PUBLISH","X-WR-CALNAME:暮らしの期限"];
+  var stamp=now.toISOString().replace(/[-:]/g,"").replace(/\.\d{3}/,"");
+  items.forEach(function(it,i){
+    L.push("BEGIN:VEVENT","UID:"+rid+"-"+i+"@tinytool-box.com","DTSTAMP:"+stamp,"DTSTART;VALUE=DATE:"+ymd8(it.date),"DTEND;VALUE=DATE:"+ymd8(addDays(it.date,1)),
+      "SUMMARY:"+icsEsc("【"+it.type+"】"+it.title),
+      "DESCRIPTION:"+icsEsc((it.where&&it.where!=="—"?"手続き先："+it.where+"\n":"")+(it.note?it.note+"\n":"")+"※目安です。最新の制度や期限は、窓口や公式サイトで確認してください。（tinytool-box.com）"),
+      "TRANSP:TRANSPARENT");
+    alarms.forEach(function(a){L.push("BEGIN:VALARM","ACTION:DISPLAY","DESCRIPTION:"+icsEsc(it.title),"TRIGGER:"+a,"END:VALARM");});
+    L.push("END:VEVENT");
+  });
+  L.push("END:VCALENDAR");
+  return L.map(fold).join("\r\n")+"\r\n";
+}
+
+  var LABEL={
+    license:["運転免許証の有効期限（有効期間の末日）","免許証の表面に書かれている、有効期間の日付です。"],
+    passport:["パスポートの有効期限","パスポートの顔写真のページに、書かれています。"],
+    shaken:["車検証の有効期間の満了日","車検証に書かれている、有効期間の満了日です。"],
+    mynumber:["カード（または電子証明書）の有効期限","カード本体と、電子証明書は、有効期限が別です。それぞれ、調べてください。"],
+    insurance:["保険の満期日","保険証券や、更新の案内に書かれています。"],
+    move:["引っ越し日（住み始める日）","引っ越す予定の日でも、試せます。"],
+    retire:["退職日（在籍の最終日）","最後に出勤する日ではなく、会社に在籍する、最終日です。"],
+    birth:["生まれた日","出産予定日を入れて、あらかじめ、手続きの目安を見ることもできます。"]
+  };
+  var WD=["日","月","火","水","木","金","土"];
+  function fmt(d){return d.getUTCFullYear()+"年"+(d.getUTCMonth()+1)+"月"+d.getUTCDate()+"日（"+WD[d.getUTCDay()]+"）";}
+  function todayUTC(){var t=new Date();return UD(t.getFullYear(),t.getMonth()+1,t.getDate());}
+  function msg(t,c){var m=$("msg");m.textContent=t;m.className="msg"+(c?" "+c:"");}
+  var off={}, items=[];
+  function opts(){return {other:$("mvk").value==="other",nhi:$("mvnhi").checked,child:$("mvchild").checked,car:$("mvcar").checked,opt:$("rtopt").checked,ui:$("rtui").checked,tax:$("rttax").checked,ins:$("bins").value};}
+  function selectedItems(){return items.filter(function(it){return !off[$("kind").value+it.id];});}
+  function run(){
+    var kind=$("kind").value, list=$("list");list.textContent="";items=[];
+    var isTax=kind==="tax";
+    $("dateRow").hidden=isTax;$("yearRow").hidden=!isTax;
+    $("opt-move").hidden=kind!=="move";$("opt-retire").hidden=kind!=="retire";$("opt-birth").hidden=kind!=="birth";
+    if(!isTax){$("dlabel").textContent=LABEL[kind][0];$("dhint").textContent=LABEL[kind][1];}
+    var base=null;
+    if(isTax)base=UD(parseInt($("yr").value,10),6,1);
+    else if($("d").value){var m=$("d").value.match(/^(\d{4})-(\d{2})-(\d{2})$/);if(m)base=UD(+m[1],+m[2],+m[3]);}
+    if(!base||isNaN(base.getTime())||base.getUTCFullYear()<2000||base.getUTCFullYear()>2060){
+      $("stat").textContent="日付を入力すると、ここに、日付順で並びます。";$("ics").disabled=true;$("copy").disabled=true;return;
+    }
+    items=calc(kind,base,opts());
+    var today=todayUTC();
+    items.forEach(function(it){
+      var box=document.createElement("div");box.className="kg"+(it.date<today?" past":"");
+      var lb=document.createElement("label");lb.className="row1";
+      var cb=document.createElement("input");cb.type="checkbox";cb.checked=!off[kind+it.id];
+      cb.addEventListener("change",function(){off[kind+it.id]=!cb.checked;updateButtons();});
+      var col=document.createElement("div");col.style.minWidth="0";
+      var dt=document.createElement("div");dt.className="dt";dt.textContent=fmt(it.date)+(it.date<today?"　（過ぎています）":"");
+      var tt=document.createElement("div");tt.className="tt";
+      var bd=document.createElement("span");bd.className="badge"+(it.type==="期限"?" b1":it.type==="受付開始"?" b3":"");bd.textContent=it.type;
+      tt.appendChild(bd);tt.appendChild(document.createTextNode(it.title));
+      col.appendChild(dt);col.appendChild(tt);
+      if(it.where&&it.where!=="—"){var wh=document.createElement("div");wh.className="wh";wh.textContent="手続き先："+it.where;col.appendChild(wh);}
+      if(it.note){var nt=document.createElement("div");nt.className="nt";nt.textContent=it.note;col.appendChild(nt);}
+      if(it.office&&!isBiz(it.date)){var wn=document.createElement("div");wn.className="wn";wn.textContent="※この日は休日です。次の開庁日（"+fmt(nextBiz(it.date))+"）まで延びる場合があります。";col.appendChild(wn);}
+      lb.appendChild(cb);lb.appendChild(col);box.appendChild(lb);list.appendChild(box);
+    });
+    $("stat").textContent=items.length+"件。チェックを外した項目は、カレンダーに入りません。";
+    updateButtons();
+  }
+  function updateButtons(){var n=selectedItems().length;$("ics").disabled=!n;$("copy").disabled=!n;}
+  function dl(blob,name){var u=URL.createObjectURL(blob),a=document.createElement("a");a.href=u;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(u)},8000);}
+  $("ics").addEventListener("click",function(){
+    var sel=selectedItems(), al=[];
+    if($("a7").checked)al.push("-P6DT15H");if($("a1").checked)al.push("-PT15H");if($("a0").checked)al.push("PT9H");
+    var rid=Math.random().toString(16).slice(2,10)+Date.now().toString(16);
+    dl(new Blob([buildIcs(sel,al,new Date(),rid)],{type:"text/calendar;charset=utf-8"}),"kurashi-kigen.ics");
+    msg(sel.length+"件のカレンダーのファイルを保存しました。","ok");
+  });
+  $("copy").addEventListener("click",function(){
+    var t=selectedItems().map(function(it){return fmt(it.date)+" ["+it.type+"] "+it.title+(it.where&&it.where!=="—"?"（"+it.where+"）":"");}).join("\n");
+    if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(function(){msg("一覧をコピーしました。","ok");},function(){msg("コピーできませんでした。","bad");});}
+    else msg("コピーできませんでした。","bad");
+  });
+  var ys=$("yr"),cy=new Date().getFullYear();
+  for(var y=cy-2;y<=cy+1;y++){var o=document.createElement("option");o.value=String(y);o.textContent=y+"年分（申告は"+(y+1)+"年）";ys.appendChild(o);}
+  ys.value=String(new Date().getMonth()<5?cy-1:cy);
+  ["kind","d","yr","mvk","mvnhi","mvchild","mvcar","rtopt","rtui","rttax","bins"].forEach(function(id){$(id).addEventListener("change",run);$(id).addEventListener("input",run);});
+  run();
+})();
+</script>
+</body>
+</html>
