@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-G1ZB4CKMD7"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-G1ZB4CKMD7');
+</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>割引計算ツール｜商品ごとに別々の割引率で合計（2点目5%引・3点目半額）</title>
+<meta name="description" content="複数の商品に、それぞれ違う割引率（％）をかけて合計を計算。「1点目10%引き、2点目5%引き、3点目半額」のような買い方の支払総額と全体の割引率がすぐ分かります。入力内容は送信されません。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#f3f5f8; --grid:#dfe5ee; --ink:#1b2433; --sub:#53607a;
+  --card:#ffffff; --line:#c5cedd; --accent:#1f3a8a; --accent-ink:#ffffff;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --paper:#141a26; --grid:#1d2536; --ink:#e7ecf6; --sub:#9aa7c2;
+    --card:#1b2334; --line:#34405a; --accent:#8fb0ff; --accent-ink:#0f1626;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#141a26; --grid:#1d2536; --ink:#e7ecf6; --sub:#9aa7c2;
+  --card:#1b2334; --line:#34405a; --accent:#8fb0ff; --accent-ink:#0f1626;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{
+  margin:0; color:var(--ink); background-color:var(--paper);
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:24px 24px;
+  font-family:"Zen Kaku Gothic New","Hiragino Sans","Yu Gothic",Meiryo,sans-serif;
+  line-height:1.8; font-size:16px;
+}
+main{max-width:760px; margin:0 auto; padding:20px 16px 56px}
+.back{display:inline-block; margin-bottom:10px; color:var(--accent); text-decoration:none; font-weight:700; min-height:32px}
+h1{font-size:clamp(26px,6vw,36px); line-height:1.35; margin:0 0 6px}
+.lead{margin:0 0 22px; color:var(--sub)}
+.panel{background:var(--card); border:1px solid var(--line); border-radius:6px; padding:16px}
+.panel + .panel{margin-top:14px}
+h2{font-size:18px; margin:0 0 10px}
+label.t{display:block; font-weight:700; margin:10px 0 4px}
+input[type=number],select{
+  width:100%; min-width:0; margin:0; font:inherit; font-size:16px; padding:8px 10px; height:44px;
+  color:var(--ink); background:var(--paper); border:1px solid var(--line); border-radius:4px;
+}
+.cols,.item{display:grid; grid-template-columns:minmax(0,1fr) 96px 44px; gap:6px 8px; align-items:center}
+.cols{color:var(--sub); font-size:14px; font-weight:700; margin-bottom:2px}
+.item{padding:10px 0; border-top:1px solid var(--line)}
+.item .no{grid-column:1 / -1; font-weight:700; font-size:14px; color:var(--sub)}
+.item .rr{grid-column:1 / -1; font-size:14px; color:var(--sub); min-height:1.6em; overflow-wrap:anywhere}
+.item .rr strong{color:var(--accent)}
+.btn{min-height:44px; padding:0 16px; font:inherit; font-weight:700; color:var(--ink); background:var(--paper); border:1px solid var(--line); border-radius:4px; cursor:pointer}
+.btn.primary{color:var(--accent-ink); background:var(--accent); border-color:var(--accent)}
+.btn.del{padding:0; width:44px}
+.btn:disabled{opacity:.4; cursor:default}
+.actions{display:flex; flex-wrap:wrap; gap:8px; margin-top:10px}
+:focus-visible{outline:3px solid var(--accent); outline-offset:2px}
+.result{border-left:6px solid var(--accent)}
+.big{font-size:clamp(22px,5.5vw,30px); font-weight:700; color:var(--accent); margin:0 0 4px; overflow-wrap:anywhere}
+.small{color:var(--sub); font-size:14px; margin:4px 0 0}
+article p{margin:0 0 12px}
+article h3{font-size:16px; margin:16px 0 6px}
+article ul{margin:0 0 12px; padding-left:1.4em}
+article li{margin-bottom:4px}
+article dt{font-weight:700; margin-top:8px}
+article dd{margin:0 0 6px; color:var(--sub)}
+</style>
+</head>
+<body>
+<main>
+  <a class="back" href="/">← tinytool-box</a>
+  <h1>割引計算ツール</h1>
+  <p class="lead">商品ごとに価格と割引率を入力すると、割引後の価格と合計がすぐに分かります。入力した内容は送信されません。</p>
+
+  <section class="panel">
+    <div class="cols"><span>価格（円）</span><span>割引（％）</span><span></span></div>
+    <div id="list"></div>
+    <div class="actions">
+      <button type="button" class="btn" id="add">＋ 商品を追加</button>
+      <button type="button" class="btn" id="clear">すべてクリア</button>
+    </div>
+    <label class="t" for="rnd">割引後の価格の端数</label>
+    <select id="rnd">
+      <option value="floor">切り捨て</option>
+      <option value="round">四捨五入</option>
+      <option value="ceil">切り上げ</option>
+    </select>
+    <p class="small">端数の扱いは、お店によって異なります。レジの金額と数円ずれる場合は、ここで切り替えてください。</p>
+  </section>
+
+  <section class="panel result" aria-live="polite">
+    <p class="big" id="res">—</p>
+    <p class="small" id="sub">価格を入力すると、合計が表示されます。</p>
+    <p class="small" id="warn"></p>
+    <div class="actions"><button type="button" class="btn primary" id="copy" disabled>結果をコピー</button></div>
+  </section>
+
+  <article class="panel">
+    <h2>使い方</h2>
+    <p>商品ごとに「価格」と「割引（％）」を入力します。割引がない商品は、割引欄を空のままにしてください（0％として計算します）。商品は「＋ 商品を追加」で30点まで増やせます。</p>
+
+    <h3>計算の例</h3>
+    <p>服を3点買うときに、1点目10%引き、2点目5%引き、3点目半額（50%引き）になる場合です。</p>
+    <ul>
+      <li>1点目：5,000円 × 10%引き → 4,500円</li>
+      <li>2点目：4,000円 × 5%引き → 3,800円</li>
+      <li>3点目：3,000円 × 50%引き → 1,500円</li>
+      <li>合計：9,800円（定価の合計は12,000円、割引額は2,200円で、全体では約18.3%引き）</li>
+    </ul>
+
+    <h3>計算のしくみ</h3>
+    <ul>
+      <li>割引後の価格 ＝ 価格 × （100 − 割引率）÷ 100</li>
+      <li>割引額 ＝ 価格 − 割引後の価格</li>
+      <li>全体の割引率 ＝ 割引額の合計 ÷ 定価の合計 × 100</li>
+    </ul>
+    <p>表示される金額は目安です。実際の支払額は、お店の端数処理や消費税の扱いによって変わることがあります。</p>
+  </article>
+
+  <article class="panel">
+    <h2>よくある質問</h2>
+    <dl>
+      <dt>商品ごとに違う割引率で、合計を出せますか？</dt>
+      <dd>できます。商品ごとに価格と割引率を入力すると、それぞれの割引後の価格と、その合計を表示します。</dd>
+      <dt>「半額」や「2割引」はどう入力しますか？</dt>
+      <dd>半額は50、2割引は20と入力します。3割引なら30、「30%OFF」も30です。</dd>
+      <dt>割引後の端数はどう処理されますか？</dt>
+      <dd>初期設定は切り捨てです。「割引後の価格の端数」で、四捨五入や切り上げにも切り替えられます。端数の扱いはお店によって異なります。</dd>
+      <dt>全体の割引率は、どう計算していますか？</dt>
+      <dd>割引額の合計を、定価の合計で割って求めています。商品ごとの割引率の平均とは、金額の違いがあるため一致しません。</dd>
+      <dt>消費税は含まれますか？</dt>
+      <dd>消費税の計算は含まれません。税込の価格を入力すれば税込の結果、税抜の価格を入力すれば税抜の結果になります。</dd>
+      <dt>何点まで計算できますか？</dt>
+      <dd>最大30点までです。</dd>
+    </dl>
+  </article>
+</main>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type": "Question", "name": "商品ごとに違う割引率で、合計を出せますか？", "acceptedAnswer": {"@type": "Answer", "text": "できます。商品ごとに価格と割引率を入力すると、それぞれの割引後の価格と、その合計を表示します。"}},
+    {"@type": "Question", "name": "「半額」や「2割引」はどう入力しますか？", "acceptedAnswer": {"@type": "Answer", "text": "半額は50、2割引は20と入力します。3割引なら30、「30%OFF」も30です。"}},
+    {"@type": "Question", "name": "割引後の端数はどう処理されますか？", "acceptedAnswer": {"@type": "Answer", "text": "初期設定は切り捨てです。「割引後の価格の端数」で、四捨五入や切り上げにも切り替えられます。端数の扱いはお店によって異なります。"}},
+    {"@type": "Question", "name": "全体の割引率は、どう計算していますか？", "acceptedAnswer": {"@type": "Answer", "text": "割引額の合計を、定価の合計で割って求めています。商品ごとの割引率の平均とは、金額の違いがあるため一致しません。"}},
+    {"@type": "Question", "name": "消費税は含まれますか？", "acceptedAnswer": {"@type": "Answer", "text": "消費税の計算は含まれません。税込の価格を入力すれば税込の結果、税抜の価格を入力すれば税抜の結果になります。"}},
+    {"@type": "Question", "name": "何点まで計算できますか？", "acceptedAnswer": {"@type": "Answer", "text": "最大30点までです。"}}
+  ]
+}
+</script>
+<script>
+(function(){
+  var $=function(i){return document.getElementById(i)}, MAX=30, list=$("list"), lastText="";
+  function yen(n){return n.toLocaleString("ja-JP",{maximumFractionDigits:2})+"円"}
+  function pct(n){return String(Math.round(n*10)/10)}
+  // 割引計算の本体（画面に依存しない）
+  function discount(price,rate,mode){
+    var x=Math.round(price*(100-rate)/100*1e6)/1e6;
+    var after=mode==="ceil"?Math.ceil(x):mode==="round"?Math.round(x):Math.floor(x);
+    return {after:after,off:price-after};
+  }
+  function addRow(){
+    if(list.children.length>=MAX)return;
+    var d=document.createElement("div"); d.className="item";
+    d.innerHTML='<div class="no"></div>'+
+      '<input type="number" class="pr" inputmode="decimal" min="0" step="any" placeholder="例：5000">'+
+      '<input type="number" class="rt" inputmode="decimal" min="0" max="100" step="any" placeholder="例：10">'+
+      '<button type="button" class="btn del" aria-label="この商品を削除">×</button>'+
+      '<div class="rr"></div>';
+    list.appendChild(d); renum();
+  }
+  function renum(){
+    var items=list.children, i;
+    for(i=0;i<items.length;i++){
+      items[i].querySelector(".no").textContent=(i+1)+"点目";
+      items[i].querySelector(".pr").setAttribute("aria-label",(i+1)+"点目の価格（円）");
+      items[i].querySelector(".rt").setAttribute("aria-label",(i+1)+"点目の割引（％）");
+      items[i].querySelector(".del").disabled=items.length<=1;
+    }
+    $("add").disabled=items.length>=MAX;
+  }
+  function calc(){
+    var items=list.children, mode=$("rnd").value, n=0, orig=0, off=0, after=0, bad=false, lines=[], i;
+    for(i=0;i<items.length;i++){
+      var it=items[i], pv=it.querySelector(".pr").value, rv=it.querySelector(".rt").value, rr=it.querySelector(".rr");
+      var p=parseFloat(pv), r=rv===""?0:parseFloat(rv);
+      if(pv===""&&rv===""){rr.textContent=""; continue;}
+      if(isNaN(p)||p<0){rr.textContent="価格を0以上の数で入力してください。"; bad=true; continue;}
+      if(isNaN(r)||r<0||r>100){rr.textContent="割引は0〜100％で入力してください。"; bad=true; continue;}
+      var c=discount(p,r,mode);
+      rr.innerHTML="割引後 <strong>"+yen(c.after)+"</strong>（"+yen(c.off)+"引き）";
+      n++; orig+=p; off+=c.off; after+=c.after;
+      lines.push((i+1)+"点目 "+yen(p)+" "+pct(r)+"%引き → "+yen(c.after));
+    }
+    $("warn").textContent=bad?"入力に誤りがある商品は、合計に含めていません。":"";
+    if(n===0){
+      $("res").textContent="—"; $("sub").textContent="価格を入力すると、合計が表示されます。";
+      $("copy").disabled=true; lastText=""; return;
+    }
+    $("res").textContent="合計 "+yen(after);
+    $("sub").textContent="定価の合計 "+yen(orig)+" − 割引額 "+yen(off)+"（全体で約"+(orig>0?pct(off/orig*100):"0")+"％引き）。"+n+"点分。";
+    lastText=lines.join("\n")+"\n合計 "+yen(after)+"（定価の合計 "+yen(orig)+"、割引額 "+yen(off)+"）";
+    $("copy").disabled=false;
+  }
+  list.addEventListener("input",calc);
+  list.addEventListener("click",function(e){
+    var b=e.target.closest?e.target.closest(".del"):null;
+    if(b&&list.children.length>1){list.removeChild(b.parentNode); renum(); calc();}
+  });
+  $("add").addEventListener("click",function(){addRow(); calc();});
+  $("clear").addEventListener("click",function(){
+    list.innerHTML=""; addRow(); addRow(); addRow(); calc();
+  });
+  $("rnd").addEventListener("change",calc);
+  $("copy").addEventListener("click",function(){
+    var b=$("copy"), ok=function(){b.textContent="コピーしました"; setTimeout(function(){b.textContent="結果をコピー"},1800);};
+    try{
+      if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(lastText).then(ok,function(){});}
+      else{
+        var t=document.createElement("textarea"); t.value=lastText; document.body.appendChild(t); t.select();
+        document.execCommand("copy"); document.body.removeChild(t); ok();
+      }
+    }catch(e){}
+  });
+  addRow(); addRow(); addRow(); calc();
+})();
+</script>
+</body>
+</html>
