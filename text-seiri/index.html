@@ -44,7 +44,8 @@ body{
   font-family:"Zen Kaku Gothic New","Hiragino Sans","Yu Gothic",Meiryo,sans-serif;
   line-height:1.8; font-size:16px;
 }
-main{max-width:760px; margin:0 auto; padding:28px 16px 56px}
+main{max-width:760px; margin:0 auto; padding:20px 16px 56px}
+.back{display:inline-block; margin-bottom:10px; color:var(--accent); text-decoration:none; font-weight:700; min-height:32px}
 h1{font-size:clamp(26px,6vw,36px); line-height:1.35; margin:0 0 6px; letter-spacing:.02em}
 .lead{margin:0 0 22px; color:var(--sub)}
 .panel{background:var(--card); border:1px solid var(--line); border-radius:6px; padding:16px}
@@ -71,14 +72,18 @@ button.ghost{background:transparent; color:var(--accent)}
 .stat{color:var(--sub); font-size:14px}
 .msg{color:var(--ok); font-weight:700; min-height:1.8em}
 article p{margin:0 0 12px}
+article h3{font-size:16px; margin:16px 0 6px}
+article ul{margin:0 0 12px; padding-left:1.4em}
+article li{margin-bottom:4px}
 article dt{font-weight:700; margin-top:8px}
 article dd{margin:0 0 6px; color:var(--sub)}
-footer{margin-top:18px; color:var(--sub); font-size:13px}
+pre.ex{margin:0 0 12px; padding:10px 12px; font:inherit; font-size:14px; line-height:1.6; background:var(--paper); border:1px solid var(--line); border-radius:4px; overflow-x:auto; white-space:pre}
 @media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
 </style>
 </head>
 <body>
 <main>
+  <a class="back" href="/">← tinytool-box</a>
   <h1>テキスト整形ツール</h1>
   <p class="lead">貼り付けるだけで、重複行の削除・並べ替え・空白と空行の除去をまとめて実行します。入力した内容は送信されません。</p>
 
@@ -127,11 +132,66 @@ footer{margin-top:18px; color:var(--sub); font-size:13px}
       <dt>並べ替え</dt>
       <dd>日本語の読み順を基準に並べ替えます。漢字は読みではなく文字コード順に近くなる場合があります。</dd>
     </dl>
+
+    <h3>整形の例</h3>
+    <p>次のような5行のテキストを、初期設定（空白の削除・空行の削除・重複行の削除）で整形すると、3行になります。</p>
+    <pre class="ex">【整形前】
+りんご
+みかん
+りんご
+
+ バナナ 
+
+【整形後】
+りんご
+みかん
+バナナ</pre>
+    <p>2行目の「りんご」は重複なので消え、空行と、「バナナ」の前後の空白もなくなります。並べ替えを「昇順」にすると、読み順（あ→ん）に並びます。</p>
+
+    <h3>こんなときに使えます</h3>
+    <ul>
+      <li>メールアドレスや名簿の一覧から、重複を取り除く</li>
+      <li>キーワード、タグ、商品名の一覧を、重複なしで整理する</li>
+      <li>コピーした文章に入った、余分な空行や空白をまとめて消す</li>
+      <li>Excelやスプレッドシートの1列分をコピーして、重複を確認する</li>
+      <li>ログやリストの行を、読み順に並べ替える</li>
+    </ul>
     <p>入力したテキストはお使いのブラウザの中だけで処理され、サーバーには送信されません。</p>
   </article>
 
-  <footer>© テキスト整形ツール</footer>
+  <article class="panel">
+    <h2>よくある質問</h2>
+    <dl>
+      <dt>重複行は、どのように判定しますか？</dt>
+      <dd>内容が完全に同じ行を重複として扱います。大文字と小文字、全角と半角は、別の文字として区別します。行の前後に空白が付いているだけの違いは、「行頭・行末の空白を削除」をオンにすると、同じ行として判定されます。</dd>
+      <dt>処理は、どの順番で行われますか？</dt>
+      <dd>空白の処理、空行の削除、重複の削除、並べ替えの順です。重複の判定は、空白を整えたあとの内容で行います。</dd>
+      <dt>数字や漢字は、どう並べ替えられますか？</dt>
+      <dd>数字は文字として比べるため、「10」は「2」より前に並びます。数の大きさ順にしたいときは、「02」「10」のように桁をそろえてください。漢字は、読みではなく文字コード順に近くなる場合があります。</dd>
+      <dt>Excelやスプレッドシートからコピーしたデータも使えますか？</dt>
+      <dd>1列分をコピーして貼り付けると、1行に1項目として整形できます。複数の列をコピーすると、列の区切り（タブ）が入った1行になります。</dd>
+      <dt>元の順番を残したまま、重複だけ消せますか？</dt>
+      <dd>できます。並べ替えを「しない」にして、「重複行を削除」をオンにすると、最初に出てきた行が元の順番で残ります。</dd>
+      <dt>入力したテキストは、送信されますか？</dt>
+      <dd>送信されません。すべてお使いのブラウザの中で処理します。</dd>
+    </dl>
+  </article>
 </main>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type": "Question", "name": "重複行は、どのように判定しますか？", "acceptedAnswer": {"@type": "Answer", "text": "内容が完全に同じ行を重複として扱います。大文字と小文字、全角と半角は、別の文字として区別します。行の前後に空白が付いているだけの違いは、「行頭・行末の空白を削除」をオンにすると、同じ行として判定されます。"}},
+    {"@type": "Question", "name": "処理は、どの順番で行われますか？", "acceptedAnswer": {"@type": "Answer", "text": "空白の処理、空行の削除、重複の削除、並べ替えの順です。重複の判定は、空白を整えたあとの内容で行います。"}},
+    {"@type": "Question", "name": "数字や漢字は、どう並べ替えられますか？", "acceptedAnswer": {"@type": "Answer", "text": "数字は文字として比べるため、「10」は「2」より前に並びます。数の大きさ順にしたいときは、「02」「10」のように桁をそろえてください。漢字は、読みではなく文字コード順に近くなる場合があります。"}},
+    {"@type": "Question", "name": "Excelやスプレッドシートからコピーしたデータも使えますか？", "acceptedAnswer": {"@type": "Answer", "text": "1列分をコピーして貼り付けると、1行に1項目として整形できます。複数の列をコピーすると、列の区切り（タブ）が入った1行になります。"}},
+    {"@type": "Question", "name": "元の順番を残したまま、重複だけ消せますか？", "acceptedAnswer": {"@type": "Answer", "text": "できます。並べ替えを「しない」にして、「重複行を削除」をオンにすると、最初に出てきた行が元の順番で残ります。"}},
+    {"@type": "Question", "name": "入力したテキストは、送信されますか？", "acceptedAnswer": {"@type": "Answer", "text": "送信されません。すべてお使いのブラウザの中で処理します。"}}
+  ]
+}
+</script>
 <script>
 (function(){
   var $ = function(id){ return document.getElementById(id); };
