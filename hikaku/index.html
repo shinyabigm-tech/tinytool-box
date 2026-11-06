@@ -48,8 +48,13 @@ del{background:var(--del);color:var(--delt);text-decoration:line-through;border-
 .ln.d{background:var(--del);color:var(--delt)}
 .key{display:flex;gap:14px;font-size:14px;margin-bottom:8px;color:var(--sub)}
 article p{margin:0 0 12px}
+article h3{font-size:16px;margin:16px 0 6px}
+article ul{margin:0 0 12px;padding-left:1.4em}
+article li{margin-bottom:4px}
 article dt{font-weight:700;margin-top:8px}
 article dd{margin:0 0 6px;color:var(--sub)}
+.ex{margin:0 0 12px;padding:10px 12px;font-size:15px;line-height:1.9;background:var(--paper);border:1px solid var(--line);border-radius:4px;white-space:pre-wrap;overflow-wrap:anywhere}
+.ex .cap{display:block;font-size:13px;color:var(--sub);line-height:1.6}
 </style>
 </head>
 <body>
@@ -90,9 +95,64 @@ article dd{margin:0 0 6px;color:var(--sub)}
       <dt>入力できる長さの目安</dt>
       <dd>変更前・変更後それぞれ、20万文字程度まで比較できます。文字単位でも、まず行ごとに比べてから、変わった部分だけを1文字ずつ比べるので、長い文章でも素早く結果が出ます。全体がほとんど書き換わっている場合は、ブロック単位の表示になることがあります。</dd>
     </dl>
+
+    <h3>比較の例（文字単位）</h3>
+    <p>契約書の1文を修正した場合です。開始月と期間が変わった部分だけが、色分けで表示されます。</p>
+    <div class="ex"><span class="cap">変更前：契約期間は2026年4月1日から1年間とする。</span><span class="cap">変更後：契約期間は2026年5月1日から2年間とする。</span>結果：契約期間は2026年<del>4</del><ins>5</ins>月1日から<del>1</del><ins>2</ins>年間とする。</div>
+    <p>このとき、集計は「追加 2文字／削除 2文字／一致 21文字（一致率 約91%）」と表示されます。</p>
+
+    <h3>比較の例（行単位）</h3>
+    <p>条文のうち、1行だけが変わった場合です。変わった行は、「－」（削除）と「＋」（追加）で並んで表示されます。</p>
+    <div class="ex">　 第1条 契約期間は1年間とする。
+<span class="ln d">－ 第2条 料金は月額5,000円とする。</span><span class="ln i">＋ 第2条 料金は月額6,000円とする。</span>　 第3条 解約は30日前までに通知する。</div>
+
+    <h3>こんなときに使えます</h3>
+    <ul>
+      <li>契約書や規約の、修正前と修正後の違いを確認する</li>
+      <li>原稿や記事の、校正前後の変更点を見つける</li>
+      <li>お知らせやメールの文面の、更新箇所を確認する</li>
+      <li>設定ファイルや一覧の、2つのバージョンの違いを調べる（行単位が便利です）</li>
+      <li>自分が書き直した文章が、どこをどれだけ変えたかを確かめる</li>
+    </ul>
     <p>比較の結果は目安です。契約書など重要な文書は、最終的に原本を目視で確認してください。</p>
   </article>
+
+  <article class="panel">
+    <h2>よくある質問</h2>
+    <dl>
+      <dt>文字単位と行単位は、どちらを選べばいいですか？</dt>
+      <dd>誤字や言い回しの小さな修正を見つけたいときは、文字単位がおすすめです。箇条書き、条文、設定ファイルのように、行ごとに内容が分かれている文章は、行単位のほうが見やすくなります。</dd>
+      <dt>全角と半角、大文字と小文字は、区別されますか？</dt>
+      <dd>初期設定では、全角と半角は同じものとして比べます（たとえば「ＡＢＣ１２３」と「ABC123」は同じとみなします）。英字の大文字と小文字は、初期設定では区別します。どちらも、チェックボックスで切り替えられます。</dd>
+      <dt>一致率は、どのように計算していますか？</dt>
+      <dd>変更前と変更後の両方に共通する部分の量を、全体の量で割って、目安として表示しています。値が大きいほど、2つの文章がよく似ています。</dd>
+      <dt>スペースや改行の違いも、差として表示されますか？</dt>
+      <dd>表示されます。スペースや改行の位置が違うと、その部分も変更として扱います。見た目が同じでも、空白が入っているかどうかで差が出ることがあります。</dd>
+      <dt>どのくらいの長さまで比較できますか？</dt>
+      <dd>変更前・変更後それぞれ、20万文字までです。これを超える場合は、文章を分けて入力してください。</dd>
+      <dt>「違いが非常に多いため、比較できません」と表示されました。</dt>
+      <dd>2つの文章がほとんど別の内容になっている場合に表示されます。文章を章や段落ごとに分けて、比べてみてください。</dd>
+      <dt>入力した文章は、送信されますか？</dt>
+      <dd>送信されません。比較は、すべてお使いのブラウザの中で行います。</dd>
+    </dl>
+  </article>
 </main>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type": "Question", "name": "文字単位と行単位は、どちらを選べばいいですか？", "acceptedAnswer": {"@type": "Answer", "text": "誤字や言い回しの小さな修正を見つけたいときは、文字単位がおすすめです。箇条書き、条文、設定ファイルのように、行ごとに内容が分かれている文章は、行単位のほうが見やすくなります。"}},
+    {"@type": "Question", "name": "全角と半角、大文字と小文字は、区別されますか？", "acceptedAnswer": {"@type": "Answer", "text": "初期設定では、全角と半角は同じものとして比べます（たとえば「ＡＢＣ１２３」と「ABC123」は同じとみなします）。英字の大文字と小文字は、初期設定では区別します。どちらも、チェックボックスで切り替えられます。"}},
+    {"@type": "Question", "name": "一致率は、どのように計算していますか？", "acceptedAnswer": {"@type": "Answer", "text": "変更前と変更後の両方に共通する部分の量を、全体の量で割って、目安として表示しています。値が大きいほど、2つの文章がよく似ています。"}},
+    {"@type": "Question", "name": "スペースや改行の違いも、差として表示されますか？", "acceptedAnswer": {"@type": "Answer", "text": "表示されます。スペースや改行の位置が違うと、その部分も変更として扱います。見た目が同じでも、空白が入っているかどうかで差が出ることがあります。"}},
+    {"@type": "Question", "name": "どのくらいの長さまで比較できますか？", "acceptedAnswer": {"@type": "Answer", "text": "変更前・変更後それぞれ、20万文字までです。これを超える場合は、文章を分けて入力してください。"}},
+    {"@type": "Question", "name": "「違いが非常に多いため、比較できません」と表示されました。", "acceptedAnswer": {"@type": "Answer", "text": "2つの文章がほとんど別の内容になっている場合に表示されます。文章を章や段落ごとに分けて、比べてみてください。"}},
+    {"@type": "Question", "name": "入力した文章は、送信されますか？", "acceptedAnswer": {"@type": "Answer", "text": "送信されません。比較は、すべてお使いのブラウザの中で行います。"}}
+  ]
+}
+</script>
 <script>
 (function(){
   var $=function(i){return document.getElementById(i)}, timer, MAXLEN=200000, MAXD=3000;
