@@ -54,6 +54,10 @@ input[type=date],input[type=number],select,textarea{
   width:100%; font:inherit; font-size:16px; padding:8px 10px; min-height:44px;
   color:var(--ink); background:var(--paper); border:1px solid var(--line); border-radius:4px;
 }
+input[type=date],input[type=number],select{height:44px; min-width:0; margin:0}
+input[type=date]{display:block; -webkit-appearance:none; appearance:none; line-height:normal}
+input[type=date]::-webkit-date-and-time-value{text-align:left; min-height:1.5em}
+input[type=date]::-webkit-datetime-edit{padding:0}
 textarea{min-height:84px; resize:vertical}
 .row{display:grid; gap:0 14px; grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
 .opts label{display:flex; align-items:center; gap:8px; min-height:40px; cursor:pointer}
@@ -63,6 +67,9 @@ textarea{min-height:84px; resize:vertical}
 .big{font-size:clamp(22px,5.5vw,30px); font-weight:700; color:var(--accent); margin:0 0 4px; overflow-wrap:anywhere}
 .small{color:var(--sub); font-size:14px; margin:4px 0 0}
 article p{margin:0 0 12px}
+article h3{font-size:16px; margin:16px 0 6px}
+article ul{margin:0 0 12px; padding-left:1.4em}
+article li{margin-bottom:4px}
 article dt{font-weight:700; margin-top:8px}
 article dd{margin:0 0 6px; color:var(--sub)}
 </style>
@@ -126,8 +133,59 @@ article dd{margin:0 0 6px; color:var(--sub)}
       <dt>注意</dt>
       <dd>金融機関や取引先によって営業日の考え方は異なります。契約書や取引先の規定で確認が必要な場合は、休みの設定と独自の休業日で調整してください。</dd>
     </dl>
+
+    <h3>よく使う場面</h3>
+    <ul>
+      <li>支払期日・入金予定日の確認（「請求から10営業日以内」など）</li>
+      <li>納期・発送予定日の見積もり</li>
+      <li>書類の提出期限や回答期限の確認</li>
+      <li>プロジェクトの作業日数の把握（期間内の営業日数を数える）</li>
+    </ul>
+
+    <h3>計算の例</h3>
+    <ul>
+      <li>金曜日を起点に1営業日後 → 翌週の月曜日（祝日でなければ）</li>
+      <li>2026年4月28日（火）の3営業日後 → 2026年5月7日（木）。4月29日の昭和の日と、5月3日〜6日の連休（振替休日を含む）を除いた結果です。</li>
+      <li>2026年5月1日〜31日の営業日数 → 18日（31日のうち、土日10日・祝日3日で休みは13日。開始日を数える設定）</li>
+    </ul>
+  </article>
+
+  <article class="panel">
+    <h2>よくある質問</h2>
+    <dl>
+      <dt>起点の日は数えますか？</dt>
+      <dd>「〇営業日後（前）」の計算では、起点の日は数えず、翌日（前の場合は前日）から数えます。「期間内の営業日数」の計算では、「開始日を数える」のチェックで切り替えられます。</dd>
+      <dt>祝日が日曜と重なった場合はどうなりますか？</dt>
+      <dd>日曜日と重なった祝日の翌日は、振替休日として自動で休みになります。祝日に挟まれた平日（国民の休日）も、自動で休みとして扱います。</dd>
+      <dt>年末年始は営業日になりますか？</dt>
+      <dd>初期設定では営業日として扱います。「年末年始（12/29〜1/3）を休みにする」にチェックを入れると、休みとして計算します。</dd>
+      <dt>会社独自の休業日はどう入力しますか？</dt>
+      <dd>「会社独自の休業日」の欄に、1行に1日ずつ「2026-08-14」の形式で入力してください。夏季休暇や創立記念日などを追加できます。</dd>
+      <dt>銀行の営業日と同じ結果になりますか？</dt>
+      <dd>金融機関の営業日は、一般に土日・祝日・年末年始（12月31日〜1月3日）が休みとされています。ただし、金融機関や取引先によって扱いが異なることがあります。正確な日付が必要な場合は、取引先の規定や契約書を確認してください。</dd>
+      <dt>土曜日だけを営業日にできますか？</dt>
+      <dd>「土日を休みにする」のチェックを外すと、土曜・日曜の両方が営業日として扱われます。土曜だけを営業日にする設定には対応していません。土曜を営業日にして日曜を休みにしたい場合は、日曜の日付を会社独自の休業日に入力してください。</dd>
+      <dt>何年までの祝日に対応していますか？</dt>
+      <dd>2020年〜2050年の祝日に対応しています。範囲外の年を指定すると、祝日が正しく反映されない場合があります。</dd>
+    </dl>
   </article>
 </main>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type": "Question", "name": "起点の日は数えますか？", "acceptedAnswer": {"@type": "Answer", "text": "「〇営業日後（前）」の計算では、起点の日は数えず、翌日（前の場合は前日）から数えます。「期間内の営業日数」の計算では、「開始日を数える」のチェックで切り替えられます。"}},
+    {"@type": "Question", "name": "祝日が日曜と重なった場合はどうなりますか？", "acceptedAnswer": {"@type": "Answer", "text": "日曜日と重なった祝日の翌日は、振替休日として自動で休みになります。祝日に挟まれた平日（国民の休日）も、自動で休みとして扱います。"}},
+    {"@type": "Question", "name": "年末年始は営業日になりますか？", "acceptedAnswer": {"@type": "Answer", "text": "初期設定では営業日として扱います。「年末年始（12/29〜1/3）を休みにする」にチェックを入れると、休みとして計算します。"}},
+    {"@type": "Question", "name": "会社独自の休業日はどう入力しますか？", "acceptedAnswer": {"@type": "Answer", "text": "「会社独自の休業日」の欄に、1行に1日ずつ「2026-08-14」の形式で入力してください。夏季休暇や創立記念日などを追加できます。"}},
+    {"@type": "Question", "name": "銀行の営業日と同じ結果になりますか？", "acceptedAnswer": {"@type": "Answer", "text": "金融機関の営業日は、一般に土日・祝日・年末年始（12月31日〜1月3日）が休みとされています。ただし、金融機関や取引先によって扱いが異なることがあります。正確な日付が必要な場合は、取引先の規定や契約書を確認してください。"}},
+    {"@type": "Question", "name": "土曜日だけを営業日にできますか？", "acceptedAnswer": {"@type": "Answer", "text": "「土日を休みにする」のチェックを外すと、土曜・日曜の両方が営業日として扱われます。土曜だけを営業日にする設定には対応していません。土曜を営業日にして日曜を休みにしたい場合は、日曜の日付を会社独自の休業日に入力してください。"}},
+    {"@type": "Question", "name": "何年までの祝日に対応していますか？", "acceptedAnswer": {"@type": "Answer", "text": "2020年〜2050年の祝日に対応しています。範囲外の年を指定すると、祝日が正しく反映されない場合があります。"}}
+  ]
+}
+</script>
 <script>
 (function(){
   var $=function(i){return document.getElementById(i)};
