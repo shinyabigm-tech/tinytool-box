@@ -14,10 +14,10 @@
 <meta name="description" content="名前を入力するだけで、認印（丸印）・角印・日付印の電子印鑑を無料で作成。透明PNGで保存でき、PDFやWordに貼り付けられます。入力内容は送信されません。">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Zen+Antique&family=Yuji+Mai&family=Yuji+Syuku&family=Zen+Maru+Gothic:wght@500&family=Noto+Serif+JP:wght@700&family=Noto+Sans+JP:wght@700&family=Zen+Kaku+Gothic+New:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Zen+Antique&family=Yuji+Mai&family=Klee+One:wght@600&family=Zen+Maru+Gothic:wght@500&family=Noto+Serif+JP:wght@700&family=Noto+Sans+JP:wght@700&family=Zen+Kaku+Gothic+New:wght@400;700&display=swap" rel="stylesheet">
 <style>
 :root{--paper:#f3f5f8;--grid:#dfe5ee;--ink:#1b2433;--sub:#53607a;--card:#fff;--line:#c5cedd;--accent:#1f3a8a;--accent-ink:#fff;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-@media (prefers-color-scheme:、dark){:root:not([data-theme="light"]){--paper:#141a26;--grid:#1d2536;--ink:#e7ecf6;--sub:#9aa7c2;--card:#1b2334;--line:#34405a;--accent:#8fb0ff;--accent-ink:#0f1626}}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--paper:#141a26;--grid:#1d2536;--ink:#e7ecf6;--sub:#9aa7c2;--card:#1b2334;--line:#34405a;--accent:#8fb0ff;--accent-ink:#0f1626}}
 :root[data-theme="dark"]{--paper:#141a26;--grid:#1d2536;--ink:#e7ecf6;--sub:#9aa7c2;--card:#1b2334;--line:#34405a;--accent:#8fb0ff;--accent-ink:#0f1626}
 *,*::before,*::after{box-sizing:inherit}
 html{scroll-padding-top:env(safe-area-inset-top,0px)}
@@ -42,6 +42,9 @@ button{font:inherit;font-weight:700;min-height:46px;padding:0 22px;cursor:pointe
 .small{color:var(--sub);font-size:14px;margin:6px 0 0}
 #dateRow[hidden]{display:none}
 article p{margin:0 0 12px}
+article h3{font-size:16px;margin:16px 0 6px}
+article ul{margin:0 0 12px;padding-left:1.4em}
+article li{margin-bottom:4px}
 article dt{font-weight:700;margin-top:8px}
 article dd{margin:0 0 6px;color:var(--sub)}
 </style>
@@ -58,7 +61,7 @@ article dd{margin:0 0 6px;color:var(--sub)}
         <select id="kind"><option value="maru">丸印（認印）</option><option value="kaku">角印</option><option value="hizuke">日付印</option></select></div>
       <div><label class="t" for="name">名前（6文字まで）</label><input type="text" id="name" maxlength="6" value="山田" autocomplete="off"></div>
       <div><label class="t" for="font">書体</label>
-        <select id="font"><option value="antique">古印体風</option><option value="gyosho">行書体風</option><option value="kaisho">楷書体</option><option value="reisho">隷書体風</option><option value="tensho">篆書体風（近似）</option><option value="serif">明朝体</option><option value="sans">ゴシック体</option></select></div>
+        <select id="font"><option value="antique">古印体風</option><option value="gyosho">行書体風</option><option value="kaisho">楷書体風</option><option value="reisho">隷書体風</option><option value="tensho">篆書体風（近似）</option><option value="serif">明朝体</option><option value="sans">ゴシック体</option></select></div>
       <div id="dirRow"><label class="t" for="dir">文字の向き</label>
         <select id="dir"><option value="v">縦書き</option><option value="h">横書き</option></select></div>
       <div><label class="t" for="color">色</label>
@@ -92,11 +95,72 @@ article dd{margin:0 0 6px;color:var(--sub)}
       <dt>透明PNGとは</dt>
       <dd>背景が透けた画像です。書類の上に重ねても、文字が隠れません。背景を白にするチェックを入れると、白い背景の画像になります。</dd>
       <dt>書体と太さ、かすれ・にじみ</dt>
-      <dd>古印体風・行書体風・楷書体・隷書体風などから、書体を選べます。篆書体風は、均一な太さの線で近づけた近似で、本物の篆書体や印相体とは異なります。文字の太さを上げると、印影が太くなります。かすれ・にじみを上げると、輪郭が少しにじんだ、押印したような質感になります（0にすると、くっきりした印になります）。</dd>
+      <dd>古印体風・行書体風・楷書体風・隷書体風などから、書体を選べます。篆書体風は、均一な太さの線で近づけた近似で、本物の篆書体や印相体とは異なります。文字の太さを上げると、印影が太くなります。かすれ・にじみを上げると、輪郭が少しにじんだ、押印したような質感になります（0にすると、くっきりした印になります）。</dd>
     </dl>
     <p><strong>ご利用にあたって：</strong>この画像は、法的な効力を保証する印鑑ではありません。実印や銀行印の代わりには使えません。契約書など重要な書類に使う場合は、提出先の規定をご確認ください。他人や団体の名前を無断で使うことは、おやめください。</p>
+
+    <h3>作り方の例</h3>
+    <ul>
+      <li>認印：種類を「丸印（認印）」、名前を「山田」、書体を「古印体風」、色を「朱色」にして、縦書きで作ります。</li>
+      <li>会社の角印：種類を「角印」、名前を「山田商事」にします。4文字以上の名前は、2列に分けて配置されます。</li>
+      <li>日付印：種類を「日付印」にして、名前を上段、日付を中段、部署名などを下段に入れます。日付は、はじめに今日の日付が入るので、書き換えて使えます。</li>
+    </ul>
+
+    <h3>書体の選び方</h3>
+    <ul>
+      <li>古印体風：印鑑らしい、角のある力強い字です。認印や角印に定番の書体です。</li>
+      <li>行書体風：筆で書いたような、流れのある字です。やわらかい印象になります。</li>
+      <li>楷書体風：教科書にあるような、整った手書きの字です。読みやすさを重視したいときに向いています。</li>
+      <li>隷書体風：古印体を横に広げた近似で、横長で安定した印象になります。</li>
+      <li>篆書体風（近似）：丸みのある均一な線で、印鑑らしい雰囲気に近づけた近似です。</li>
+      <li>明朝体・ゴシック体：読みやすい、一般的な書体です。</li>
+    </ul>
+    <p>行書体風と楷書体風は、無料で使えるウェブフォントで近づけた書体です。本物の行書体や楷書体の印鑑とは、字の形が異なる場合があります。</p>
+
+    <h3>書類への貼り付け方</h3>
+    <ul>
+      <li>Word・Excel：「挿入」から、保存したPNG画像を選びます。Wordでは、画像の「文字列の折り返し」を「前面」にすると、文字の上に自由に重ねられます。</li>
+      <li>PDF：PDFを編集できるアプリで、画像として追加し、位置とサイズを整えます。</li>
+      <li>スマホ：保存した画像を、書類のアプリで画像として追加します。</li>
+    </ul>
+  </article>
+
+  <article class="panel">
+    <h2>よくある質問</h2>
+    <dl>
+      <dt>作った電子印鑑は、契約書に使えますか？</dt>
+      <dd>この画像は、実印や銀行印の代わりにはなりません。画像の印影は誰でも作れるため、本人が押したことの証明にもなりません。契約書など重要な書類に使う場合は、提出先の規定を確認してください。本人確認が必要な場面では、電子署名や電子契約サービスなど、別の方法が使われます。</dd>
+      <dt>PDFやWordに貼り付けるには、どうすればいいですか？</dt>
+      <dd>「PNG画像として保存」で保存した画像を、書類に画像として挿入します。背景が透明なので、文字の上に重ねても、下の文字が隠れません。</dd>
+      <dt>画像が保存できないときは、どうすればいいですか？</dt>
+      <dd>スマホでは、プレビューの画像を長押しして、保存してください。ブラウザによって、保存の方法が異なる場合があります。</dd>
+      <dt>名前は何文字まで入れられますか？レイアウトはどうなりますか？</dt>
+      <dd>6文字までです。3文字までは1列で、4文字以上は2列に分けて配置します。縦書きでは右の列から、横書きでは上の行から読みます。</dd>
+      <dt>日付印の日付は、変えられますか？</dt>
+      <dd>変えられます。はじめは今日の日付が入っていますが、欄を書き換えると、プレビューに反映されます。日付の欄は12文字までです。</dd>
+      <dt>書体は、本物の篆書体や楷書体と同じですか？</dt>
+      <dd>同じではありません。無料で使えるウェブフォントを使い、近い雰囲気にした書体です。本物の印鑑の書体とは、字の形が異なる場合があります。</dd>
+      <dt>入力した名前は、送信されますか？</dt>
+      <dd>送信されません。画像は、すべてお使いのブラウザの中で作成します。</dd>
+    </dl>
   </article>
 </main>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type": "Question", "name": "作った電子印鑑は、契約書に使えますか？", "acceptedAnswer": {"@type": "Answer", "text": "この画像は、実印や銀行印の代わりにはなりません。画像の印影は誰でも作れるため、本人が押したことの証明にもなりません。契約書など重要な書類に使う場合は、提出先の規定を確認してください。本人確認が必要な場面では、電子署名や電子契約サービスなど、別の方法が使われます。"}},
+    {"@type": "Question", "name": "PDFやWordに貼り付けるには、どうすればいいですか？", "acceptedAnswer": {"@type": "Answer", "text": "「PNG画像として保存」で保存した画像を、書類に画像として挿入します。背景が透明なので、文字の上に重ねても、下の文字が隠れません。"}},
+    {"@type": "Question", "name": "画像が保存できないときは、どうすればいいですか？", "acceptedAnswer": {"@type": "Answer", "text": "スマホでは、プレビューの画像を長押しして、保存してください。ブラウザによって、保存の方法が異なる場合があります。"}},
+    {"@type": "Question", "name": "名前は何文字まで入れられますか？レイアウトはどうなりますか？", "acceptedAnswer": {"@type": "Answer", "text": "6文字までです。3文字までは1列で、4文字以上は2列に分けて配置します。縦書きでは右の列から、横書きでは上の行から読みます。"}},
+    {"@type": "Question", "name": "日付印の日付は、変えられますか？", "acceptedAnswer": {"@type": "Answer", "text": "変えられます。はじめは今日の日付が入っていますが、欄を書き換えると、プレビューに反映されます。日付の欄は12文字までです。"}},
+    {"@type": "Question", "name": "書体は、本物の篆書体や楷書体と同じですか？", "acceptedAnswer": {"@type": "Answer", "text": "同じではありません。無料で使えるウェブフォントを使い、近い雰囲気にした書体です。本物の印鑑の書体とは、字の形が異なる場合があります。"}},
+    {"@type": "Question", "name": "入力した名前は、送信されますか？", "acceptedAnswer": {"@type": "Answer", "text": "送信されません。画像は、すべてお使いのブラウザの中で作成します。"}}
+  ]
+}
+</script>
 <script>
 (function(){
   var $=function(i){return document.getElementById(i)};
@@ -105,7 +169,7 @@ article dd{margin:0 0 6px;color:var(--sub)}
   var FONTS={
     antique:{fam:'"Zen Antique",'+SERIF,w:400,sx:1,sy:1,ld:'400 40px "Zen Antique"'},
     gyosho:{fam:'"Yuji Mai",'+SERIF,w:400,sx:1,sy:1,ld:'400 40px "Yuji Mai"'},
-    kaisho:{fam:'"Yuji Syuku",'+SERIF,w:400,sx:1,sy:1,ld:'400 40px "Yuji Syuku"'},
+    kaisho:{fam:'"Klee One","Hiragino Maru Gothic ProN","Yu Gothic",sans-serif',w:600,sx:1,sy:1,ld:'600 40px "Klee One"'},
     reisho:{fam:'"Zen Antique",'+SERIF,w:400,sx:1.14,sy:0.88,ld:'400 40px "Zen Antique"'},
     tensho:{fam:'"Zen Maru Gothic","Hiragino Maru Gothic ProN","Yu Gothic",sans-serif',w:500,sx:0.92,sy:1.06,ld:'500 40px "Zen Maru Gothic"'},
     serif:{fam:'"Noto Serif JP",'+SERIF,w:700,sx:1,sy:1,ld:'700 40px "Noto Serif JP"'},
