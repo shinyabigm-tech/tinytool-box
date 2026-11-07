@@ -53,6 +53,9 @@ button:disabled{opacity:.5;cursor:default}
 .thumb{width:56px;height:56px;object-fit:contain;border:1px solid var(--line);border-radius:4px;background:#fff}
 .checker{background-color:#fff;background-image:linear-gradient(45deg,#d9d9d9 25%,transparent 25%,transparent 75%,#d9d9d9 75%),linear-gradient(45deg,#d9d9d9 25%,transparent 25%,transparent 75%,#d9d9d9 75%);background-size:16px 16px;background-position:0 0,8px 8px}
 article p{margin:0 0 12px}
+article h3{font-size:16px;margin:16px 0 6px}
+article ul{margin:0 0 12px;padding-left:1.4em}
+article li{margin-bottom:4px}
 article dt{font-weight:700;margin-top:8px}
 article dd{margin:0 0 6px;color:var(--sub)}
 </style>
@@ -100,8 +103,71 @@ article dd{margin:0 0 6px;color:var(--sub)}
 <dd>パスワード付きのZIPの作成と解凍、4GBを超える巨大なZIPには対応していません。また、端末のメモリを使うため、合計で数百MBを超えるファイルは避けてください。PDFの容量を小さくする機能もありません。</dd>
 </dl>
 <p>重要なファイルは、解凍したあと、中身が開けるかを確認してください。</p>
+
+<h3>使い方の例</h3>
+<ul>
+<li>メールで複数のファイルを送る：写真や書類を選んで、「ZIPを作成して保存」を押します。1つのファイルになるので、添付しやすくなります。</li>
+<li>フォルダごと渡す：パソコンで、「フォルダごと追加」からフォルダを選ぶと、フォルダの中の構成のまま、ZIPにまとまります。</li>
+<li>もらったZIPの中身を確認する：「ZIPの中身を見る・取り出す」に切り替えて、ZIPを選びます。必要なファイルだけを、保存できます。</li>
+<li>文字化けしたZIPを開く：Windowsで作られた日本語のファイル名のZIPも、読める形で一覧に表示されます。</li>
+</ul>
+
+<h3>圧縮で小さくなるファイル、ならないファイル</h3>
+<ul>
+<li>小さくなりやすい：テキスト、CSV、ログ、HTMLなど、文字が中心のファイルです。</li>
+<li>あまり小さくならない：JPEGやPNGの画像、動画、PDF、Word・Excelのファイル（.docx・.xlsx）は、すでに圧縮されているため、ZIPにしても、容量はほとんど変わりません。</li>
+</ul>
+<p>写真の容量を小さくしたいときは、<a href="/gazou/">画像リサイズ・圧縮ツール</a>を使うと、サイズや画質を調整できます。</p>
+
+<h3>できることとできないこと</h3>
+<ul>
+<li>できること：ファイルやフォルダのZIP作成、ZIPの中身の一覧表示、1つずつ、またはまとめての保存。</li>
+<li>できないこと：パスワード付きのZIPの作成と解凍、7zやRARなど、ZIP以外の形式の解凍、4GBを超えるZIPの処理。</li>
+</ul>
+</article>
+
+<article class="panel">
+<h2>よくある質問</h2>
+<dl>
+<dt>ファイルは、外部に送信されますか？</dt>
+<dd>送信されません。ZIPの作成も、解凍も、すべてお使いのブラウザの中で行います。</dd>
+<dt>日本語のファイル名は、文字化けしませんか？</dt>
+<dd>ZIPを作るときは、ファイル名をUTF-8で保存します。最近のWindows、Mac、スマホのアプリでは、日本語のファイル名が正しく表示されます。ZIPを開くときは、ファイル名の文字コードを自動で判定します。古いWindowsで作られたZIPも、できるだけ正しく表示します。ただし、ごく古いソフトで開くと、文字化けする場合があります。</dd>
+<dt>パスワード付きのZIPは、作れますか？開けますか？</dt>
+<dd>どちらも、できません。パスワード付きのZIPは、一覧には表示されますが、「パスワード付き」と表示され、保存はできません。</dd>
+<dt>フォルダごと圧縮・解凍できますか？</dt>
+<dd>圧縮は、パソコンで「フォルダごと追加」を使うと、フォルダの構成のまま、ZIPにまとまります。解凍は、中のファイルが一覧に表示されますが、フォルダの階層は再現せず、ファイル名だけで保存されます。</dd>
+<dt>ZIPにしても、容量が小さくなりません。</dt>
+<dd>JPEGやPNGの画像、動画、PDF、Word・Excelのファイルは、すでに圧縮されているため、ZIPにしても、ほとんど小さくなりません。テキストやCSVのような、文字が中心のファイルは、小さくなりやすいです。</dd>
+<dt>何MBまで処理できますか？</dt>
+<dd>圧縮は、合計400MBまでです。端末のメモリを使うため、大きなファイルは、分けて処理してください。解凍も、ZIPのサイズは400MBまでです。</dd>
+<dt>「圧縮機能に対応していません」と表示されました。</dt>
+<dd>お使いのブラウザが、圧縮や解凍の機能に対応していない場合の表示です。ブラウザを最新の状態にして、もう一度試してください。</dd>
+<dt>7zやRARのファイルは、開けますか？</dt>
+<dd>開けません。このツールで扱えるのは、ZIP形式だけです。</dd>
+<dt>「すべて保存」で、一部のファイルが保存されません。</dt>
+<dd>複数のファイルを続けて保存するため、ブラウザが、「複数のファイルのダウンロードを許可しますか」と確認を出す場合があります。許可して、もう一度試してください。1つずつ保存することもできます。</dd>
+</dl>
 </article>
 </main>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type": "Question", "name": "ファイルは、外部に送信されますか？", "acceptedAnswer": {"@type": "Answer", "text": "送信されません。ZIPの作成も、解凍も、すべてお使いのブラウザの中で行います。"}},
+    {"@type": "Question", "name": "日本語のファイル名は、文字化けしませんか？", "acceptedAnswer": {"@type": "Answer", "text": "ZIPを作るときは、ファイル名をUTF-8で保存します。最近のWindows、Mac、スマホのアプリでは、日本語のファイル名が正しく表示されます。ZIPを開くときは、ファイル名の文字コードを自動で判定します。古いWindowsで作られたZIPも、できるだけ正しく表示します。ただし、ごく古いソフトで開くと、文字化けする場合があります。"}},
+    {"@type": "Question", "name": "パスワード付きのZIPは、作れますか？開けますか？", "acceptedAnswer": {"@type": "Answer", "text": "どちらも、できません。パスワード付きのZIPは、一覧には表示されますが、「パスワード付き」と表示され、保存はできません。"}},
+    {"@type": "Question", "name": "フォルダごと圧縮・解凍できますか？", "acceptedAnswer": {"@type": "Answer", "text": "圧縮は、パソコンで「フォルダごと追加」を使うと、フォルダの構成のまま、ZIPにまとまります。解凍は、中のファイルが一覧に表示されますが、フォルダの階層は再現せず、ファイル名だけで保存されます。"}},
+    {"@type": "Question", "name": "ZIPにしても、容量が小さくなりません。", "acceptedAnswer": {"@type": "Answer", "text": "JPEGやPNGの画像、動画、PDF、Word・Excelのファイルは、すでに圧縮されているため、ZIPにしても、ほとんど小さくなりません。テキストやCSVのような、文字が中心のファイルは、小さくなりやすいです。"}},
+    {"@type": "Question", "name": "何MBまで処理できますか？", "acceptedAnswer": {"@type": "Answer", "text": "圧縮は、合計400MBまでです。端末のメモリを使うため、大きなファイルは、分けて処理してください。解凍も、ZIPのサイズは400MBまでです。"}},
+    {"@type": "Question", "name": "「圧縮機能に対応していません」と表示されました。", "acceptedAnswer": {"@type": "Answer", "text": "お使いのブラウザが、圧縮や解凍の機能に対応していない場合の表示です。ブラウザを最新の状態にして、もう一度試してください。"}},
+    {"@type": "Question", "name": "7zやRARのファイルは、開けますか？", "acceptedAnswer": {"@type": "Answer", "text": "開けません。このツールで扱えるのは、ZIP形式だけです。"}},
+    {"@type": "Question", "name": "「すべて保存」で、一部のファイルが保存されません。", "acceptedAnswer": {"@type": "Answer", "text": "複数のファイルを続けて保存するため、ブラウザが、「複数のファイルのダウンロードを許可しますか」と確認を出す場合があります。許可して、もう一度試してください。1つずつ保存することもできます。"}}
+  ]
+}
+</script>
 <script>
 (function(){
   var $=function(i){return document.getElementById(i)};
