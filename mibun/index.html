@@ -53,6 +53,9 @@ button:disabled{opacity:.5;cursor:default}
 .thumb{width:56px;height:56px;object-fit:contain;border:1px solid var(--line);border-radius:4px;background:#fff}
 .checker{background-color:#fff;background-image:linear-gradient(45deg,#d9d9d9 25%,transparent 25%,transparent 75%,#d9d9d9 75%),linear-gradient(45deg,#d9d9d9 25%,transparent 25%,transparent 75%,#d9d9d9 75%);background-size:16px 16px;background-position:0 0,8px 8px}
 article p{margin:0 0 12px}
+article h3{font-size:16px;margin:16px 0 6px}
+article ul{margin:0 0 12px;padding-left:1.4em}
+article li{margin-bottom:4px}
 article dt{font-weight:700;margin-top:8px}
 article dd{margin:0 0 6px;color:var(--sub)}
 .stage{display:block;width:100%;height:auto;border:1px solid var(--line);border-radius:4px;background:#222;touch-action:none;cursor:crosshair}
@@ -60,6 +63,7 @@ article dd{margin:0 0 6px;color:var(--sub)}
 .pvc{display:block;width:100%;max-width:420px;height:auto;border:1px solid var(--line);background:#fff;margin:0 auto}
 .sidebox h3{font-size:16px;margin:14px 0 4px}
 .warn{border-left:6px solid #c47a00;padding:8px 12px;background:var(--paper);border-radius:4px;font-size:15px;margin:10px 0 0}
+.ex{margin:0 0 12px;padding:10px 12px;font-size:15px;line-height:1.9;background:var(--paper);border:1px solid var(--line);border-radius:4px;white-space:pre-wrap;overflow-wrap:anywhere}
 </style>
 </head>
 <body>
@@ -125,8 +129,81 @@ article dd{margin:0 0 6px;color:var(--sub)}
 <dd>マイナンバーカードの裏面には、マイナンバーが書かれています。本人確認書類として写しを出す場合は、表面だけで足りることが多く、裏面は、提出先から求められたときに限ってください。健康保険証など、ほかの書類も、提出先の案内に従ってください。</dd>
 </dl>
 <p><strong>ご利用にあたって：</strong>提出先の指定（写しの形式、大きさ、黒塗りや透かしの可否、有効期限など）を、最優先にしてください。黒塗りや透かしを、認めない提出先もあります。このツールは、写しを作る作業を、手伝うものです。作成した画像やPDFは、提出が済んだら、端末から、削除することをおすすめします。</p>
+
+<h3>使い方の例（銀行に免許証の写しを出す場合）</h3>
+<ul>
+<li>書類の種類：運転免許証。裏面にチェックを入れたままにします。</li>
+<li>表面と裏面の写真を、それぞれ選びます。4つの丸を、カードの四隅に合わせます。</li>
+<li>提出先の欄に「○○銀行」と入れて、透かしをオンのままにします。カードの上に、次のような文字が、薄く重なります。</li>
+</ul>
+<div class="ex">○○銀行 提出用 2026/10/22 他の目的には使用できません</div>
+<ul>
+<li>カードの大きさは、「実寸」のままで、用紙の位置は「上寄せ」にします。</li>
+<li>「PDFで保存」を押します。表と裏が、A4用紙1枚に、上下に並んだPDFができます。</li>
+</ul>
+
+<h3>きれいに仕上げる撮影のコツ</h3>
+<ul>
+<li>平らで、無地の場所にカードを置いて、真上から撮ります。</li>
+<li>明るい場所で、カードに影や光の反射が入らないようにします。</li>
+<li>カードの四隅が、写真の中に、すべて入るようにします。</li>
+<li>文字が薄く見えるときは、「文字をくっきりさせる」を上げるか、「白黒にする」を試します。</li>
+</ul>
+
+<h3>仕上げの設定の目安</h3>
+<ul>
+<li>カードの大きさ：実寸（約85.6mm×54mm）が基本です。読みやすさを重視するときは、約125%や約150%にします。</li>
+<li>用紙の中の位置：上寄せは、用紙の上から約25mmの位置に、並べます。中央にすると、用紙の真ん中に並びます。</li>
+<li>透かしの濃さ：文字が読めなくなるときは、濃さを下げます。提出先が透かしを認めない場合は、オフにします。</li>
+<li>保存形式：PDFでも、JPEGの画像でも、A4用紙の大きさで、300dpiの画質になります。提出先の指定に合わせて、選んでください。</li>
+</ul>
+</article>
+
+<article class="panel">
+<h2>よくある質問</h2>
+<dl>
+<dt>写真は、外部に送信されますか？</dt>
+<dd>送信されません。写真の読み込み、台形の補正、黒塗り、PDFの作成は、すべてお使いのブラウザの中で行います。</dd>
+<dt>斜めから撮った写真でも、使えますか？</dt>
+<dd>使えます。写真の上の4つの丸を、カードの四隅に合わせると、斜めに写ったカードが、まっすぐな長方形に補正されます。四隅が合わないときは、「四隅を最初の位置に戻す」で、やり直せます。</dd>
+<dt>黒塗りは、あとから元に戻せますか？</dt>
+<dd>保存する前なら、「黒塗りを1つ戻す」か「黒塗りを全部消す」で戻せます。保存したPDFや画像では、黒塗りの部分が、画像に焼き付けられるため、元に戻せません。</dd>
+<dt>透かしは、必ず入れる必要がありますか？</dt>
+<dd>いいえ。透かしは、写しが別の目的に使い回されるのを防ぐための、任意の機能です。提出先が、透かしを認めない場合は、オフにしてください。提出先の指定を、最優先にしてください。</dd>
+<dt>マイナンバーカードの裏面も、写す必要がありますか？</dt>
+<dd>マイナンバーカードの裏面には、マイナンバーが書かれています。本人確認書類として写しを出す場合は、表面だけで足りることが多く、裏面は、提出先から求められたときに限ってください。このツールでは、マイナンバーカードを選ぶと、裏面は、初期設定でオフになります。</dd>
+<dt>PDFと画像（JPEG）は、どちらで保存すればいいですか？</dt>
+<dd>提出先の指定に合わせてください。どちらも、A4用紙の大きさで、300dpiの画質です。メールやアップロードの容量制限があるときは、提出先に、形式と容量の目安を確認してください。</dd>
+<dt>実寸で印刷できますか？</dt>
+<dd>カードの大きさを「実寸」にして保存すると、カードと同じ大きさ（約85.6mm×54mm）で、A4用紙に配置されます。印刷するときは、拡大・縮小をしない設定（100%や、実際のサイズ）にしてください。</dd>
+<dt>どのくらいの大きさの写真まで、使えますか？</dt>
+<dd>1枚あたり40MBまでです。長辺が3200ピクセルを超える写真は、3200ピクセルに縮小して処理します。</dd>
+<dt>作った写しは、そのあと、どうすればいいですか？</dt>
+<dd>提出が済んだら、端末から、画像やPDFを削除することをおすすめします。本人確認書類の写しには、重要な個人情報が含まれています。</dd>
+<dt>スマホでも使えますか？</dt>
+<dd>使えます。四隅の丸の移動や、黒塗りは、指でなぞって操作します。保存した画像やPDFは、お使いのスマホの、ダウンロードの場所などに、保存されます。</dd>
+</dl>
 </article>
 </main>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type": "Question", "name": "写真は、外部に送信されますか？", "acceptedAnswer": {"@type": "Answer", "text": "送信されません。写真の読み込み、台形の補正、黒塗り、PDFの作成は、すべてお使いのブラウザの中で行います。"}},
+    {"@type": "Question", "name": "斜めから撮った写真でも、使えますか？", "acceptedAnswer": {"@type": "Answer", "text": "使えます。写真の上の4つの丸を、カードの四隅に合わせると、斜めに写ったカードが、まっすぐな長方形に補正されます。四隅が合わないときは、「四隅を最初の位置に戻す」で、やり直せます。"}},
+    {"@type": "Question", "name": "黒塗りは、あとから元に戻せますか？", "acceptedAnswer": {"@type": "Answer", "text": "保存する前なら、「黒塗りを1つ戻す」か「黒塗りを全部消す」で戻せます。保存したPDFや画像では、黒塗りの部分が、画像に焼き付けられるため、元に戻せません。"}},
+    {"@type": "Question", "name": "透かしは、必ず入れる必要がありますか？", "acceptedAnswer": {"@type": "Answer", "text": "いいえ。透かしは、写しが別の目的に使い回されるのを防ぐための、任意の機能です。提出先が、透かしを認めない場合は、オフにしてください。提出先の指定を、最優先にしてください。"}},
+    {"@type": "Question", "name": "マイナンバーカードの裏面も、写す必要がありますか？", "acceptedAnswer": {"@type": "Answer", "text": "マイナンバーカードの裏面には、マイナンバーが書かれています。本人確認書類として写しを出す場合は、表面だけで足りることが多く、裏面は、提出先から求められたときに限ってください。このツールでは、マイナンバーカードを選ぶと、裏面は、初期設定でオフになります。"}},
+    {"@type": "Question", "name": "PDFと画像（JPEG）は、どちらで保存すればいいですか？", "acceptedAnswer": {"@type": "Answer", "text": "提出先の指定に合わせてください。どちらも、A4用紙の大きさで、300dpiの画質です。メールやアップロードの容量制限があるときは、提出先に、形式と容量の目安を確認してください。"}},
+    {"@type": "Question", "name": "実寸で印刷できますか？", "acceptedAnswer": {"@type": "Answer", "text": "カードの大きさを「実寸」にして保存すると、カードと同じ大きさ（約85.6mm×54mm）で、A4用紙に配置されます。印刷するときは、拡大・縮小をしない設定（100%や、実際のサイズ）にしてください。"}},
+    {"@type": "Question", "name": "どのくらいの大きさの写真まで、使えますか？", "acceptedAnswer": {"@type": "Answer", "text": "1枚あたり40MBまでです。長辺が3200ピクセルを超える写真は、3200ピクセルに縮小して処理します。"}},
+    {"@type": "Question", "name": "作った写しは、そのあと、どうすればいいですか？", "acceptedAnswer": {"@type": "Answer", "text": "提出が済んだら、端末から、画像やPDFを削除することをおすすめします。本人確認書類の写しには、重要な個人情報が含まれています。"}},
+    {"@type": "Question", "name": "スマホでも使えますか？", "acceptedAnswer": {"@type": "Answer", "text": "使えます。四隅の丸の移動や、黒塗りは、指でなぞって操作します。保存した画像やPDFは、お使いのスマホの、ダウンロードの場所などに、保存されます。"}}
+  ]
+}
+</script>
 <script>
 (function(){
   var $=function(i){return document.getElementById(i)};
