@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-G1ZB4CKMD7"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-G1ZB4CKMD7');
+</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>証明写真サイズ トリミングツール｜履歴書・免許証・パスポートの写真をL判・A4に並べる</title>
+<meta name="description" content="写真を履歴書（30×40mm）・運転免許証（24×30mm）・パスポートやマイナンバーカード（35×45mm）などのサイズに切り抜き、L判・2L判・A4に切り取り線つきで並べます。登録不要・無料。写真は端末内だけで処理され、送信されません。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#f3f5f8;--grid:#dfe5ee;--ink:#1b2433;--sub:#53607a;--card:#fff;--line:#c5cedd;--accent:#1f3a8a;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--paper:#141a26;--grid:#1d2536;--ink:#e7ecf6;--sub:#9aa7c2;--card:#1b2334;--line:#34405a;--accent:#8fb0ff}}
+:root[data-theme="dark"]{--paper:#141a26;--grid:#1d2536;--ink:#e7ecf6;--sub:#9aa7c2;--card:#1b2334;--line:#34405a;--accent:#8fb0ff}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+[hidden]{display:none!important}
+body{margin:0;color:var(--ink);background-color:var(--paper);background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:24px 24px;font-family:"Zen Kaku Gothic New","Hiragino Sans","Yu Gothic",Meiryo,sans-serif;line-height:1.8;font-size:16px}
+main{max-width:760px;margin:0 auto;padding:20px 16px 56px}
+a{color:var(--accent)}
+.back{display:inline-block;margin-bottom:10px;color:var(--accent);text-decoration:none;font-weight:700;min-height:32px}
+h1{font-size:clamp(26px,6vw,36px);line-height:1.35;margin:0 0 6px}
+.lead{margin:0 0 22px;color:var(--sub)}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:6px;padding:16px}
+.panel + .panel{margin-top:14px}
+h2{font-size:18px;margin:0 0 10px}
+label.t{display:block;font-weight:700;margin:10px 0 4px}
+input[type=file],input[type=number],select{width:100%;font:inherit;font-size:16px;padding:8px 10px;min-height:44px;color:var(--ink);background:var(--paper);border:1px solid var(--line);border-radius:4px}
+.row{display:grid;gap:0 14px;grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+.u{color:var(--sub);font-weight:400;font-size:14px}
+.chk{display:flex;align-items:center;gap:8px;margin-top:14px;min-height:44px;font-weight:700}
+.chk input{width:22px;height:22px;margin:0}
+.small{color:var(--sub);font-size:14px;margin:6px 0 0}
+.stagewrap{max-width:480px;margin:0 auto}
+canvas{display:block;width:100%;height:auto;border-radius:4px}
+#stage{aspect-ratio:1/1;touch-action:none;cursor:grab;background:#1b1f2a}
+#stage:active{cursor:grabbing}
+#sheet{border:1px solid var(--line);background:#fff;max-width:480px;margin:0 auto}
+input[type=range]{width:100%;min-height:44px;accent-color:var(--accent)}
+.btns{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));margin-top:14px}
+button{font:inherit;font-weight:700;min-height:48px;padding:8px 14px;color:var(--card);background:var(--accent);border:0;border-radius:6px;cursor:pointer}
+button:disabled{opacity:.45;cursor:not-allowed}
+table{width:100%;border-collapse:collapse;font-size:15px}
+th,td{padding:8px 6px;border-bottom:1px solid var(--line);text-align:left}
+th{color:var(--sub);font-weight:700;font-size:14px}
+.wrap{overflow-x:auto}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+article p{margin:0 0 12px}
+article h3{font-size:16px;margin:16px 0 6px}
+article ul,article ol{margin:0 0 12px;padding-left:1.4em}
+article li{margin-bottom:4px}
+article dt{font-weight:700;margin-top:8px}
+article dd{margin:0 0 6px;color:var(--sub)}
+</style>
+</head>
+<body>
+<main>
+  <a class="back" href="/">← tinytool-box</a>
+  <h1>証明写真サイズ トリミングツール</h1>
+  <p class="lead">写真を履歴書・免許証・パスポートなどのサイズに切り抜いて、L判やA4にまとめて並べます。写真は端末の中だけで処理され、送信されません。</p>
+
+  <section class="panel">
+    <h2>1. 写真を選ぶ</h2>
+    <label class="t" for="file">写真ファイル（JPEG・PNGなど）</label>
+    <input id="file" type="file" accept="image/*">
+    <p class="small" id="fmsg">顔が正面を向いた、明るい場所で撮った写真がおすすめです。</p>
+  </section>
+
+  <section class="panel">
+    <h2>2. サイズと用紙を選ぶ</h2>
+    <div class="row">
+      <div>
+        <label class="t" for="size">写真のサイズ</label>
+        <select id="size">
+          <option value="30x40">履歴書・在留カードなど（横30×縦40mm）</option>
+          <option value="24x30">運転免許証・資格試験など（横24×縦30mm）</option>
+          <option value="35x45">パスポート・マイナンバーカード（横35×縦45mm）</option>
+          <option value="40x60">医師国家試験など（横40×縦60mm）</option>
+          <option value="custom">自由入力（mm）</option>
+        </select>
+      </div>
+      <div>
+        <label class="t" for="paper">並べる用紙</label>
+        <select id="paper">
+          <option value="89x127">L判（89×127mm）</option>
+          <option value="127x178">2L判（127×178mm）</option>
+          <option value="210x297">A4（210×297mm）</option>
+          <option value="single">1枚だけ（並べない）</option>
+        </select>
+      </div>
+    </div>
+    <div class="row" id="custom" hidden>
+      <div><label class="t" for="cw">横 <span class="u">mm（10〜150）</span></label><input id="cw" type="number" inputmode="decimal" min="10" max="150" step="0.5" value="35"></div>
+      <div><label class="t" for="ch">縦 <span class="u">mm（10〜200）</span></label><input id="ch" type="number" inputmode="decimal" min="10" max="200" step="0.5" value="45"></div>
+    </div>
+    <label class="chk"><input type="checkbox" id="cut" checked> 切り取り線を入れる</label>
+  </section>
+
+  <section class="panel">
+    <h2>3. 枠に合わせる</h2>
+    <div class="stagewrap">
+      <canvas id="stage" width="480" height="480" tabindex="0" aria-label="写真の位置と大きさを調整する領域。ドラッグで移動、拡大スライダーで大きさを変更できます。"></canvas>
+      <label class="t" for="zoom">拡大</label>
+      <input id="zoom" type="range" min="1" max="4" step="0.01" value="1">
+      <p class="small">写真をドラッグして位置を、2本指（またはスライダー）で大きさを合わせます。</p>
+    </div>
+  </section>
+
+  <section class="panel">
+    <h2>4. 仕上がりを確認して保存</h2>
+    <canvas id="sheet" width="300" height="200" aria-label="仕上がりのプレビュー"></canvas>
+    <p class="small" id="info">写真を選ぶと、ここに仕上がりが表示されます。</p>
+    <div class="btns">
+      <button type="button" id="dlJpg" disabled>JPEGで保存</button>
+      <button type="button" id="dlPdf" disabled>PDFで保存</button>
+    </div>
+    <p class="small">印刷するときは、拡大・縮小をしない設定（原寸・100%）にしてください。</p>
+  </section>
+
+  <article class="panel">
+    <h2>使い方</h2>
+    <ol>
+      <li>写真を選びます。</li>
+      <li>写真のサイズと、並べる用紙を選びます。</li>
+      <li>枠の中に顔が収まるように、写真を動かして大きさを合わせます。</li>
+      <li>プレビューを確認して、JPEGまたはPDFで保存します。</li>
+      <li>保存したファイルを、写真プリントのサービスなどで印刷します。</li>
+    </ol>
+    <p>用紙には、選んだサイズの写真が入る限り並びます。縦向きと横向きを比べて、枚数の多いほうの向きを自動で選びます。保存する画像は300dpiで作成します。</p>
+
+    <h3>証明写真のサイズ早見表</h3>
+    <div class="wrap"><table>
+      <thead><tr><th>主な用途</th><th>サイズ（横×縦）</th></tr></thead>
+      <tbody>
+        <tr><td>履歴書・公務員試験・在留カード</td><td>30×40mm</td></tr>
+        <tr><td>運転免許証・英検など資格試験</td><td>24×30mm</td></tr>
+        <tr><td>パスポート・マイナンバーカード・国家資格</td><td>35×45mm</td></tr>
+        <tr><td>医師国家試験</td><td>40×60mm</td></tr>
+      </tbody>
+    </table></div>
+    <p class="small">サイズは用途や提出先によって異なる場合があります。必ず、提出先の案内を確認してください。</p>
+  </article>
+
+  <article class="panel">
+    <h2>よくある質問</h2>
+    <dl>
+      <dt>証明写真のサイズは何mmですか？</dt>
+      <dd>履歴書や在留カードは横30×縦40mm、運転免許証や資格試験は横24×縦30mm、パスポートやマイナンバーカードは横35×縦45mmが一般的です。提出先によって異なるため、必ず募集要項や申請先の案内を確認してください。</dd>
+      <dt>背景を白くできますか？</dt>
+      <dd>このツールは、切り抜きと並べる作業を行います。背景の色は変えられません。無地の白い壁の前で撮影するのがおすすめです。当サイトの<a href="/haikei/">背景透過ツール</a>で背景を透明にしたPNGを読み込むと、透明な部分は白で出力されます。</dd>
+      <dt>保存した写真を印刷するには？</dt>
+      <dd>保存したJPEGを、ネットプリントや写真プリントのサービスで、用紙サイズに合わせて印刷します。拡大・縮小や、自動のトリミングをしない設定にしてください。印刷後に、定規で写真のサイズを測っておくと安心です。</dd>
+      <dt>写真は送信されますか？</dt>
+      <dd>いいえ。読み込んだ写真は、お使いのブラウザの中だけで処理されます。サーバーには送信されず、保存もされません。</dd>
+      <dt>写真が横向きに表示されます。</dt>
+      <dd>スマートフォンの写真アプリで向きを直してから、読み込み直してください。</dd>
+      <dt>顔の大きさや位置の決まりは確認してくれますか？</dt>
+      <dd>いいえ。このツールは、枠に合わせて切り抜くだけで、規格に合っているかの判定はしません。顔の大きさ、向き、背景、撮影時期などの条件は、必ず提出先の案内で確認してください。</dd>
+    </dl>
+  </article>
+</main>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type": "Question", "name": "証明写真のサイズは何mmですか？", "acceptedAnswer": {"@type": "Answer", "text": "履歴書や在留カードは横30×縦40mm、運転免許証や資格試験は横24×縦30mm、パスポートやマイナンバーカードは横35×縦45mmが一般的です。提出先によって異なるため、必ず募集要項や申請先の案内を確認してください。"}},
+    {"@type": "Question", "name": "背景を白くできますか？", "acceptedAnswer": {"@type": "Answer", "text": "このツールは、切り抜きと並べる作業を行います。背景の色は変えられません。無地の白い壁の前で撮影するのがおすすめです。背景透過ツールで背景を透明にしたPNGを読み込むと、透明な部分は白で出力されます。"}},
+    {"@type": "Question", "name": "保存した写真を印刷するには？", "acceptedAnswer": {"@type": "Answer", "text": "保存したJPEGを、ネットプリントや写真プリントのサービスで、用紙サイズに合わせて印刷します。拡大・縮小や、自動のトリミングをしない設定にしてください。印刷後に、定規で写真のサイズを測っておくと安心です。"}},
+    {"@type": "Question", "name": "写真は送信されますか？", "acceptedAnswer": {"@type": "Answer", "text": "いいえ。読み込んだ写真は、お使いのブラウザの中だけで処理されます。サーバーには送信されず、保存もされません。"}},
+    {"@type": "Question", "name": "写真が横向きに表示されます。", "acceptedAnswer": {"@type": "Answer", "text": "スマートフォンの写真アプリで向きを直してから、読み込み直してください。"}},
+    {"@type": "Question", "name": "顔の大きさや位置の決まりは確認してくれますか？", "acceptedAnswer": {"@type": "Answer", "text": "いいえ。このツールは、枠に合わせて切り抜くだけで、規格に合っているかの判定はしません。顔の大きさ、向き、背景、撮影時期などの条件は、必ず提出先の案内で確認してください。"}}
+  ]
+}
+</script>
+<script>
+(function(){
+  var $=function(i){return document.getElementById(i)};
+  var S=480, MARGIN=4, GAP=2, DPI_OUT=300, PREV_LONG=1400;
+  var PAPER_NAME={"89x127":"L判","127x178":"2L判","210x297":"A4"};
+  var stage=$("stage"), sctx=stage.getContext("2d");
+  var RES=Math.min(3,Math.max(2,Math.ceil(window.devicePixelRatio||2)));
+  stage.width=S*RES; stage.height=S*RES; sctx.setTransform(RES,0,0,RES,0,0);
+  var sheet=$("sheet"), shctx=sheet.getContext("2d");
+  var st={img:null,iw:0,ih:0,fx:0,fy:0,fw:0,fh:0,ix:0,iy:0,z:1,cover:1};
+  var timer=null;
+
+  function photoMM(){
+    if($("size").value==="custom"){
+      var w=parseFloat($("cw").value), h=parseFloat($("ch").value);
+      if(!(w>=10&&w<=150&&h>=10&&h<=200)) return null;
+      return {w:w,h:h};
+    }
+    var p=$("size").value.split("x");
+    return {w:+p[0],h:+p[1]};
+  }
+
+  function setFrame(){
+    var mm=photoMM();
+    if(!mm){st.fw=0;st.fh=0;return;}
+    var k=Math.min(400/mm.w,400/mm.h);
+    st.fw=mm.w*k; st.fh=mm.h*k;
+    st.fx=(S-st.fw)/2; st.fy=(S-st.fh)/2;
+  }
+
+  function clampPos(){
+    var s=st.cover*st.z, w=st.iw*s, h=st.ih*s;
+    st.ix=Math.min(st.fx,Math.max(st.fx+st.fw-w,st.ix));
+    st.iy=Math.min(st.fy,Math.max(st.fy+st.fh-h,st.iy));
+  }
+
+  function fit(){
+    if(!st.img||!st.fw){draw();return;}
+    st.cover=Math.max(st.fw/st.iw,st.fh/st.ih);
+    st.z=1; $("zoom").value=1;
+    var s=st.cover;
+    st.ix=st.fx+(st.fw-st.iw*s)/2;
+    st.iy=st.fy+(st.fh-st.ih*s)/2;
+    clampPos(); draw();
+  }
+
+  function zoomAt(nz,px,py){
+    nz=Math.max(1,Math.min(4,nz));
+    var s0=st.cover*st.z, ux=(px-st.ix)/s0, uy=(py-st.iy)/s0;
+    st.z=nz;
+    var s1=st.cover*st.z;
+    st.ix=px-ux*s1; st.iy=py-uy*s1;
+    clampPos();
+    $("zoom").value=st.z;
+  }
+
+  function draw(){
+    sctx.clearRect(0,0,S,S);
+    sctx.fillStyle="#1b1f2a"; sctx.fillRect(0,0,S,S);
+    if(!st.img||!st.fw){
+      sctx.fillStyle="#9aa7c2"; sctx.font="20px sans-serif"; sctx.textAlign="center";
+      sctx.fillText(st.img?"サイズを入力してください":"写真を選ぶと、ここに表示されます",S/2,S/2);
+      return;
+    }
+    var s=st.cover*st.z;
+    sctx.fillStyle="#fff"; sctx.fillRect(st.ix,st.iy,st.iw*s,st.ih*s);
+    sctx.drawImage(st.img,st.ix,st.iy,st.iw*s,st.ih*s);
+    sctx.save();
+    sctx.fillStyle="rgba(0,0,0,.55)";
+    sctx.beginPath(); sctx.rect(0,0,S,S); sctx.rect(st.fx,st.fy,st.fw,st.fh);
+    sctx.fill("evenodd");
+    sctx.restore();
+    sctx.strokeStyle="#fff"; sctx.lineWidth=2;
+    sctx.strokeRect(st.fx,st.fy,st.fw,st.fh);
+    sctx.save();
+    sctx.strokeStyle="rgba(255,255,255,.55)"; sctx.lineWidth=1; sctx.setLineDash([6,6]);
+    sctx.beginPath(); sctx.moveTo(S/2,st.fy); sctx.lineTo(S/2,st.fy+st.fh); sctx.stroke();
+    sctx.restore();
+  }
+
+  /* ---- 操作：ドラッグ・ピンチ・ホイール・キーボード ---- */
+  var ptrs={}, lastDist=0;
+  function pos(e){
+    var r=stage.getBoundingClientRect(), k=S/r.width;
+    return {x:(e.clientX-r.left)*k,y:(e.clientY-r.top)*k};
+  }
+  stage.addEventListener("pointerdown",function(e){
+    if(!st.img||!st.fw) return;
+    stage.setPointerCapture(e.pointerId);
+    ptrs[e.pointerId]=pos(e); lastDist=0;
+  });
+  stage.addEventListener("pointermove",function(e){
+    if(!ptrs[e.pointerId]) return;
+    var p=pos(e), q=ptrs[e.pointerId], ids=Object.keys(ptrs);
+    if(ids.length===1){
+      st.ix+=p.x-q.x; st.iy+=p.y-q.y; clampPos();
+      ptrs[e.pointerId]=p;
+    }else{
+      ptrs[e.pointerId]=p;
+      var a=ptrs[ids[0]], b=ptrs[ids[1]];
+      var d=Math.hypot(a.x-b.x,a.y-b.y);
+      if(lastDist>0) zoomAt(st.z*d/lastDist,(a.x+b.x)/2,(a.y+b.y)/2);
+      lastDist=d;
+    }
+    draw(); schedule();
+  });
+  function endPtr(e){delete ptrs[e.pointerId]; lastDist=0;}
+  stage.addEventListener("pointerup",endPtr);
+  stage.addEventListener("pointercancel",endPtr);
+  stage.addEventListener("wheel",function(e){
+    if(!st.img||!st.fw) return;
+    e.preventDefault();
+    var p=pos(e);
+    zoomAt(st.z*(e.deltaY<0?1.1:1/1.1),p.x,p.y);
+    draw(); schedule();
+  },{passive:false});
+  stage.addEventListener("keydown",function(e){
+    if(!st.img||!st.fw) return;
+    var m={ArrowLeft:[-4,0],ArrowRight:[4,0],ArrowUp:[0,-4],ArrowDown:[0,4]}[e.key];
+    if(m){st.ix+=m[0]; st.iy+=m[1]; clampPos();}
+    else if(e.key==="+"||e.key==="="){zoomAt(st.z*1.05,S/2,S/2);}
+    else if(e.key==="-"){zoomAt(st.z/1.05,S/2,S/2);}
+    else return;
+    e.preventDefault(); draw(); schedule();
+  });
+  $("zoom").addEventListener("input",function(){
+    if(!st.img||!st.fw) return;
+    zoomAt(parseFloat(this.value),S/2,S/2);
+    draw(); schedule();
+  });
+
+  /* ---- 仕上がりの作成 ---- */
+  function layout(pw,ph,mm){
+    var cols=Math.floor((pw-2*MARGIN+GAP)/(mm.w+GAP));
+    var rows=Math.floor((ph-2*MARGIN+GAP)/(mm.h+GAP));
+    return {cols:cols,rows:rows,n:(cols>0&&rows>0)?cols*rows:0};
+  }
+
+  function buildSheet(dpi,longPx){
+    if(!st.img) return {error:"写真を選ぶと、ここに仕上がりが表示されます。"};
+    var mm=photoMM();
+    if(!mm||!st.fw) return {error:"サイズの数値を確認してください（横10〜150mm、縦10〜200mm）。"};
+    var pv=$("paper").value, single=(pv==="single"), pw, ph, L=null, land=false;
+    if(single){pw=mm.w; ph=mm.h;}
+    else{
+      var d=pv.split("x"), a=Math.min(+d[0],+d[1]), b=Math.max(+d[0],+d[1]);
+      var p1=layout(a,b,mm), p2=layout(b,a,mm);
+      land=p2.n>p1.n; L=land?p2:p1; pw=land?b:a; ph=land?a:b;
+      if(L.n<1) return {error:"この用紙には、選んだサイズの写真が入りません。別の用紙を選んでください。"};
+    }
+    var k=longPx?longPx/Math.max(pw,ph):dpi/25.4;
+    var tw=Math.round(mm.w*k), th=Math.round(mm.h*k);
+    var tile=document.createElement("canvas"); tile.width=tw; tile.height=th;
+    var tc=tile.getContext("2d");
+    tc.fillStyle="#fff"; tc.fillRect(0,0,tw,th);
+    tc.imageSmoothingEnabled=true; tc.imageSmoothingQuality="high";
+    var s=st.cover*st.z;
+    var sx=Math.max(0,(st.fx-st.ix)/s), sy=Math.max(0,(st.fy-st.iy)/s);
+    var sw=Math.min(st.fw/s,st.iw-sx), sh=Math.min(st.fh/s,st.ih-sy);
+    tc.drawImage(st.img,sx,sy,sw,sh,0,0,tw,th);
+    if(single){
+      return {canvas:tile,pw:pw,ph:ph,tag:"single",text:"1枚（横"+mm.w+"×縦"+mm.h+"mm）"};
+    }
+    var W=Math.round(pw*k), H=Math.round(ph*k);
+    var cv=document.createElement("canvas"); cv.width=W; cv.height=H;
+    var c=cv.getContext("2d");
+    c.fillStyle="#fff"; c.fillRect(0,0,W,H);
+    var gridW=L.cols*mm.w+(L.cols-1)*GAP, gridH=L.rows*mm.h+(L.rows-1)*GAP;
+    var x0=(pw-gridW)/2, y0=(ph-gridH)/2, i, j;
+    for(j=0;j<L.rows;j++){
+      for(i=0;i<L.cols;i++){
+        c.drawImage(tile,Math.round((x0+i*(mm.w+GAP))*k),Math.round((y0+j*(mm.h+GAP))*k));
+      }
+    }
+    if($("cut").checked){
+      c.strokeStyle="#8a8a8a"; c.lineWidth=Math.max(1,0.15*k);
+      c.beginPath();
+      for(i=0;i<=L.cols;i++){
+        var x=(x0+i*(mm.w+GAP)-GAP/2)*k;
+        c.moveTo(x,(y0-GAP/2)*k); c.lineTo(x,(y0+gridH+GAP/2)*k);
+      }
+      for(j=0;j<=L.rows;j++){
+        var y=(y0+j*(mm.h+GAP)-GAP/2)*k;
+        c.moveTo((x0-GAP/2)*k,y); c.lineTo((x0+gridW+GAP/2)*k,y);
+      }
+      c.stroke();
+    }
+    return {canvas:cv,pw:pw,ph:ph,tag:pv,
+      text:PAPER_NAME[pv]+"に"+L.n+"枚（"+(land?"横":"縦")+"向き、縦"+L.rows+"段×横"+L.cols+"列）"};
+  }
+
+  function schedule(){clearTimeout(timer); timer=setTimeout(renderPreview,80);}
+  function renderPreview(){
+    var r=buildSheet(0,PREV_LONG), ok=!!r.canvas;
+    if(!ok){
+      sheet.width=300; sheet.height=200;
+      shctx.fillStyle="#fff"; shctx.fillRect(0,0,300,200);
+      $("info").textContent=r.error;
+    }else{
+      sheet.width=r.canvas.width; sheet.height=r.canvas.height;
+      shctx.drawImage(r.canvas,0,0);
+      $("info").textContent=r.text;
+    }
+    $("dlJpg").disabled=!ok; $("dlPdf").disabled=!ok;
+  }
+
+  /* ---- 保存（JPEG・PDF） ---- */
+  function toBlob(canvas,type,q){
+    return new Promise(function(res){canvas.toBlob(res,type,q);});
+  }
+  function saveBlob(blob,name){
+    var a=document.createElement("a");
+    a.href=URL.createObjectURL(blob); a.download=name;
+    document.body.appendChild(a); a.click();
+    setTimeout(function(){URL.revokeObjectURL(a.href); a.remove();},4000);
+  }
+  function makePdf(jpeg,iw,ih,wmm,hmm){
+    var enc=new TextEncoder(), chunks=[], offs=[], len=0;
+    function push(x){var b=(typeof x==="string")?enc.encode(x):x; chunks.push(b); len+=b.length;}
+    var pw=(wmm*72/25.4).toFixed(2), ph=(hmm*72/25.4).toFixed(2);
+    push("%PDF-1.4\n");
+    offs[1]=len; push("1 0 obj\n<< /Type /Catalog /Pages 2 0 R >>\nendobj\n");
+    offs[2]=len; push("2 0 obj\n<< /Type /Pages /Kids [3 0 R] /Count 1 >>\nendobj\n");
+    offs[3]=len; push("3 0 obj\n<< /Type /Page /Parent 2 0 R /MediaBox [0 0 "+pw+" "+ph+"] /Resources << /XObject << /Im0 4 0 R >> >> /Contents 5 0 R >>\nendobj\n");
+    offs[4]=len;
+    push("4 0 obj\n<< /Type /XObject /Subtype /Image /Width "+iw+" /Height "+ih+" /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length "+jpeg.length+" >>\nstream\n");
+    push(jpeg); push("\nendstream\nendobj\n");
+    var content="q "+pw+" 0 0 "+ph+" 0 0 cm /Im0 Do Q";
+    offs[5]=len; push("5 0 obj\n<< /Length "+content.length+" >>\nstream\n"+content+"\nendstream\nendobj\n");
+    var xpos=len, x="xref\n0 6\n0000000000 65535 f \n";
+    for(var n=1;n<=5;n++) x+=String(offs[n]).padStart(10,"0")+" 00000 n \n";
+    push(x);
+    push("trailer\n<< /Size 6 /Root 1 0 R >>\nstartxref\n"+xpos+"\n%%EOF");
+    return new Blob(chunks,{type:"application/pdf"});
+  }
+  function baseName(r){
+    var mm=photoMM();
+    return "shomei-"+mm.w+"x"+mm.h+"-"+r.tag;
+  }
+  async function runSave(btn,kind){
+    var label=btn.textContent; btn.disabled=true; btn.textContent="作成中…";
+    try{
+      var r=buildSheet(DPI_OUT,0);
+      if(!r.canvas) throw new Error(r.error);
+      var jpg=await toBlob(r.canvas,"image/jpeg",0.95);
+      if(kind==="jpg"){
+        saveBlob(jpg,baseName(r)+".jpg");
+      }else{
+        var bytes=new Uint8Array(await jpg.arrayBuffer());
+        saveBlob(makePdf(bytes,r.canvas.width,r.canvas.height,r.pw,r.ph),baseName(r)+".pdf");
+      }
+    }catch(err){
+      $("info").textContent="保存に失敗しました。写真を小さくするか、別のブラウザで試してください。";
+    }
+    btn.textContent=label; btn.disabled=false;
+  }
+  $("dlJpg").addEventListener("click",function(){runSave(this,"jpg");});
+  $("dlPdf").addEventListener("click",function(){runSave(this,"pdf");});
+
+  /* ---- 入力まわり ---- */
+  /* ---- 写真の読み込み（3段階のフォールバック＋大きい写真の縮小） ---- */
+  var MAXPX=4096;
+  function decodeImage(f){
+    return new Promise(function(resolve,reject){
+      var url=URL.createObjectURL(f), im=new Image();
+      im.onload=function(){
+        URL.revokeObjectURL(url);
+        if(!im.naturalWidth||!im.naturalHeight){reject(new Error("empty"));return;}
+        resolve({src:im,w:im.naturalWidth,h:im.naturalHeight});
+      };
+      im.onerror=function(){URL.revokeObjectURL(url);reject(new Error("img"));};
+      im.src=url;
+    });
+  }
+  function decodeBitmap(f){
+    if(!window.createImageBitmap) return Promise.reject(new Error("nobitmap"));
+    return createImageBitmap(f,{imageOrientation:"from-image"})
+      .catch(function(){return createImageBitmap(f);})
+      .then(function(b){return {src:b,w:b.width,h:b.height};});
+  }
+  function decodeReader(f){
+    return new Promise(function(resolve,reject){
+      var fr=new FileReader();
+      fr.onload=function(){
+        var im=new Image();
+        im.onload=function(){
+          if(!im.naturalWidth||!im.naturalHeight){reject(new Error("empty"));return;}
+          resolve({src:im,w:im.naturalWidth,h:im.naturalHeight});
+        };
+        im.onerror=function(){reject(new Error("reader-img"));};
+        im.src=fr.result;
+      };
+      fr.onerror=function(){reject(new Error("reader"));};
+      fr.readAsDataURL(f);
+    });
+  }
+  function shrink(d){
+    var m=Math.max(d.w,d.h);
+    if(m<=MAXPX) return d;
+    var r=MAXPX/m, w=Math.round(d.w*r), h=Math.round(d.h*r);
+    var c=document.createElement("canvas"); c.width=w; c.height=h;
+    var x=c.getContext("2d"); x.imageSmoothingEnabled=true; x.imageSmoothingQuality="high";
+    x.drawImage(d.src,0,0,w,h);
+    return {src:c,w:w,h:h};
+  }
+  function fail(f){
+    var t=f.type||"不明", mb=(f.size/1048576).toFixed(1);
+    var heic=/heic|heif/i.test(f.type+" "+f.name);
+    $("fmsg").textContent="この写真を読み込めませんでした（形式: "+t+"、"+mb+"MB）。"+
+      (heic?"HEIC形式の可能性があります。iPhoneの「設定」→「カメラ」→「フォーマット」を「互換性優先」にするか、写真アプリで共有時に「すべての写真データ」をオフにしてJPEGで書き出してください。":
+      "別の写真で試すか、写真を一度スクリーンショットで保存し直してから読み込んでください。");
+  }
+  $("file").addEventListener("change",function(){
+    var f=this.files&&this.files[0];
+    if(!f) return;
+    $("fmsg").textContent="読み込み中です…";
+    decodeImage(f)
+      .catch(function(){return decodeBitmap(f);})
+      .catch(function(){return decodeReader(f);})
+      .then(function(d){
+        d=shrink(d);
+        st.img=d.src; st.iw=d.w; st.ih=d.h;
+        $("fmsg").textContent="読み込みました（"+st.iw+"×"+st.ih+"px）。";
+        setFrame(); fit(); schedule();
+      })
+      .catch(function(){fail(f);});
+  });
+  function onSize(){
+    $("custom").hidden=($("size").value!=="custom");
+    setFrame(); fit(); schedule();
+  }
+  $("size").addEventListener("change",onSize);
+  $("cw").addEventListener("input",onSize);
+  $("ch").addEventListener("input",onSize);
+  $("paper").addEventListener("change",schedule);
+  $("cut").addEventListener("change",schedule);
+
+  setFrame(); draw(); schedule();
+})();
+</script>
+</body>
+</html>
