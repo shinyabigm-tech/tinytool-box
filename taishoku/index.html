@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-G1ZB4CKMD7"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-G1ZB4CKMD7');
+</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>退職願・退職届 作成ツール｜縦書き・横書きでPDFに｜日付は和暦・西暦に対応</title>
+<meta name="description" content="退職願・退職届を、項目を入力するだけで作成。縦書き・横書き、A4・B5、和暦・西暦に対応し、PDFとJPEGで保存できます。登録不要・無料。入力した内容は端末内だけで処理され、送信されません。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;700&family=Noto+Serif+JP:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#f3f5f8;--grid:#dfe5ee;--ink:#1b2433;--sub:#53607a;--card:#fff;--line:#c5cedd;--accent:#1f3a8a;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--paper:#141a26;--grid:#1d2536;--ink:#e7ecf6;--sub:#9aa7c2;--card:#1b2334;--line:#34405a;--accent:#8fb0ff}}
+:root[data-theme="dark"]{--paper:#141a26;--grid:#1d2536;--ink:#e7ecf6;--sub:#9aa7c2;--card:#1b2334;--line:#34405a;--accent:#8fb0ff}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+[hidden]{display:none!important}
+body{margin:0;color:var(--ink);background-color:var(--paper);background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:24px 24px;font-family:"Zen Kaku Gothic New","Hiragino Sans","Yu Gothic",Meiryo,sans-serif;line-height:1.8;font-size:16px}
+main{max-width:760px;margin:0 auto;padding:20px 16px 56px}
+a{color:var(--accent)}
+.back{display:inline-block;margin-bottom:10px;color:var(--accent);text-decoration:none;font-weight:700;min-height:32px}
+h1{font-size:clamp(26px,6vw,36px);line-height:1.35;margin:0 0 6px}
+.lead{margin:0 0 22px;color:var(--sub)}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:6px;padding:16px}
+.panel + .panel{margin-top:14px}
+h2{font-size:18px;margin:0 0 10px}
+label.t{display:block;font-weight:700;margin:10px 0 4px}
+input[type=text],input[type=date],select{display:block;width:100%;min-width:0;max-width:100%;font:inherit;font-size:16px;padding:8px 10px;min-height:44px;color:var(--ink);background:var(--paper);border:1px solid var(--line);border-radius:4px;text-align:left;-webkit-appearance:none;appearance:none}
+select{background-image:linear-gradient(45deg,transparent 50%,var(--sub) 50%),linear-gradient(135deg,var(--sub) 50%,transparent 50%);background-position:calc(100% - 18px) 50%,calc(100% - 13px) 50%;background-size:5px 5px;background-repeat:no-repeat;padding-right:32px}
+.row{display:grid;gap:0 14px;grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+.u{color:var(--sub);font-weight:400;font-size:14px}
+.chk{display:flex;align-items:center;gap:8px;margin-top:12px;min-height:44px;font-weight:700}
+.chk input{width:22px;height:22px;margin:0}
+.small{color:var(--sub);font-size:14px;margin:6px 0 0}
+canvas{display:block;width:100%;height:auto;max-width:480px;margin:0 auto;border:1px solid var(--line);background:#fff;border-radius:4px}
+.btns{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));margin-top:14px}
+button{font:inherit;font-weight:700;min-height:48px;padding:8px 14px;color:var(--card);background:var(--accent);border:0;border-radius:6px;cursor:pointer}
+button.sub{color:var(--accent);background:transparent;border:2px solid var(--accent)}
+button:disabled{opacity:.45;cursor:not-allowed}
+table{width:100%;border-collapse:collapse;font-size:15px}
+th,td{padding:8px 6px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+th{color:var(--sub);font-weight:700;font-size:14px}
+.wrap{overflow-x:auto}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+article p{margin:0 0 12px}
+article h3{font-size:16px;margin:16px 0 6px}
+article ul,article ol{margin:0 0 12px;padding-left:1.4em}
+article li{margin-bottom:4px}
+article dt{font-weight:700;margin-top:8px}
+article dd{margin:0 0 6px;color:var(--sub)}
+</style>
+</head>
+<body>
+<main>
+  <a class="back" href="/">← tinytool-box</a>
+  <h1>退職願・退職届 作成ツール</h1>
+  <p class="lead">項目を入力すると、縦書き・横書きの退職願・退職届ができます。PDFで保存して、そのまま印刷できます。入力した内容は端末の中だけで処理され、送信されません。</p>
+
+  <section class="panel">
+    <h2>1. 書類の種類を選ぶ</h2>
+    <div class="row">
+      <div>
+        <label class="t" for="kind">書類</label>
+        <select id="kind">
+          <option value="todoke">退職届（退職が決まったあとに出す）</option>
+          <option value="negai">退職願（退職をお願いする）</option>
+        </select>
+      </div>
+      <div>
+        <label class="t" for="dir">書き方</label>
+        <select id="dir">
+          <option value="tate">縦書き</option>
+          <option value="yoko">横書き</option>
+        </select>
+      </div>
+      <div>
+        <label class="t" for="paper">用紙</label>
+        <select id="paper">
+          <option value="a4">A4</option>
+          <option value="b5">B5</option>
+        </select>
+      </div>
+    </div>
+  </section>
+
+  <section class="panel">
+    <h2>2. 内容を入力する</h2>
+    <div class="row">
+      <div><label class="t" for="sub">提出日</label><input id="sub" type="date"></div>
+      <div><label class="t" for="tai">退職日 <span class="u">（退職願は希望日）</span></label><input id="tai" type="date"></div>
+    </div>
+    <div class="row">
+      <div>
+        <label class="t" for="era">日付の書き方</label>
+        <select id="era">
+          <option value="wa">和暦（令和）</option>
+          <option value="sei">西暦</option>
+        </select>
+      </div>
+      <div>
+        <label class="t" for="wk">書き出し</label>
+        <select id="wk">
+          <option value="私儀">私儀（わたくしぎ）</option>
+          <option value="私事">私事（わたくしごと）</option>
+        </select>
+      </div>
+    </div>
+    <label class="t" for="affil">所属部署 <span class="u">（なくても構いません）</span></label>
+    <input id="affil" type="text" placeholder="営業部" autocomplete="off">
+    <label class="t" for="name">氏名</label>
+    <input id="name" type="text" placeholder="山田 太郎" autocomplete="off">
+    <label class="t" for="company">会社名 <span class="u">（正式名称）</span></label>
+    <input id="company" type="text" placeholder="株式会社〇〇〇〇" autocomplete="off">
+    <label class="t" for="rep">宛先の役職・氏名 <span class="u">（「殿」は自動で付きます）</span></label>
+    <input id="rep" type="text" placeholder="代表取締役社長 鈴木 一郎" autocomplete="off">
+    <label class="chk"><input type="checkbox" id="stamp" checked> 氏名の下に、押印の目印（円）を入れる</label>
+    <label class="chk"><input type="checkbox" id="thanks"> お礼の一文を添える</label>
+    <p class="small">退職の理由は、自己都合の場合の定型表現「一身上の都合」で作成します。</p>
+  </section>
+
+  <section class="panel">
+    <h2>3. 仕上がりを確認して保存</h2>
+    <canvas id="doc" width="300" height="400" aria-label="退職願・退職届のプレビュー"></canvas>
+    <p class="small" id="info">項目を入力すると、仕上がりが表示されます。</p>
+    <div class="btns">
+      <button type="button" id="dlPdf" disabled>PDFで保存</button>
+      <button type="button" id="dlJpg" disabled>JPEGで保存</button>
+      <button type="button" id="cpTxt" class="sub" disabled>文面をコピー</button>
+    </div>
+    <p class="small">押印の目印の円は、印鑑を押す位置の目安です。不要なら、チェックを外してください。</p>
+  </section>
+
+  <article class="panel">
+    <h2>使い方</h2>
+    <ol>
+      <li>退職願か退職届かを選び、縦書き・横書きと用紙を選びます。</li>
+      <li>提出日、退職日、所属部署、氏名、会社名、宛先の役職・氏名を入力します。</li>
+      <li>プレビューで、字や日付に間違いがないか確認します。</li>
+      <li>PDFで保存して、白無地の用紙に印刷します。署名と押印は、会社の求めに応じて、手書きや印鑑で加えます。</li>
+    </ol>
+
+    <h3>退職願と退職届の違い</h3>
+    <div class="wrap"><table>
+      <thead><tr><th></th><th>退職願</th><th>退職届</th></tr></thead>
+      <tbody>
+        <tr><th>意味</th><td>退職したいと、会社にお願いする書類</td><td>退職が決まったあとに、正式に届け出る書類</td></tr>
+        <tr><th>出す時期</th><td>上司に退職の意思を伝える段階</td><td>退職日などが話し合いで決まったあと</td></tr>
+        <tr><th>文末</th><td>「退職いたしたく、ここにお願い申し上げます。」</td><td>「退職いたします。」</td></tr>
+        <tr><th>退職日</th><td>希望日を書く</td><td>話し合いで決まった日を書く</td></tr>
+      </tbody>
+    </table></div>
+    <p class="small">役員や公務員が出す「辞表」は、タイトルを「辞表」にすると、基本の形は同じです。</p>
+
+    <h3>用紙と提出のマナー</h3>
+    <ul>
+      <li>用紙は、白無地のA4かB5が一般的です。</li>
+      <li>封筒は白無地で、表に「退職届」（または「退職願」）、裏に所属部署と氏名を書きます。</li>
+      <li>退職の理由は、「一身上の都合」で十分です。詳しい理由は書きません。</li>
+      <li>提出時期は、会社の就業規則に従います。実務では、1か月ほど前に伝えるのが一般的です。</li>
+      <li>先に直属の上司に口頭で伝えてから、書類を出します。</li>
+    </ul>
+    <p>会社都合での退職の場合は、書き方が異なることがあります。人事担当者の指示に従ってください。</p>
+  </article>
+
+  <article class="panel">
+    <h2>よくある質問</h2>
+    <dl>
+      <dt>退職願と退職届は、どちらを出せばいいですか？</dt>
+      <dd>上司に退職を相談する段階では退職願、退職日などが決まったあとに正式に届け出るときは退職届を出すのが一般的です。会社に指定の書式や運用がある場合は、それに従ってください。</dd>
+      <dt>退職の理由は、詳しく書く必要がありますか？</dt>
+      <dd>自己都合の退職では、「一身上の都合」とだけ書くのが一般的です。転職や家庭の事情などの具体的な理由は、書かなくて構いません。</dd>
+      <dt>押印は必要ですか？</dt>
+      <dd>会社が求める場合に押す、という扱いも増えています。認印で足りるとされるのが一般的です。迷ったら、会社の規則や人事担当者に確認してください。</dd>
+      <dt>パソコンで作っても失礼になりませんか？</dt>
+      <dd>パソコンで作成した書類を受け付ける会社は増えています。ただ、会社の雰囲気や規則によっては手書きを求められることもあるため、提出前に確認すると安心です。</dd>
+      <dt>いつまでに出せばいいですか？</dt>
+      <dd>会社の就業規則に従うのが基本です。実務では、退職日の1か月ほど前に伝えるのが一般的です。法的な扱いは雇用の形態によって異なるので、不安な場合は労働基準監督署や社会保険労務士に相談してください。</dd>
+      <dt>入力した内容は送信されますか？</dt>
+      <dd>いいえ。氏名や会社名などの入力内容は、お使いのブラウザの中だけで処理されます。サーバーには送信されず、保存もされません。</dd>
+    </dl>
+  </article>
+</main>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type": "Question", "name": "退職願と退職届は、どちらを出せばいいですか？", "acceptedAnswer": {"@type": "Answer", "text": "上司に退職を相談する段階では退職願、退職日などが決まったあとに正式に届け出るときは退職届を出すのが一般的です。会社に指定の書式や運用がある場合は、それに従ってください。"}},
+    {"@type": "Question", "name": "退職の理由は、詳しく書く必要がありますか？", "acceptedAnswer": {"@type": "Answer", "text": "自己都合の退職では、「一身上の都合」とだけ書くのが一般的です。転職や家庭の事情などの具体的な理由は、書かなくて構いません。"}},
+    {"@type": "Question", "name": "押印は必要ですか？", "acceptedAnswer": {"@type": "Answer", "text": "会社が求める場合に押す、という扱いも増えています。認印で足りるとされるのが一般的です。迷ったら、会社の規則や人事担当者に確認してください。"}},
+    {"@type": "Question", "name": "パソコンで作っても失礼になりませんか？", "acceptedAnswer": {"@type": "Answer", "text": "パソコンで作成した書類を受け付ける会社は増えています。ただ、会社の雰囲気や規則によっては手書きを求められることもあるため、提出前に確認すると安心です。"}},
+    {"@type": "Question", "name": "いつまでに出せばいいですか？", "acceptedAnswer": {"@type": "Answer", "text": "会社の就業規則に従うのが基本です。実務では、退職日の1か月ほど前に伝えるのが一般的です。法的な扱いは雇用の形態によって異なるので、不安な場合は労働基準監督署や社会保険労務士に相談してください。"}},
+    {"@type": "Question", "name": "入力した内容は送信されますか？", "acceptedAnswer": {"@type": "Answer", "text": "いいえ。氏名や会社名などの入力内容は、お使いのブラウザの中だけで処理されます。サーバーには送信されず、保存もされません。"}}
+  ]
+}
+</script>
+<script>
+(function(){
+  var $=function(i){return document.getElementById(i)};
+  var FONT='"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho","YuMincho","MS PMincho","Noto Serif CJK JP",serif';
+  var PAPERS={a4:{w:210,h:297,name:"A4"},b5:{w:182,h:257,name:"B5"}};
+  var PREV_LONG=1400, DPI_OUT=300;
+  var K=["〇","一","二","三","四","五","六","七","八","九"];
+  var ROT="ー−―～〜「」『』（）()［］[]〔〕｛｝{}〈〉《》…‥－—–";
+  var SMALL="ぁぃぅぇぉっゃゅょゎァィゥェォッャュョヮヵヶ";
+  var HANG="、。」）』,.";
+  var THANKS="在職中は格別のご高配を賜り、厚く御礼申し上げます。";
+
+  /* ---- 日付 ---- */
+  function kan(n){
+    if(n<10) return K[n];
+    var t=Math.floor(n/10), o=n%10;
+    return (t===1?"":K[t])+"十"+(o?K[o]:"");
+  }
+  function digitsK(s){
+    return String(s).replace(/[0-9０-９]/g,function(c){
+      var n=c.charCodeAt(0); n=(n>=0xFF10)?n-0xFF10:n-0x30; return K[n];
+    });
+  }
+  function parseDate(v){
+    var m=/^(\d{4})-(\d{2})-(\d{2})$/.exec(v||"");
+    if(!m) return null;
+    var y=+m[1], mo=+m[2], d=+m[3], t=new Date(y,mo-1,d);
+    if(t.getFullYear()!==y||t.getMonth()!==mo-1||t.getDate()!==d) return null;
+    return {y:y,m:mo,d:d};
+  }
+  function fmtDate(v,vert,useEra){
+    var p=parseDate(v); if(!p) return "";
+    var n=p.y*10000+p.m*100+p.d, era=null;
+    if(useEra){
+      if(n>=20190501) era={name:"令和",y:p.y-2018};
+      else if(n>=19890108) era={name:"平成",y:p.y-1988};
+    }
+    var mo=vert?kan(p.m):p.m, d=vert?kan(p.d):p.d;
+    if(era){
+      var yy=(era.y===1)?"元":(vert?kan(era.y):era.y);
+      return era.name+yy+"年"+mo+"月"+d+"日";
+    }
+    return (vert?digitsK(p.y):p.y)+"年"+mo+"月"+d+"日";
+  }
+  function pad(n){return (n<10?"0":"")+n;}
+  function ymd(dt){return dt.getFullYear()+"-"+pad(dt.getMonth()+1)+"-"+pad(dt.getDate());}
+
+  /* ---- 入力値 ---- */
+  function vals(){
+    return {
+      kind:$("kind").value, dir:$("dir").value, paper:$("paper").value,
+      sub:$("sub").value, tai:$("tai").value, era:$("era").value==="wa",
+      wk:$("wk").value, affil:$("affil").value.trim(), name:$("name").value.trim(),
+      company:$("company").value.trim(), rep:$("rep").value.trim(),
+      stamp:$("stamp").checked, thanks:$("thanks").checked
+    };
+  }
+  function bodyLines(v,vert){
+    var d=fmtDate(v.tai,vert,v.era)||"○年○月○日";
+    var L=["このたび一身上の都合により、","来る"+d+"をもって"];
+    if(v.kind==="todoke") L.push("退職いたします。");
+    else L.push("退職いたしたく、","ここにお願い申し上げます。");
+    if(v.thanks) L.push(THANKS);
+    return L;
+  }
+  function titleOf(v){return v.kind==="todoke"?"退職届":"退職願";}
+  function vertText(s){return digitsK(s);}
+
+  /* ---- 描画（拡大変換を使わず、すべて実ピクセルで描く） ---- */
+  var SC=1;
+  function fnt(c,bold,fs){c.font=(bold?"600 ":"400 ")+(fs*SC)+"px "+FONT;}
+  function ftext(c,t,x,y,mw){
+    if(mw) c.fillText(t,x*SC,y*SC,mw*SC); else c.fillText(t,x*SC,y*SC);
+  }
+
+  /* ---- 縦書き ---- */
+  function drawV(c,text,cx,y0,fs,pitch,maxLen,fromBottom,bold){
+    var chars=Array.from(vertText(text)), i, total=0;
+    if(!chars.length) return 0;
+    function w(ch){return (ch===" "||ch==="　")?0.5:1;}
+    for(i=0;i<chars.length;i++) total+=w(chars[i])*pitch;
+    if(total>maxLen){var r=maxLen/total; fs*=r; pitch*=r; total=maxLen;}
+    fnt(c,bold,fs);
+    var y=fromBottom?(y0-total):y0;
+    for(i=0;i<chars.length;i++){
+      var ch=chars[i], h=w(ch)*pitch;
+      if(h===pitch){
+        var cy=y+h/2;
+        c.save(); c.setTransform(1,0,0,1,cx*SC,cy*SC);
+        if(ROT.indexOf(ch)>=0){c.rotate(Math.PI/2); c.fillText(ch,0,0);}
+        else if(ch==="、"||ch==="。"||ch===","||ch==="."){
+          c.fillText(ch===","?"、":(ch==="."?"。":ch),fs*0.55*SC,-fs*0.55*SC);
+        }
+        else if(SMALL.indexOf(ch)>=0){c.fillText(ch,fs*0.12*SC,-fs*0.12*SC);}
+        else c.fillText(ch,0,0);
+        c.restore();
+      }
+      y+=h;
+    }
+    return total;
+  }
+  function stampMark(c,x,y){
+    c.save();
+    c.strokeStyle="#9a9a9a"; c.lineWidth=0.3*SC;
+    c.beginPath(); c.arc(x*SC,y*SC,5.2*SC,0,Math.PI*2); c.stroke();
+    c.fillStyle="#b3b3b3"; c.textAlign="center"; fnt(c,false,4.5); ftext(c,"印",x,y);
+    c.restore();
+  }
+  function docVertical(c,v){
+    var lines=bodyLines(v,true), x=148, i;
+    drawV(c,titleOf(v),172,50,10,15,200,false,true);
+    drawV(c,v.wk,160,245,6.5,7.4,60,true,false);
+    for(i=0;i<lines.length;i++){drawV(c,lines[i],x,62,6.5,7.4,183,false,false); x-=11.5;}
+    drawV(c,fmtDate(v.sub,true,v.era)||"○年○月○日",86,75,6.5,7.4,150,false,false);
+    if(v.affil) drawV(c,v.affil,74,140,6.5,7.4,115,false,false);
+    var nl=drawV(c,v.name||"（氏名）",61,155,7.5,8.6,v.stamp?80:100,false,true);
+    if(v.stamp) stampMark(c,61,155+nl+9);
+    drawV(c,v.company||"（会社名）",40,70,6.5,7.4,185,false,false);
+    drawV(c,(v.rep||"（宛先）")+" 殿",27,86,6.5,7.4,170,false,false);
+  }
+
+  /* ---- 横書き ---- */
+  function wrap(s,n){
+    var a=Array.from(s), out=[], i=0, j;
+    while(i<a.length){
+      j=Math.min(a.length,i+n);
+      while(j<a.length&&HANG.indexOf(a[j])>=0) j++;
+      if(j<a.length){
+        var q=j;
+        while(q>i+1&&/[0-9A-Za-z]/.test(a[q-1])&&/[0-9A-Za-z年月日]/.test(a[q])) q--;
+        if(q>i+1) j=q;
+      }
+      out.push(a.slice(i,j).join("")); i=j;
+    }
+    return out;
+  }
+  function docHorizontal(c,v){
+    var title=titleOf(v), tp=15, i, y;
+    fnt(c,true,10); c.textAlign="center";
+    for(i=0;i<title.length;i++) ftext(c,title[i],105-title.length*tp/2+tp*i+tp/2,45);
+    fnt(c,false,6.5); c.textAlign="right"; ftext(c,v.wk,170,68);
+    var main=bodyLines(v,false), th=null;
+    if(v.thanks){th=main.pop();}
+    var paras=[main.join("")]; if(th) paras.push(th);
+    c.textAlign="left"; y=84;
+    paras.forEach(function(p,pi){
+      wrap("　"+p,23).forEach(function(l){ftext(c,l,30,y); y+=11;});
+      if(pi<paras.length-1) y+=5;
+    });
+    y+=8; c.textAlign="right";
+    ftext(c,fmtDate(v.sub,false,v.era)||"○年○月○日",170,y,140); y+=18;
+    if(v.affil){ftext(c,v.affil,170,y,140); y+=12;}
+    fnt(c,false,7.5);
+    ftext(c,v.name||"（氏名）",v.stamp?151:170,y,v.stamp?110:140);
+    if(v.stamp) stampMark(c,162,y);
+    y+=26; fnt(c,false,6.5); c.textAlign="left";
+    ftext(c,v.company||"（会社名）",30,y,150); y+=12;
+    ftext(c,(v.rep||"（宛先）")+" 殿",30,y,150);
+  }
+
+  function renderDoc(k,v){
+    var P=PAPERS[v.paper], cv=document.createElement("canvas");
+    cv.width=Math.round(P.w*k); cv.height=Math.round(P.h*k);
+    var c=cv.getContext("2d");
+    c.setTransform(1,0,0,1,0,0);
+    c.fillStyle="#fff"; c.fillRect(0,0,cv.width,cv.height);
+    SC=k*P.w/210;
+    try{c.fontKerning="none";}catch(e){}
+    try{if("textRendering" in c) c.textRendering="geometricPrecision";}catch(e){}
+    c.fillStyle="#1a1a1a"; c.textAlign="center"; c.textBaseline="middle";
+    if(v.dir==="tate") docVertical(c,v); else docHorizontal(c,v);
+    return cv;
+  }
+
+  /* ---- フォント読み込み ---- */
+  function allText(v){
+    return "退職届願私儀事殿印〇一二三四五六七八九十元令和平成年月日西暦"+THANKS+
+      bodyLines(v,true).join("")+v.affil+v.name+v.company+v.rep;
+  }
+  function ensureFonts(v){
+    if(!document.fonts||!document.fonts.load) return Promise.resolve();
+    var t=allText(v);
+    var p=Promise.all([
+      document.fonts.load('400 20px "Noto Serif JP"',t),
+      document.fonts.load('600 20px "Noto Serif JP"',t)
+    ]).catch(function(){});
+    var timeout=new Promise(function(res){setTimeout(res,3500);});
+    return Promise.race([p,timeout]);
+  }
+
+  /* ---- プレビュー ---- */
+  var token=0, timer=null, dc=$("doc"), dctx=dc.getContext("2d");
+  function missing(v){
+    var m=[];
+    if(!parseDate(v.sub)) m.push("提出日");
+    if(!parseDate(v.tai)) m.push("退職日");
+    if(!v.name) m.push("氏名");
+    if(!v.company) m.push("会社名");
+    if(!v.rep) m.push("宛先の役職・氏名");
+    return m;
+  }
+  function schedule(){clearTimeout(timer); timer=setTimeout(renderPreview,120);}
+  function renderPreview(){
+    var v=vals(), my=++token, P=PAPERS[v.paper];
+    ensureFonts(v).then(function(){
+      if(my!==token) return;
+      var cv=renderDoc(PREV_LONG/P.h,v);
+      dc.width=cv.width; dc.height=cv.height;
+      dctx.drawImage(cv,0,0);
+      var m=missing(v);
+      $("info").textContent=P.name+"・"+(v.dir==="tate"?"縦書き":"横書き")+
+        (m.length?"　未入力: "+m.join("、"):"");
+      var ng=m.length>0;
+      $("dlPdf").disabled=ng; $("dlJpg").disabled=ng; $("cpTxt").disabled=ng;
+    });
+  }
+
+  /* ---- 保存・コピー ---- */
+  function toBlob(canvas,type,q){return new Promise(function(res){canvas.toBlob(res,type,q);});}
+  function saveBlob(blob,name){
+    var a=document.createElement("a");
+    a.href=URL.createObjectURL(blob); a.download=name;
+    document.body.appendChild(a); a.click();
+    setTimeout(function(){URL.revokeObjectURL(a.href); a.remove();},4000);
+  }
+  function makePdf(jpeg,iw,ih,wmm,hmm){
+    var enc=new TextEncoder(), chunks=[], offs=[], len=0;
+    function push(x){var b=(typeof x==="string")?enc.encode(x):x; chunks.push(b); len+=b.length;}
+    var pw=(wmm*72/25.4).toFixed(2), ph=(hmm*72/25.4).toFixed(2);
+    push("%PDF-1.4\n");
+    offs[1]=len; push("1 0 obj\n<< /Type /Catalog /Pages 2 0 R >>\nendobj\n");
+    offs[2]=len; push("2 0 obj\n<< /Type /Pages /Kids [3 0 R] /Count 1 >>\nendobj\n");
+    offs[3]=len; push("3 0 obj\n<< /Type /Page /Parent 2 0 R /MediaBox [0 0 "+pw+" "+ph+"] /Resources << /XObject << /Im0 4 0 R >> >> /Contents 5 0 R >>\nendobj\n");
+    offs[4]=len;
+    push("4 0 obj\n<< /Type /XObject /Subtype /Image /Width "+iw+" /Height "+ih+" /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length "+jpeg.length+" >>\nstream\n");
+    push(jpeg); push("\nendstream\nendobj\n");
+    var content="q "+pw+" 0 0 "+ph+" 0 0 cm /Im0 Do Q";
+    offs[5]=len; push("5 0 obj\n<< /Length "+content.length+" >>\nstream\n"+content+"\nendstream\nendobj\n");
+    var xpos=len, x="xref\n0 6\n0000000000 65535 f \n";
+    for(var n=1;n<=5;n++) x+=String(offs[n]).padStart(10,"0")+" 00000 n \n";
+    push(x);
+    push("trailer\n<< /Size 6 /Root 1 0 R >>\nstartxref\n"+xpos+"\n%%EOF");
+    return new Blob(chunks,{type:"application/pdf"});
+  }
+  function fileBase(v){
+    return "taishoku-"+(v.kind==="todoke"?"todoke":"negai")+"-"+v.paper+"-"+(v.dir==="tate"?"tate":"yoko");
+  }
+  async function runSave(btn,kind){
+    var label=btn.textContent; btn.disabled=true; btn.textContent="作成中…";
+    try{
+      var v=vals(), P=PAPERS[v.paper];
+      await ensureFonts(v);
+      var cv=renderDoc(DPI_OUT/25.4,v);
+      var jpg=await toBlob(cv,"image/jpeg",0.95);
+      if(kind==="jpg") saveBlob(jpg,fileBase(v)+".jpg");
+      else{
+        var bytes=new Uint8Array(await jpg.arrayBuffer());
+        saveBlob(makePdf(bytes,cv.width,cv.height,P.w,P.h),fileBase(v)+".pdf");
+      }
+    }catch(e){
+      $("info").textContent="保存に失敗しました。別のブラウザで試してください。";
+    }
+    btn.textContent=label; btn.disabled=false;
+  }
+  function plainText(v){
+    var main=bodyLines(v,false), th=null;
+    if(v.thanks) th=main.pop();
+    var L=[titleOf(v),"",v.wk,main.join("")];
+    if(th) L.push(th);
+    L.push("",fmtDate(v.sub,false,v.era));
+    if(v.affil) L.push(v.affil);
+    L.push(v.name,"",v.company,v.rep+" 殿");
+    return L.join("\n");
+  }
+  function copyText(btn){
+    var t=plainText(vals()), label=btn.textContent;
+    function done(ok){
+      btn.textContent=ok?"コピーしました":"コピーできませんでした";
+      setTimeout(function(){btn.textContent=label;},1800);
+    }
+    if(navigator.clipboard&&navigator.clipboard.writeText){
+      navigator.clipboard.writeText(t).then(function(){done(true);},function(){done(false);});
+    }else{
+      var ta=document.createElement("textarea"); ta.value=t; document.body.appendChild(ta);
+      ta.select(); var ok=false; try{ok=document.execCommand("copy");}catch(e){}
+      ta.remove(); done(ok);
+    }
+  }
+  $("dlPdf").addEventListener("click",function(){runSave(this,"pdf");});
+  $("dlJpg").addEventListener("click",function(){runSave(this,"jpg");});
+  $("cpTxt").addEventListener("click",function(){copyText(this);});
+
+  ["kind","dir","paper","sub","tai","era","wk","affil","name","company","rep","stamp","thanks"].forEach(function(id){
+    $(id).addEventListener("input",schedule);
+    $(id).addEventListener("change",schedule);
+  });
+
+  var now=new Date(), later=new Date(now.getFullYear(),now.getMonth(),now.getDate()+30);
+  $("sub").value=ymd(now); $("tai").value=ymd(later);
+  schedule();
+})();
+</script>
+</body>
+</html>
