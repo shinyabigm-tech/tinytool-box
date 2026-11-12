@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-G1ZB4CKMD7"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-G1ZB4CKMD7');
+</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>法要日程カレンダー作成ツール｜四十九日・年忌法要の日付と手配日をカレンダーに登録</title>
+<meta name="description" content="命日を入れるだけで、四十九日・百か日・一周忌・三回忌などの日付を一覧にします。法要の何日前かを自由に選んで、手配の目安日も計算。カレンダー（.ics）への登録、PDF・画像での保存ができます。登録不要・無料、入力内容は送信されません。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#f3f5f8;--grid:#dfe5ee;--ink:#1b2433;--sub:#53607a;--card:#fff;--line:#c5cedd;--accent:#1f3a8a;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--paper:#141a26;--grid:#1d2536;--ink:#e7ecf6;--sub:#9aa7c2;--card:#1b2334;--line:#34405a;--accent:#8fb0ff}}
+:root[data-theme="dark"]{--paper:#141a26;--grid:#1d2536;--ink:#e7ecf6;--sub:#9aa7c2;--card:#1b2334;--line:#34405a;--accent:#8fb0ff}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+[hidden]{display:none!important}
+body{margin:0;color:var(--ink);background-color:var(--paper);background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:24px 24px;font-family:"Zen Kaku Gothic New","Hiragino Sans","Yu Gothic",Meiryo,sans-serif;line-height:1.8;font-size:16px}
+main{max-width:760px;margin:0 auto;padding:20px 16px 56px}
+a{color:var(--accent)}
+.back{display:inline-block;margin-bottom:10px;color:var(--accent);text-decoration:none;font-weight:700;min-height:32px}
+h1{font-size:clamp(24px,6vw,34px);line-height:1.35;margin:0 0 6px}
+.lead{margin:0 0 22px;color:var(--sub)}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:6px;padding:16px}
+.panel + .panel{margin-top:14px}
+h2{font-size:18px;margin:0 0 10px}
+label.t{display:block;font-weight:700;margin:10px 0 4px}
+input[type=text],input[type=date]{display:block;width:100%;min-width:0;max-width:100%;font:inherit;font-size:16px;padding:8px 10px;min-height:44px;color:var(--ink);background:var(--paper);border:1px solid var(--line);border-radius:4px;text-align:left;-webkit-appearance:none;appearance:none}
+.row{display:grid;gap:0 14px;grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+.u{color:var(--sub);font-weight:400;font-size:14px}
+.chk{display:flex;align-items:center;gap:8px;margin-top:10px;min-height:44px;font-weight:700}
+.chk input{width:22px;height:22px;margin:0;flex:none}
+.small{color:var(--sub);font-size:14px;margin:6px 0 0}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+.chip{font:inherit;font-size:15px;font-weight:700;min-height:40px;padding:4px 12px;color:var(--accent);background:transparent;border:2px solid var(--accent);border-radius:20px;cursor:pointer}
+.chip[aria-pressed="true"]{color:var(--card);background:var(--accent)}
+.mini{display:flex;gap:8px;margin:4px 0 8px}
+.mini button{font:inherit;font-size:14px;font-weight:700;min-height:36px;padding:2px 12px;color:var(--accent);background:transparent;border:1px solid var(--accent);border-radius:4px;cursor:pointer}
+ul.items{list-style:none;margin:0;padding:0}
+ul.items li{padding:10px 0;border-top:1px solid var(--line)}
+ul.items li:first-child{border-top:0}
+ul.items li.past{opacity:.55}
+.nm{font-size:17px}
+.dt{margin-left:30px;font-weight:700}
+.sb{margin-left:30px;font-size:14px;color:var(--sub);line-height:1.6}
+canvas{display:block;width:100%;height:auto;max-width:480px;margin:0 auto;border:1px solid var(--line);background:#fff;border-radius:4px}
+.btns{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));margin-top:14px}
+button.main{font:inherit;font-weight:700;min-height:48px;padding:8px 14px;color:var(--card);background:var(--accent);border:0;border-radius:6px;cursor:pointer}
+button.sec{font:inherit;font-weight:700;min-height:48px;padding:8px 14px;color:var(--accent);background:transparent;border:2px solid var(--accent);border-radius:6px;cursor:pointer}
+button:disabled{opacity:.45;cursor:not-allowed}
+table{width:100%;border-collapse:collapse;font-size:15px}
+th,td{padding:8px 6px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+th{color:var(--sub);font-weight:700;font-size:14px}
+.wrap{overflow-x:auto}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+article p{margin:0 0 12px}
+article h3{font-size:16px;margin:16px 0 6px}
+article ul,article ol{margin:0 0 12px;padding-left:1.4em}
+article li{margin-bottom:4px}
+article dt{font-weight:700;margin-top:8px}
+article dd{margin:0 0 6px;color:var(--sub)}
+</style>
+</head>
+<body>
+<main>
+  <a class="back" href="/">← tinytool-box</a>
+  <h1>法要日程カレンダー作成ツール</h1>
+  <p class="lead">命日を入れると、四十九日や一周忌などの日付を一覧にします。法要の何日前かを選んで、手配の目安日も計算し、カレンダーへの登録や、PDF・画像での保存ができます。入力した内容は端末の中だけで処理され、送信されません。</p>
+
+  <section class="panel">
+    <h2>1. 命日を入力する</h2>
+    <div class="row">
+      <div><label class="t" for="dead">命日</label><input id="dead" type="date"></div>
+      <div><label class="t" for="who">故人のお名前・続柄 <span class="u">（なくても構いません）</span></label><input id="who" type="text" placeholder="祖父" autocomplete="off"></div>
+    </div>
+    <p class="small">仏式の一般的な数え方で計算します。命日を1日目として数えます。</p>
+  </section>
+
+  <section class="panel">
+    <h2>2. 手配の目安日を決める</h2>
+    <label class="t" for="leads">法要の何日前 <span class="u">（複数は、カンマで区切ります）</span></label>
+    <input id="leads" type="text" inputmode="numeric" value="30, 14, 7" autocomplete="off">
+    <div class="chips" id="chips"></div>
+    <label class="t" for="memo">手配のメモ</label>
+    <input id="memo" type="text" value="お寺・会場・お料理・案内状の手配を確認" autocomplete="off">
+    <label class="chk"><input type="checkbox" id="cbPrep" checked> 手配の日も、カレンダーの予定に入れる</label>
+    <label class="chk"><input type="checkbox" id="cbAlarm" checked> 通知をつける</label>
+  </section>
+
+  <section class="panel">
+    <h2>3. 日程の一覧</h2>
+    <div class="mini"><button type="button" id="selAll">すべて選ぶ</button><button type="button" id="selNone">すべて外す</button></div>
+    <ul class="items" id="list"><li class="small">命日を入力すると、ここに日程が表示されます。</li></ul>
+    <p class="small">チェックをつけた法要が、カレンダーとPDF・画像に入ります。すでに過ぎた日付は、カレンダーには入りません。</p>
+  </section>
+
+  <section class="panel">
+    <h2>4. 保存・登録する</h2>
+    <canvas id="tbl" width="300" height="400" aria-label="法要日程表のプレビュー"></canvas>
+    <p class="small" id="info">命日を入力すると、日程表が表示されます。</p>
+    <div class="btns">
+      <button type="button" class="main" id="btnIcs" disabled>カレンダーに登録（.ics）</button>
+      <button type="button" class="main" id="btnPdf" disabled>PDFで保存</button>
+      <button type="button" class="sec" id="btnJpg" disabled>画像（JPEG）で保存</button>
+      <button type="button" class="sec" id="btnCopy" disabled>共有用の文面をコピー</button>
+    </div>
+    <p class="small">カレンダー用のファイル（.ics）は、保存したあとに開くと、iPhoneの「カレンダー」やGoogleカレンダーなどに取り込めます。</p>
+    <p class="small">法要の日は、宗派・地域・お寺のご都合で変わることがあります。目安としてご利用いただき、日取りは菩提寺や親族とご相談ください。</p>
+  </section>
+
+  <article class="panel">
+    <h2>日付の数え方</h2>
+    <div class="wrap"><table>
+      <thead><tr><th>法要</th><th>命日からの数え方</th></tr></thead>
+      <tbody>
+        <tr><td>初七日</td><td>命日を含めて7日目（命日の6日後）</td></tr>
+        <tr><td>二七日〜六七日</td><td>命日の13日後・20日後・27日後・34日後・41日後</td></tr>
+        <tr><td>四十九日</td><td>命日を含めて49日目（命日の48日後）</td></tr>
+        <tr><td>百か日</td><td>命日を含めて100日目（命日の99日後）</td></tr>
+        <tr><td>一周忌</td><td>命日の1年後</td></tr>
+        <tr><td>三回忌</td><td>命日の2年後</td></tr>
+        <tr><td>七回忌・十三回忌</td><td>命日の6年後・12年後</td></tr>
+        <tr><td>十七回忌・二十三回忌</td><td>命日の16年後・22年後</td></tr>
+        <tr><td>二十七回忌・三十三回忌</td><td>命日の26年後・32年後</td></tr>
+        <tr><td>五十回忌</td><td>命日の49年後</td></tr>
+      </tbody>
+    </table></div>
+    <p class="small">三回忌以降は、亡くなった年を1年目として数えるため、回忌の数より1年少ない年数になります。</p>
+    <h3>使い方</h3>
+    <ol>
+      <li>命日を入力します。</li>
+      <li>手配の目安にしたい日数を選びます。「30日前」「7日前」のように、自由に決められます。</li>
+      <li>一覧で、カレンダーや日程表に入れたい法要にチェックをつけます。</li>
+      <li>「カレンダーに登録」や、PDF・画像での保存をします。</li>
+    </ol>
+    <h3>平日の法要は、前倒しの候補日も表示します</h3>
+    <p>法要の日が平日の場合は、その直前の土曜・日曜・祝日を、前倒しの候補として表示します。法要は、命日より前の日に行うことが多いためです。</p>
+  </article>
+
+  <article class="panel">
+    <h2>よくある質問</h2>
+    <dl>
+      <dt>四十九日は、命日から何日後ですか？</dt>
+      <dd>仏式では、命日を1日目として数え、49日目にあたります。命日の48日後です。初七日は命日を含めて7日目（命日の6日後）、百か日は100日目（命日の99日後）が一般的です。</dd>
+      <dt>一周忌や三回忌は、いつ行いますか？</dt>
+      <dd>一周忌は命日の1年後、三回忌は2年後です。三回忌からは、亡くなった年を1年目として数えるため、七回忌は6年後、十三回忌は12年後、三十三回忌は32年後になります。</dd>
+      <dt>法要を、命日の当日にできない場合は？</dt>
+      <dd>命日より前の日に繰り上げて行うことが多く、後ろにずらすことは避けるという考え方もあります。お寺や親族と相談して決めてください。</dd>
+      <dt>宗派や地域で、日程は変わりますか？</dt>
+      <dd>はい。数え方や、行う法要の種類は、宗派・地域・お寺によって異なる場合があります。このツールは、一般的な仏式の数え方をもとにした目安です。</dd>
+      <dt>2月29日が命日の場合は、どうなりますか？</dt>
+      <dd>うるう年ではない年の年忌は、2月28日として計算します。3月1日とする考え方もあるため、お寺に確認してください。</dd>
+      <dt>手配は、法要の何日前から始めればいいですか？</dt>
+      <dd>お寺や会場、参列者の都合によって変わります。まず、お寺に日取りを相談し、そのあとに会場、お料理、案内状などを手配します。このツールでは、手配の目安にする日数を、自由に選べます。</dd>
+      <dt>カレンダーには、どうやって登録しますか？</dt>
+      <dd>「カレンダーに登録」で保存したファイル（.ics）を開くと、iPhoneの「カレンダー」やGoogleカレンダーなどに取り込めます。</dd>
+      <dt>入力した内容は、送信されますか？</dt>
+      <dd>いいえ。命日やお名前などの入力内容は、お使いのブラウザの中だけで処理されます。サーバーには送信されず、保存もされません。</dd>
+    </dl>
+  </article>
+</main>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type": "Question", "name": "四十九日は、命日から何日後ですか？", "acceptedAnswer": {"@type": "Answer", "text": "仏式では、命日を1日目として数え、49日目にあたります。命日の48日後です。初七日は命日を含めて7日目（命日の6日後）、百か日は100日目（命日の99日後）が一般的です。"}},
+    {"@type": "Question", "name": "一周忌や三回忌は、いつ行いますか？", "acceptedAnswer": {"@type": "Answer", "text": "一周忌は命日の1年後、三回忌は2年後です。三回忌からは、亡くなった年を1年目として数えるため、七回忌は6年後、十三回忌は12年後、三十三回忌は32年後になります。"}},
+    {"@type": "Question", "name": "法要を、命日の当日にできない場合は？", "acceptedAnswer": {"@type": "Answer", "text": "命日より前の日に繰り上げて行うことが多く、後ろにずらすことは避けるという考え方もあります。お寺や親族と相談して決めてください。"}},
+    {"@type": "Question", "name": "宗派や地域で、日程は変わりますか？", "acceptedAnswer": {"@type": "Answer", "text": "はい。数え方や、行う法要の種類は、宗派・地域・お寺によって異なる場合があります。このツールは、一般的な仏式の数え方をもとにした目安です。"}},
+    {"@type": "Question", "name": "2月29日が命日の場合は、どうなりますか？", "acceptedAnswer": {"@type": "Answer", "text": "うるう年ではない年の年忌は、2月28日として計算します。3月1日とする考え方もあるため、お寺に確認してください。"}},
+    {"@type": "Question", "name": "手配は、法要の何日前から始めればいいですか？", "acceptedAnswer": {"@type": "Answer", "text": "お寺や会場、参列者の都合によって変わります。まず、お寺に日取りを相談し、そのあとに会場、お料理、案内状などを手配します。このツールでは、手配の目安にする日数を、自由に選べます。"}},
+    {"@type": "Question", "name": "カレンダーには、どうやって登録しますか？", "acceptedAnswer": {"@type": "Answer", "text": "「カレンダーに登録」で保存したファイル（.ics）を開くと、iPhoneの「カレンダー」やGoogleカレンダーなどに取り込めます。"}},
+    {"@type": "Question", "name": "入力した内容は、送信されますか？", "acceptedAnswer": {"@type": "Answer", "text": "いいえ。命日やお名前などの入力内容は、お使いのブラウザの中だけで処理されます。サーバーには送信されず、保存もされません。"}}
+  ]
+}
+</script>
+<script>
+(function(){
+  var $=function(i){return document.getElementById(i)};
+  var SANS='"Zen Kaku Gothic New","Hiragino Sans","Yu Gothic",Meiryo,"Noto Sans CJK JP",sans-serif';
+  var WD=["日","月","火","水","木","金","土"];
+  var PREV_LONG=1400, DPI_OUT=300;
+
+  /* ---- 法要の一覧 ---- */
+  var HOYO=[
+    {id:"h7",name:"初七日",kind:"d",n:6,def:false},
+    {id:"h14",name:"二七日",kind:"d",n:13,def:false},
+    {id:"h21",name:"三七日",kind:"d",n:20,def:false},
+    {id:"h28",name:"四七日",kind:"d",n:27,def:false},
+    {id:"h35",name:"五七日",kind:"d",n:34,def:false},
+    {id:"h42",name:"六七日",kind:"d",n:41,def:false},
+    {id:"h49",name:"四十九日（七七日）",kind:"d",n:48,def:true},
+    {id:"h100",name:"百か日",kind:"d",n:99,def:true},
+    {id:"y1",name:"一周忌",kind:"y",n:1,def:true},
+    {id:"y3",name:"三回忌",kind:"y",n:2,def:true},
+    {id:"y7",name:"七回忌",kind:"y",n:6,def:true},
+    {id:"y13",name:"十三回忌",kind:"y",n:12,def:true},
+    {id:"y17",name:"十七回忌",kind:"y",n:16,def:true},
+    {id:"y23",name:"二十三回忌",kind:"y",n:22,def:true},
+    {id:"y27",name:"二十七回忌",kind:"y",n:26,def:true},
+    {id:"y33",name:"三十三回忌",kind:"y",n:32,def:true},
+    {id:"y37",name:"三十七回忌",kind:"y",n:36,def:false},
+    {id:"y43",name:"四十三回忌",kind:"y",n:42,def:false},
+    {id:"y47",name:"四十七回忌",kind:"y",n:46,def:false},
+    {id:"y50",name:"五十回忌",kind:"y",n:49,def:false}
+  ];
+  var sel={}; HOYO.forEach(function(h){sel[h.id]=h.def;});
+
+  /* ---- 日付の部品（UTC基準） ---- */
+  function D(y,m,d){return new Date(Date.UTC(y,m-1,d));}
+  function addDays(t,n){return new Date(t.getTime()+n*864e5);}
+  function isLeap(y){return (y%4===0&&y%100!==0)||y%400===0;}
+  function yearsLater(p,n){var Y=p.y+n,d=p.d; if(p.m===2&&p.d===29&&!isLeap(Y)) d=28; return D(Y,p.m,d);}
+  function parseDate(v){
+    var m=/^(\d{4})-(\d{2})-(\d{2})$/.exec(v||"");
+    if(!m) return null;
+    var y=+m[1], mo=+m[2], d=+m[3], t=D(y,mo,d);
+    if(t.getUTCFullYear()!==y||t.getUTCMonth()!==mo-1||t.getUTCDate()!==d) return null;
+    return {y:y,m:mo,d:d};
+  }
+  function todayUTC(){var n=new Date(); return D(n.getFullYear(),n.getMonth()+1,n.getDate());}
+
+  /* ---- 祝日（1990〜2099年） ---- */
+  var HCACHE={};
+  function nthMon(y,m,n){var w=D(y,m,1).getUTCDay(); return 1+((8-w)%7)+7*(n-1);}
+  function key(t){return (t.getUTCMonth()+1)+"-"+t.getUTCDate();}
+  function holidaysOf(y){
+    if(HCACHE[y]) return HCACHE[y];
+    var s={}, add=function(m,d){s[m+"-"+d]=1;};
+    if(y<1990||y>2099){HCACHE[y]=s; return s;}
+    var dy=y-1980;
+    var spring=Math.floor(20.8431+0.242194*dy-Math.floor(dy/4));
+    var autumn=Math.floor(23.2488+0.242194*dy-Math.floor(dy/4));
+    add(1,1);
+    if(y>=2000) add(1,nthMon(y,1,2)); else add(1,15);
+    add(2,11);
+    if(y>=2020) add(2,23); else if(y<=2018) add(12,23);
+    add(3,spring);
+    add(4,29); add(5,3); if(y>=2007) add(5,4); add(5,5);
+    if(y===2020) add(7,23); else if(y===2021) add(7,22); else if(y>=2003) add(7,nthMon(y,7,3)); else if(y>=1996) add(7,20);
+    if(y===2020) add(8,10); else if(y===2021) add(8,8); else if(y>=2016) add(8,11);
+    if(y>=2003) add(9,nthMon(y,9,3)); else add(9,15);
+    add(9,autumn);
+    if(y===2020) add(7,24); else if(y===2021) add(7,23); else if(y>=2000) add(10,nthMon(y,10,2)); else add(10,10);
+    add(11,3); add(11,23);
+    if(y===2019){add(5,1); add(10,22);}
+    var keys=Object.keys(s), i;
+    for(i=0;i<keys.length;i++){
+      var p=keys[i].split("-"), t=D(y,+p[0],+p[1]);
+      if(t.getUTCDay()===0){
+        var x=addDays(t,1);
+        while(s[key(x)]) x=addDays(x,1);
+        if(x.getUTCFullYear()===y) s[key(x)]=1;
+      }
+    }
+    for(var m=1;m<=12;m++){
+      for(var d=1;d<=31;d++){
+        var t2=D(y,m,d); if(t2.getUTCMonth()!==m-1) continue;
+        if(s[m+"-"+d]||t2.getUTCDay()===0) continue;
+        var pv=addDays(t2,-1), nx=addDays(t2,1);
+        if(pv.getUTCFullYear()===y&&nx.getUTCFullYear()===y&&s[key(pv)]&&s[key(nx)]) s[m+"-"+d]=2;
+      }
+    }
+    HCACHE[y]=s; return s;
+  }
+  function isHoliday(t){return !!holidaysOf(t.getUTCFullYear())[key(t)];}
+  function isOff(t){var w=t.getUTCDay(); return w===0||w===6||isHoliday(t);}
+  function offBefore(date){
+    if(isOff(date)) return [];
+    var out=[], i;
+    for(i=1;i<=14&&out.length<2;i++){var x=addDays(date,-i); if(isOff(x)) out.push(x);}
+    return out;
+  }
+
+  /* ---- 表示の整形 ---- */
+  var ERAS=[["令和",20190501,2019],["平成",19890108,1989],["昭和",19261225,1926],["大正",19120730,1912],["明治",18680908,1868]];
+  function eraLabel(t){
+    var n=t.getUTCFullYear()*10000+(t.getUTCMonth()+1)*100+t.getUTCDate(), i;
+    for(i=0;i<ERAS.length;i++){
+      if(n>=ERAS[i][1]){var y=t.getUTCFullYear()-ERAS[i][2]+1; return ERAS[i][0]+(y===1?"元":y)+"年";}
+    }
+    return "";
+  }
+  function wd(t){return WD[t.getUTCDay()]+(isHoliday(t)&&t.getUTCDay()!==0&&t.getUTCDay()!==6?"・祝":"");}
+  function fmtYMD(t){return t.getUTCFullYear()+"年"+(t.getUTCMonth()+1)+"月"+t.getUTCDate()+"日（"+wd(t)+"）";}
+  function fmtMD(t){return (t.getUTCMonth()+1)+"月"+t.getUTCDate()+"日（"+wd(t)+"）";}
+  function fmtS(t){return (t.getUTCMonth()+1)+"/"+t.getUTCDate()+"（"+wd(t)+"）";}
+
+  /* ---- 入力 ---- */
+  function parseLeads(){
+    var seen={}, out=[];
+    ($("leads").value||"").split(/[,、，\s]+/).forEach(function(s){
+      s=s.replace(/日前?$/,"");
+      var n=parseInt(s,10);
+      if(n>=1&&n<=730&&!seen[n]&&String(n)===s.replace(/^0+(?=\d)/,"")){seen[n]=1; out.push(n);}
+    });
+    out.sort(function(a,b){return b-a;});
+    return out.slice(0,8);
+  }
+  function prefix(){var w=$("who").value.trim(); return w?w+"の":"";}
+  function buildRows(){
+    var dd=parseDate($("dead").value); if(!dd) return null;
+    var dead=D(dd.y,dd.m,dd.d), today=todayUTC(), leads=parseLeads();
+    return {dead:dead,rows:HOYO.map(function(h){
+      var date=(h.kind==="d")?addDays(dead,h.n):yearsLater(dd,h.n);
+      return {h:h,date:date,past:date.getTime()<today.getTime(),off:isOff(date),before:offBefore(date),
+        prep:leads.map(function(n){return {n:n,date:addDays(date,-n)};})};
+    }),today:today,leads:leads};
+  }
+  function chosen(data){return data.rows.filter(function(r){return sel[r.h.id];});}
+
+  /* ---- 一覧 ---- */
+  function renderList(data){
+    var ul=$("list"); ul.textContent="";
+    if(!data){
+      var li=document.createElement("li"); li.className="small"; li.textContent="命日を入力すると、ここに日程が表示されます。"; ul.appendChild(li); return;
+    }
+    data.rows.forEach(function(r){
+      var li=document.createElement("li"); if(r.past) li.className="past";
+      var lab=document.createElement("label"); lab.className="chk"; lab.style.marginTop="0";
+      var cb=document.createElement("input"); cb.type="checkbox"; cb.checked=!!sel[r.h.id];
+      cb.addEventListener("change",function(){sel[r.h.id]=cb.checked; renderOutput();});
+      var nm=document.createElement("span"); nm.className="nm"; nm.textContent=r.h.name+(r.past?"（過ぎています）":"");
+      lab.appendChild(cb); lab.appendChild(nm); li.appendChild(lab);
+      var dt=document.createElement("div"); dt.className="dt";
+      dt.textContent=fmtYMD(r.date)+"　"+eraLabel(r.date); li.appendChild(dt);
+      var sb;
+      if(!r.past){
+        sb=document.createElement("div"); sb.className="sb";
+        sb.textContent=r.off?"当日が休日です。":(r.before.length?"前倒しの候補: "+r.before.map(fmtMD).join("・"):"");
+        if(sb.textContent) li.appendChild(sb);
+        var pr=r.prep.filter(function(p){return p.date.getTime()>=data.today.getTime();});
+        if(pr.length){
+          sb=document.createElement("div"); sb.className="sb";
+          sb.textContent="手配の目安: "+pr.map(function(p){return p.n+"日前 "+fmtMD(p.date);}).join(" ／ ");
+          li.appendChild(sb);
+        }
+      }
+      ul.appendChild(li);
+    });
+  }
+
+  /* ---- 日程表（画像・PDF） ---- */
+  function drawTable(k,data){
+    var W=Math.round(210*k), H=Math.round(297*k);
+    var cv=document.createElement("canvas"); cv.width=W; cv.height=H;
+    var c=cv.getContext("2d");
+    c.fillStyle="#fff"; c.fillRect(0,0,W,H);
+    c.textBaseline="middle";
+    function F(b,mm){c.font=(b?"700 ":"400 ")+(mm*k)+"px "+SANS;}
+    function T(t,x,y,mw){if(mw) c.fillText(t,x*k,y*k,mw*k); else c.fillText(t,x*k,y*k);}
+    c.fillStyle="#1a1a1a"; c.textAlign="center"; F(true,8); T("法要日程表",105,20);
+    var sub=($("who").value.trim()?$("who").value.trim()+"　":"")+"命日 "+fmtYMD(data.dead);
+    var er=eraLabel(data.dead); if(er) sub+="（"+er+"）";
+    F(false,3.8); T(sub,105,30,180);
+    c.strokeStyle="#999"; c.lineWidth=0.3*k; c.beginPath(); c.moveTo(14*k,37*k); c.lineTo(196*k,37*k); c.stroke();
+    var rows=chosen(data), n=rows.length, top=40, bottom=272;
+    var rh=Math.min(19,(bottom-top)/Math.max(n,1)), s=Math.min(1.1,rh/16), i;
+    c.textAlign="left";
+    for(i=0;i<n;i++){
+      var r=rows[i], y0=top+i*rh;
+      var subs=[];
+      if(!r.past){
+        if(r.off) subs.push("当日が休日です");
+        else if(r.before.length) subs.push("前倒しの候補: "+r.before.map(fmtS).join("・"));
+        var pr=r.prep.filter(function(p){return p.date.getTime()>=data.today.getTime();});
+        if(pr.length) subs.push("手配の目安: "+pr.map(function(p){return p.n+"日前 "+fmtS(p.date);}).join(" ／ "));
+      }
+      var ymain=y0+rh*(subs.length?0.26:0.5);
+      c.fillStyle="#1a1a1a"; F(true,4.8*s); T(r.h.name,14,ymain,52);
+      F(false,4.6*s); T(fmtYMD(r.date),68,ymain,70);
+      c.fillStyle="#666"; F(false,3.4*s); T((eraLabel(r.date)||"")+(r.past?"　済":""),142,ymain,40);
+      var j;
+      for(j=0;j<subs.length;j++){
+        c.fillStyle="#555"; F(false,3.1*s); T(subs[j],14,y0+rh*(0.58+0.23*j),182);
+      }
+      c.strokeStyle="#ddd"; c.lineWidth=0.2*k; c.beginPath(); c.moveTo(14*k,(y0+rh)*k); c.lineTo(196*k,(y0+rh)*k); c.stroke();
+    }
+    c.fillStyle="#777"; c.textAlign="center"; F(false,3);
+    T("法要の日は、宗派・地域・お寺により異なる場合があります。目安としてご利用ください。",105,283,190);
+    c.textAlign="right"; F(false,2.8); T("tinytool-box.com/houyou/",196,290);
+    return cv;
+  }
+
+  /* ---- カレンダー（.ics） ---- */
+  function esc(s){return String(s).replace(/\\/g,"\\\\").replace(/;/g,"\\;").replace(/,/g,"\\,").replace(/\r?\n/g,"\\n");}
+  function fold(line){
+    var enc=new TextEncoder(), chars=Array.from(line), out="", seg="", cur=0, i;
+    for(i=0;i<chars.length;i++){
+      var b=enc.encode(chars[i]).length;
+      if(cur+b>72){out+=seg+"\r\n "; seg=""; cur=1;}
+      seg+=chars[i]; cur+=b;
+    }
+    return out+seg;
+  }
+  function ymd8(t){return t.getUTCFullYear()+String(t.getUTCMonth()+1).padStart(2,"0")+String(t.getUTCDate()).padStart(2,"0");}
+  function buildIcs(data){
+    var now=new Date(), stamp=now.getUTCFullYear()+String(now.getUTCMonth()+1).padStart(2,"0")+String(now.getUTCDate()).padStart(2,"0")+"T"+String(now.getUTCHours()).padStart(2,"0")+String(now.getUTCMinutes()).padStart(2,"0")+String(now.getUTCSeconds()).padStart(2,"0")+"Z";
+    var L=["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//tinytool-box//houyou//JA","CALSCALE:GREGORIAN","METHOD:PUBLISH","X-WR-CALNAME:"+esc(prefix()+"法要日程")];
+    var uid=0, alarm=$("cbAlarm").checked, withPrep=$("cbPrep").checked, memo=$("memo").value.trim(), count=0;
+    function ev(date,title,desc,trig,opaque){
+      uid++; count++;
+      L.push("BEGIN:VEVENT","UID:hoyo-"+stamp+"-"+uid+"@tinytool-box.com","DTSTAMP:"+stamp,
+        "DTSTART;VALUE=DATE:"+ymd8(date),"DTEND;VALUE=DATE:"+ymd8(addDays(date,1)),
+        "SUMMARY:"+esc(title),"DESCRIPTION:"+esc(desc),"TRANSP:"+(opaque?"OPAQUE":"TRANSPARENT"));
+      if(alarm) L.push("BEGIN:VALARM","ACTION:DISPLAY","DESCRIPTION:"+esc(title),"TRIGGER:"+trig,"END:VALARM");
+      L.push("END:VEVENT");
+    }
+    chosen(data).forEach(function(r){
+      if(r.past) return;
+      var base=prefix()+r.h.name;
+      ev(r.date,base,"法要の日程（目安）。宗派・地域・お寺のご都合で変わる場合があります。","-PT15H",true);
+      if(withPrep){
+        r.prep.forEach(function(p){
+          if(p.date.getTime()<data.today.getTime()) return;
+          ev(p.date,base+"の手配（"+p.n+"日前）",(memo||"法要の手配を確認")+"　法要の日: "+fmtYMD(r.date),"PT9H",false);
+        });
+      }
+    });
+    L.push("END:VCALENDAR");
+    return {text:L.map(fold).join("\r\n")+"\r\n",count:count};
+  }
+
+  /* ---- 共有用の文面 ---- */
+  function shareText(data){
+    var out=[(prefix()?prefix().replace(/の$/,"")+"の":"")+"法要日程", "命日: "+fmtYMD(data.dead), ""];
+    chosen(data).forEach(function(r){
+      out.push(r.h.name+": "+fmtYMD(r.date)+(r.past?"（済）":""));
+      if(!r.past){
+        var pr=r.prep.filter(function(p){return p.date.getTime()>=data.today.getTime();});
+        if(pr.length) out.push("　手配の目安: "+pr.map(function(p){return p.n+"日前 "+fmtS(p.date);}).join("、"));
+      }
+    });
+    out.push("","※日程は目安です。宗派・地域・お寺のご都合で変わる場合があります。");
+    return out.join("\n");
+  }
+
+  /* ---- 出力まわり ---- */
+  var token=0, timer=null, tc=$("tbl"), tctx=tc.getContext("2d");
+  function ensureFonts(){
+    if(!document.fonts||!document.fonts.load) return Promise.resolve();
+    var t="法要日程表命日前倒しの候補手配目安日前当日が休日です済令和平成昭和元年月日（）0123456789";
+    var p=Promise.all([document.fonts.load('400 20px "Zen Kaku Gothic New"',t),document.fonts.load('700 20px "Zen Kaku Gothic New"',t)]).catch(function(){});
+    return Promise.race([p,new Promise(function(r){setTimeout(r,3000);})]);
+  }
+  function renderOutput(){
+    clearTimeout(timer); timer=setTimeout(function(){
+      var data=buildRows(), my=++token;
+      if(!data){
+        tc.width=300; tc.height=400; tctx.fillStyle="#fff"; tctx.fillRect(0,0,300,400);
+        $("info").textContent="命日を入力すると、日程表が表示されます。";
+        ["btnIcs","btnPdf","btnJpg","btnCopy"].forEach(function(i){$(i).disabled=true;});
+        return;
+      }
+      var n=chosen(data).length;
+      ensureFonts().then(function(){
+        if(my!==token) return;
+        var cv=drawTable(PREV_LONG/297,data);
+        tc.width=cv.width; tc.height=cv.height; tctx.drawImage(cv,0,0);
+        var fut=chosen(data).filter(function(r){return !r.past;}).length;
+        $("info").textContent=n?("日程表に "+n+" 件の法要を入れています。カレンダーに入るのは、これから先の "+fut+" 件です。"):"日程表に入れる法要を、一覧から選んでください。";
+        $("btnPdf").disabled=!n; $("btnJpg").disabled=!n; $("btnCopy").disabled=!n; $("btnIcs").disabled=!fut;
+      });
+    },100);
+  }
+
+  function toBlob(canvas,type,q){return new Promise(function(res){canvas.toBlob(res,type,q);});}
+  function saveBlob(blob,name){
+    var a=document.createElement("a"); a.href=URL.createObjectURL(blob); a.download=name;
+    document.body.appendChild(a); a.click();
+    setTimeout(function(){URL.revokeObjectURL(a.href); a.remove();},4000);
+  }
+  function makePdf(jpeg,iw,ih,wmm,hmm){
+    var enc=new TextEncoder(), chunks=[], offs=[], len=0;
+    function push(x){var b=(typeof x==="string")?enc.encode(x):x; chunks.push(b); len+=b.length;}
+    var pw=(wmm*72/25.4).toFixed(2), ph=(hmm*72/25.4).toFixed(2);
+    push("%PDF-1.4\n");
+    offs[1]=len; push("1 0 obj\n<< /Type /Catalog /Pages 2 0 R >>\nendobj\n");
+    offs[2]=len; push("2 0 obj\n<< /Type /Pages /Kids [3 0 R] /Count 1 >>\nendobj\n");
+    offs[3]=len; push("3 0 obj\n<< /Type /Page /Parent 2 0 R /MediaBox [0 0 "+pw+" "+ph+"] /Resources << /XObject << /Im0 4 0 R >> >> /Contents 5 0 R >>\nendobj\n");
+    offs[4]=len;
+    push("4 0 obj\n<< /Type /XObject /Subtype /Image /Width "+iw+" /Height "+ih+" /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length "+jpeg.length+" >>\nstream\n");
+    push(jpeg); push("\nendstream\nendobj\n");
+    var content="q "+pw+" 0 0 "+ph+" 0 0 cm /Im0 Do Q";
+    offs[5]=len; push("5 0 obj\n<< /Length "+content.length+" >>\nstream\n"+content+"\nendstream\nendobj\n");
+    var xpos=len, x="xref\n0 6\n0000000000 65535 f \n";
+    for(var n=1;n<=5;n++) x+=String(offs[n]).padStart(10,"0")+" 00000 n \n";
+    push(x); push("trailer\n<< /Size 6 /Root 1 0 R >>\nstartxref\n"+xpos+"\n%%EOF");
+    return new Blob(chunks,{type:"application/pdf"});
+  }
+  async function saveImage(btn,kind){
+    var label=btn.textContent; btn.disabled=true; btn.textContent="作成中…";
+    try{
+      var data=buildRows(); await ensureFonts();
+      var cv=drawTable(DPI_OUT/25.4,data), jpg=await toBlob(cv,"image/jpeg",0.95);
+      if(kind==="jpg") saveBlob(jpg,"houyou-nittei.jpg");
+      else saveBlob(makePdf(new Uint8Array(await jpg.arrayBuffer()),cv.width,cv.height,210,297),"houyou-nittei.pdf");
+    }catch(e){$("info").textContent="保存に失敗しました。別のブラウザで試してください。";}
+    btn.textContent=label; btn.disabled=false;
+  }
+  $("btnPdf").addEventListener("click",function(){saveImage(this,"pdf");});
+  $("btnJpg").addEventListener("click",function(){saveImage(this,"jpg");});
+  $("btnIcs").addEventListener("click",function(){
+    var data=buildRows(); if(!data) return;
+    var r=buildIcs(data);
+    saveBlob(new Blob([r.text],{type:"text/calendar;charset=utf-8"}),"houyou-nittei.ics");
+    $("info").textContent="カレンダー用のファイルを保存しました（"+r.count+" 件の予定）。保存したファイルを開くと、カレンダーに追加できます。";
+  });
+  $("btnCopy").addEventListener("click",function(){
+    var data=buildRows(); if(!data) return;
+    var btn=this, label=btn.textContent, t=shareText(data);
+    function done(ok){btn.textContent=ok?"コピーしました":"コピーできませんでした"; setTimeout(function(){btn.textContent=label;},1800);}
+    if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(function(){done(true);},function(){done(false);});}
+    else{var ta=document.createElement("textarea"); ta.value=t; document.body.appendChild(ta); ta.select(); var ok=false; try{ok=document.execCommand("copy");}catch(e){} ta.remove(); done(ok);}
+  });
+
+  /* ---- 何日前のボタン ---- */
+  var PRESETS=[90,60,30,14,7,3,1];
+  function renderChips(){
+    var cur=parseLeads(), box=$("chips"); box.textContent="";
+    PRESETS.forEach(function(n){
+      var b=document.createElement("button"); b.type="button"; b.className="chip"; b.textContent=n+"日前";
+      b.setAttribute("aria-pressed",cur.indexOf(n)>=0?"true":"false");
+      b.addEventListener("click",function(){
+        var l=parseLeads(), i=l.indexOf(n);
+        if(i>=0) l.splice(i,1); else l.push(n);
+        l.sort(function(a,b){return b-a;});
+        $("leads").value=l.join(", "); refresh();
+      });
+      box.appendChild(b);
+    });
+  }
+  function refresh(){renderChips(); var d=buildRows(); renderList(d); renderOutput();}
+  ["dead","who","leads","memo"].forEach(function(id){$(id).addEventListener("input",refresh);$(id).addEventListener("change",refresh);});
+  ["cbPrep","cbAlarm"].forEach(function(id){$(id).addEventListener("change",renderOutput);});
+  $("selAll").addEventListener("click",function(){HOYO.forEach(function(h){sel[h.id]=true;}); refresh();});
+  $("selNone").addEventListener("click",function(){HOYO.forEach(function(h){sel[h.id]=false;}); refresh();});
+  refresh();
+})();
+</script>
+</body>
+</html>
