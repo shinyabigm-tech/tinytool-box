@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-G1ZB4CKMD7"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-G1ZB4CKMD7');
+</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ZIPファイルの文字化けを防ぐ方法｜日本語のファイル名が読めないとき｜tinytool-box</title>
+<meta name="description" content="ZIPを開くとファイル名が文字化けする原因と、対処法を解説。送る側・受け取る側それぞれの対策、ファイル名のつけ方のコツも紹介します。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#f3f5f8;--grid:#dfe5ee;--ink:#1b2433;--sub:#53607a;--card:#fff;--line:#c5cedd;--accent:#1f3a8a;--accent-ink:#fff;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--paper:#141a26;--grid:#1d2536;--ink:#e7ecf6;--sub:#9aa7c2;--card:#1b2334;--line:#34405a;--accent:#8fb0ff;--accent-ink:#0f1626}}
+:root[data-theme="dark"]{--paper:#141a26;--grid:#1d2536;--ink:#e7ecf6;--sub:#9aa7c2;--card:#1b2334;--line:#34405a;--accent:#8fb0ff;--accent-ink:#0f1626}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;color:var(--ink);background-color:var(--paper);background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:24px 24px;font-family:"Zen Kaku Gothic New","Hiragino Sans","Yu Gothic",Meiryo,sans-serif;line-height:1.9;font-size:16px}
+main{max-width:760px;margin:0 auto;padding:20px 16px 56px}
+a{color:var(--accent)}
+.back{display:inline-block;margin-bottom:10px;text-decoration:none;font-weight:700;min-height:32px}
+h1{font-size:clamp(24px,6vw,34px);line-height:1.4;margin:0 0 6px}
+.lead{margin:0 0 22px;color:var(--sub)}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:6px;padding:16px}
+.panel + .panel{margin-top:14px}
+h2{font-size:19px;margin:22px 0 8px;padding-left:10px;border-left:5px solid var(--accent)}
+h2:first-child{margin-top:0}
+h3{font-size:16px;margin:16px 0 6px}
+p{margin:0 0 12px}
+ul,ol{margin:0 0 12px;padding-left:1.4em}
+li{margin-bottom:4px}
+table{width:100%;border-collapse:collapse;font-size:15px}
+th,td{padding:8px 6px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+th{color:var(--sub);font-weight:700;font-size:14px}
+.wrap{overflow-x:auto;margin-bottom:12px}
+.note{color:var(--sub);font-size:14px}
+.cta{display:block;padding:14px 16px;border:1px solid var(--line);border-left:6px solid var(--accent);border-radius:6px;background:var(--paper);text-decoration:none;color:inherit;margin:14px 0}
+.cta b{display:block;color:var(--accent);font-size:17px}
+.cta span{display:block;color:var(--sub);font-size:14px}
+.rel{list-style:none;padding:0}
+.rel li{margin-bottom:8px}
+.links{margin-top:18px;font-size:14px}
+.links a{margin-right:16px}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+</style>
+</head>
+<body>
+<main>
+<a class="back" href="/guide/">← ガイド一覧</a>
+<h1>ZIPファイルの文字化けを防ぐ方法｜日本語のファイル名が読めないとき</h1>
+<p class="lead">ZIPを開いたら、ファイル名が、意味不明な文字になっていた。そんなときの原因と、対策を説明します。</p>
+<article class="panel">
+<h2>文字化けするのは「ファイル名」だけ</h2>
+<p>ZIPの文字化けで困るのは、多くの場合、ファイルの「名前」です。ファイルの中身（文章や写真など）が、壊れているわけではありません。</p>
+<h2>なぜ文字化けするのか</h2>
+<p>ZIPには、ファイル名を保存するときの「文字コード」の決まりが、いくつかあります。昔のソフトは、ファイル名を、その環境の文字コード（日本語のWindowsでは、Shift_JISの仲間）で保存していました。一方、新しい方式では、UTF-8という文字コードを使い、そのことを、ZIPの中に印として記録します。</p>
+<p>文字コードの印がないZIPを、別の環境で開くと、ソフトが文字コードを、取り違えて、ファイル名が化けることがあります。</p>
+<h2>受け取る側の対策</h2>
+<ul>
+<li>別の解凍ソフトで、開き直す。ソフトによって、文字コードの判定の方法が違います。</li>
+<li>文字コードを選べる解凍ソフトを使う。</li>
+<li>文字コードを自動で判定するツールで、中身を確認して、必要なファイルだけを取り出す。</li>
+</ul>
+<h2>送る側の対策</h2>
+<ul>
+<li>UTF-8に対応した、新しいソフトや機能で、ZIPを作る。</li>
+<li>ファイル名を、英数字だけにする。いちばん確実な方法です。</li>
+<li>相手の環境が分からないときは、ファイル名に、機種依存文字（丸数字や特殊な記号など）を使わない。</li>
+</ul>
+<h3>ファイル名のつけ方のコツ</h3>
+<ul>
+<li>日付は、「20261125」のように、数字でそろえる。</li>
+<li>半角スペースの代わりに、「_」（アンダーバー）や「-」を使う。</li>
+<li>長すぎる名前は避ける。</li>
+</ul>
+<h2>できないことに注意</h2>
+<p>パスワードで保護されたZIPは、ツールによっては、開けないことがあります。当サイトのツールは、パスワード付きのZIPの作成と、解凍には、対応していません。</p>
+<h2>ZIPを作る・開く</h2>
+<p>当サイトのツールは、ZIPを作るときに、ファイル名をUTF-8で保存します。ZIPを開くときは、文字コードを自動で判定して、できるだけ正しく表示します。ファイルは、端末の外には、送信されません。</p>
+<a class="cta" href="/zip/"><b>ZIP圧縮・解凍ツール</b><span>ファイルをZIPにまとめる、ZIPの中身を取り出す。日本語のファイル名にも対応。</span></a>
+</article>
+<section class="panel">
+<h2>あわせて読みたい</h2>
+<ul class="rel"><li><a href="/gazou/">画像リサイズ・圧縮ツール</a></li><li><a href="/denchou/">電子帳簿保存法 ファイル名リネームツール</a></li><li><a href="/guide/gazou-karuku/">画像を軽くする方法</a></li></ul>
+</section>
+<p class="links" data-sitefooter="1"><a href="/about/">運営者情報</a><a href="/privacy/">プライバシーポリシー</a><a href="/contact/">お問い合わせ</a></p>
+</main>
+</body>
+</html>
